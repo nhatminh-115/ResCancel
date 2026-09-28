@@ -1,0 +1,189 @@
+{
+  "timestamp": "2026-09-28 16:21:32",
+  "config": {
+    "n_samples": 1000,
+    "batch_size": 32,
+    "device": "cuda",
+    "tested_depths": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "fractions": [
+      "10%",
+      "25%",
+      "50%"
+    ],
+    "mask_counts": [
+      20,
+      49,
+      98
+    ],
+    "seeds": {
+      "calib_seed": 9101,
+      "eval_seed": 9201,
+      "mask_seed": 9301,
+      "gaussian_seeds": [
+        9401,
+        9402,
+        9403,
+        9404,
+        9405
+      ],
+      "sphere_seeds": [
+        9501,
+        9502,
+        9503
+      ]
+    }
+  },
+  "tiny_manifest": {
+    "model_name": "deit_tiny_patch16_224",
+    "evaluated_depths": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "fractions": [
+      "10%",
+      "25%",
+      "50%"
+    ],
+    "mask_counts": [
+      20,
+      49,
+      98
+    ],
+    "calib_seed": 9101,
+    "eval_seed": 9201,
+    "mask_seed": 9301,
+    "gaussian_seeds": [
+      9401,
+      9402,
+      9403,
+      9404,
+      9405
+    ],
+    "sphere_seeds": [
+      9501,
+      9502,
+      9503
+    ],
+    "n_calib_samples": 1000,
+    "n_eval_samples": 1000,
+    "backbone_weights_verified": true,
+    "unlabeled_calibration_stats_verified": true,
+    "no_eval_data_in_calibration_stats_verified": true,
+    "nested_masks_verified": true,
+    "cls_untouched_verified": true,
+    "downstream_blocks_identical": true,
+    "norm_matched_random_rel_err_verified": true,
+    "calibration_stats_persisted": true,
+    "manifest_valid": true,
+    "peak_vram_mb": 105.03466796875,
+    "runtime_seconds": 91.14424848556519,
+    "baseline_accuracy": 0.679,
+    "baseline_margin_mean": 1.1680814321041106
+  },
+  "small_manifest": {
+    "model_name": "deit_small_patch16_224",
+    "evaluated_depths": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "fractions": [
+      "10%",
+      "25%",
+      "50%"
+    ],
+    "mask_counts": [
+      20,
+      49,
+      98
+    ],
+    "calib_seed": 9101,
+    "eval_seed": 9201,
+    "mask_seed": 9301,
+    "gaussian_seeds": [
+      9401,
+      9402,
+      9403,
+      9404,
+      9405
+    ],
+    "sphere_seeds": [
+      9501,
+      9502,
+      9503
+    ],
+    "n_calib_samples": 1000,
+    "n_eval_samples": 1000,
+    "backbone_weights_verified": true,
+    "unlabeled_calibration_stats_verified": true,
+    "no_eval_data_in_calibration_stats_verified": true,
+    "nested_masks_verified": true,
+    "cls_untouched_verified": true,
+    "downstream_blocks_identical": true,
+    "norm_matched_random_rel_err_verified": true,
+    "calibration_stats_persisted": true,
+    "manifest_valid": true,
+    "peak_vram_mb": 224.48779296875,
+    "runtime_seconds": 162.45195198059082,
+    "baseline_accuracy": 0.761,
+    "baseline_margin_mean": 2.242294243812561
+  },
+  "validations": {
+    "tiny": {
+      "check1_backbone_unmodified": true,
+      "check2_disjoint_splits": true,
+      "check3_unlabeled_calibration_stats": true,
+      "check4_no_eval_data_in_stats": true,
+      "check5_all_depths_evaluated": true,
+      "check6_nested_masks": true,
+      "check7_mask_counts": true,
+      "check8_cls_untouched": true,
+      "check9_downstream_blocks_identical": true,
+      "check10_norm_matched_random_rel_err": true,
+      "check11_frozen_seeds": true,
+      "check12_image_level_independence": true,
+      "check13_calibration_stats_persisted": true,
+      "check14_report_equals_manifest": true
+    },
+    "small": {
+      "check1_backbone_unmodified": true,
+      "check2_disjoint_splits": true,
+      "check3_unlabeled_calibration_stats": true,
+      "check4_no_eval_data_in_stats": true,
+      "check5_all_depths_evaluated": true,
+      "check6_nested_masks": true,
+      "check7_mask_counts": true,
+      "check8_cls_untouched": true,
+      "check9_downstream_blocks_identical": true,
+      "check10_norm_matched_random_rel_err": true,
+      "check11_frozen_seeds": true,
+      "check12_image_level_independence": true,
+      "check13_calibration_stats_persisted": true,
+      "check14_report_equals_manifest": true
+    }
+  },
+  "decision": {
+    "outcome": "OUTCOME C",
+    "decision": "OUTCOME C - DEPTH-TRANSITION PHENOMENON: Held-out distribution-matched Gaussian replacements robustly rescue predictive performance across a coherent mid-to-late depth window with interpretable budget scaling.",
+    "rationale": [
+      "Depth-8 held-out replication strongly confirmed: Tiny (dz=0.466, 95% CI [0.582, 0.758]) and Small (dz=0.652, 95% CI [1.228, 1.484]).",
+      "Gaussian decisively outperforms Random Sphere across models (Tiny dz=0.764, Small dz=0.714).",
+      "Coherent multi-layer transition window confirmed: earlier intermediate depths show content sensitivity, mid-to-late blocks show broad Gaussian tolerance, and depth 10 approaches token irrelevance.",
+      "Interpretable budget scaling confirmed across 10%, 25%, and 50% replacement fractions."
+    ]
+  }
+}
