@@ -1,0 +1,123 @@
+{
+  "outcome": "OUTCOME C",
+  "decision": "OUTCOME C - CONTENT FUNGIBILITY: Evidence supports patch-token content fungibility across replicated depths.",
+  "replicated_fungible_depths": [
+    8
+  ],
+  "passed_depths_tiny": [
+    8
+  ],
+  "passed_depths_small": [
+    8
+  ],
+  "per_depth_eval": {
+    "2": {
+      "tiny_passed": false,
+      "small_passed": false,
+      "both_passed": false,
+      "tiny_gap_dz": -0.2727614575577737,
+      "small_gap_dz": -0.18268664850881372,
+      "tiny_gap_ci": [
+        -0.5750161132097243,
+        -0.3609979731023312
+      ],
+      "small_gap_ci": [
+        -0.5237174994528293,
+        -0.2628784737884999
+      ],
+      "tiny_fdr_q": 6.190564605861071e-17,
+      "small_fdr_q": 1.2685223001369856e-08,
+      "tiny_zero_damage": 0.4399304807186127,
+      "small_zero_damage": 0.7110907845497131,
+      "tiny_cross_damage": 0.906796972990036,
+      "small_cross_damage": 1.1051450610160827
+    },
+    "4": {
+      "tiny_passed": false,
+      "small_passed": false,
+      "both_passed": false,
+      "tiny_gap_dz": 0.19218388719582039,
+      "small_gap_dz": -0.216175597298669,
+      "tiny_gap_ci": [
+        0.2570599946141243,
+        0.5000938932240009
+      ],
+      "small_gap_ci": [
+        -0.512508497750759,
+        -0.2876009058833122
+      ],
+      "tiny_fdr_q": 2.169319496848376e-09,
+      "small_fdr_q": 2.357602649230301e-11,
+      "tiny_zero_damage": 1.1473655211925506,
+      "small_zero_damage": 0.6318776884078979,
+      "tiny_cross_damage": 0.7693887982368469,
+      "small_cross_damage": 1.031097351551056
+    },
+    "6": {
+      "tiny_passed": false,
+      "small_passed": false,
+      "both_passed": false,
+      "tiny_gap_dz": -0.2922775780432727,
+      "small_gap_dz": -0.4448402992289147,
+      "tiny_gap_ci": [
+        -0.4484762112677097,
+        -0.29145502362847336
+      ],
+      "small_gap_ci": [
+        -0.7193571603119373,
+        -0.5445740146219731
+      ],
+      "tiny_fdr_q": 7.054291808677653e-19,
+      "small_fdr_q": 9.656161021542735e-41,
+      "tiny_zero_damage": 0.22124286437034607,
+      "small_zero_damage": 0.2468085150718689,
+      "tiny_cross_damage": 0.5907473764419555,
+      "small_cross_damage": 0.8793640427589416
+    },
+    "8": {
+      "tiny_passed": true,
+      "small_passed": true,
+      "both_passed": true,
+      "tiny_gap_dz": 0.22915239975331755,
+      "small_gap_dz": 0.48741346971027694,
+      "tiny_gap_ci": [
+        0.25686680893599995,
+        0.4492412880450487
+      ],
+      "small_gap_ci": [
+        0.8358594970464707,
+        1.0793036153793334
+      ],
+      "tiny_fdr_q": 1.4248841429277167e-12,
+      "small_fdr_q": 1.5024886407297734e-47,
+      "tiny_zero_damage": 0.732349637389183,
+      "small_zero_damage": 1.5279362825155258,
+      "tiny_cross_damage": 0.37917621088027953,
+      "small_cross_damage": 0.5695552389621734
+    },
+    "10": {
+      "tiny_passed": false,
+      "small_passed": false,
+      "both_passed": false,
+      "tiny_gap_dz": 0.0018225260351501398,
+      "small_gap_dz": -0.11300427177546106,
+      "tiny_gap_ci": [
+        -0.03796250111460684,
+        0.04090188285708427
+      ],
+      "small_gap_ci": [
+        -0.08991812627315521,
+        -0.026283443790674217
+      ],
+      "tiny_fdr_q": 0.9540522226824656,
+      "small_fdr_q": 0.00036905541817218093,
+      "tiny_zero_damage": 0.02463360929489136,
+      "small_zero_damage": -0.02404358696937561,
+      "tiny_cross_damage": 0.023474560976028444,
+      "small_cross_damage": 0.033544570207595825
+    }
+  },
+  "rationale": [
+    "Depth 8: Tiny (dz=0.229, 95% CI [0.257, 0.449], q=1.4249e-12) and Small (dz=0.487, 95% CI [0.836, 1.079], q=1.5025e-47) both demonstrate significant positive FungibilityGap with meaningful zero degradation."
+  ]
+}
