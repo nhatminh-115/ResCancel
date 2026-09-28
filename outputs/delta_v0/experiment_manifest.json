@@ -1,0 +1,456 @@
+{
+  "experiment": "DELTA_TRANSPORT_V0",
+  "timestamp": "2026-09-28 10:30:48",
+  "git_commit_sha": "e677d95736a29f0d342b37747e2666d888b3e7f5",
+  "protocol_frozen": "docs/DELTA_V0_PROTOCOL.md",
+  "prior_art_document": "docs/DELTA_V0_PRIOR_ART.md",
+  "models": [
+    "deit_tiny_patch16_224",
+    "deit_small_patch16_224"
+  ],
+  "sample_count": 1000,
+  "seed": 42,
+  "primary_gamma": 0.05,
+  "sensitivity_gammas": [
+    0.02,
+    0.1
+  ],
+  "injection_layer": 9,
+  "candidate_layers": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "random_control_seeds": [
+    2501,
+    2502,
+    2503
+  ],
+  "device": "cuda",
+  "device_name": "NVIDIA GeForce RTX 5070 Laptop GPU",
+  "package_versions": {
+    "torch": "2.11.0+cu128",
+    "timm": "1.0.26",
+    "pandas": "2.3.3"
+  },
+  "backbone_weights_verified": true,
+  "delta_definition_verified": true,
+  "cls_untouched_verified": true,
+  "patch_positions_verified": true,
+  "perturbation_norm_verified": true,
+  "results": {
+    "deit_tiny_patch16_224": {
+      "runtime_seconds": 7.478980302810669,
+      "peak_vram_mb": 284.5107421875,
+      "token_vs_global": {
+        "comparison": "Tokenwise_vs_Global",
+        "n_samples": 1000,
+        "mean_diff": 0.25207948684692383,
+        "median_diff": 0.22705984115600586,
+        "std_diff": 0.14310689270496368,
+        "cohens_dz": 1.7614769078008248,
+        "t_stat": 55.70279168403155,
+        "p_value": 1.1605788841972415e-308,
+        "wilcoxon_stat": 255.0,
+        "wilcoxon_p_value": 7.149003286377114e-165,
+        "bootstrap_ci_95": [
+          0.24343834817409515,
+          0.2607792913913727
+        ],
+        "acc_a": 0.749,
+        "acc_b": 0.721,
+        "acc_diff": 0.028000000000000025,
+        "contingency_table": {
+          "both_correct": 721,
+          "Tokenwise_only": 28,
+          "Global_only": 0,
+          "both_incorrect": 251
+        },
+        "risk_diff": 0.028,
+        "mcnemar_stat": 26.035714285714285,
+        "mcnemar_p_value": 3.351596306607733e-07,
+        "exact_mcnemar_p_value": 7.450580596923828e-09
+      },
+      "global_vs_base": {
+        "comparison": "Global_vs_Baseline",
+        "n_samples": 1000,
+        "mean_diff": 0.11089689284563065,
+        "median_diff": 0.09524154663085938,
+        "std_diff": 0.07285812497138977,
+        "cohens_dz": 1.5220936977060293,
+        "t_stat": 48.13282608758636,
+        "p_value": 1.7015159770572805e-262,
+        "wilcoxon_stat": 1432.0,
+        "wilcoxon_p_value": 2.4201972158851395e-163,
+        "bootstrap_ci_95": [
+          0.10639849305152893,
+          0.11536180973052979
+        ],
+        "acc_a": 0.721,
+        "acc_b": 0.707,
+        "acc_diff": 0.014000000000000012,
+        "contingency_table": {
+          "both_correct": 707,
+          "Global_only": 14,
+          "Baseline_only": 0,
+          "both_incorrect": 279
+        },
+        "risk_diff": 0.014,
+        "mcnemar_stat": 12.071428571428571,
+        "mcnemar_p_value": 0.0005120045221899044,
+        "exact_mcnemar_p_value": 0.0001220703125
+      },
+      "token_vs_base": {
+        "comparison": "Tokenwise_vs_Baseline",
+        "n_samples": 1000,
+        "mean_diff": 0.3629763722419739,
+        "median_diff": 0.33107447624206543,
+        "std_diff": 0.18270203471183777,
+        "cohens_dz": 1.9867122597428613,
+        "t_stat": 62.82535489493256,
+        "p_value": 0.0,
+        "wilcoxon_stat": 40.0,
+        "wilcoxon_p_value": 3.7502327186143063e-165,
+        "bootstrap_ci_95": [
+          0.3517734408378601,
+          0.3741928040981293
+        ],
+        "acc_a": 0.749,
+        "acc_b": 0.707,
+        "acc_diff": 0.04200000000000004,
+        "contingency_table": {
+          "both_correct": 707,
+          "Tokenwise_only": 42,
+          "Baseline_only": 0,
+          "both_incorrect": 251
+        },
+        "risk_diff": 0.042,
+        "mcnemar_stat": 40.023809523809526,
+        "mcnemar_p_value": 2.508860953006117e-10,
+        "exact_mcnemar_p_value": 4.547473508864641e-13
+      },
+      "spatial_diversity": {
+        "n_images": 1000,
+        "total_tokens_evaluated": 196000,
+        "overall_layer_counts": [
+          23530,
+          21545,
+          19331,
+          22342,
+          28751,
+          36923,
+          21694,
+          21884
+        ],
+        "overall_layer_proportions": [
+          0.12005102040816326,
+          0.1099234693877551,
+          0.09862755102040817,
+          0.11398979591836735,
+          0.1466887755102041,
+          0.18838265306122448,
+          0.11068367346938776,
+          0.1116530612244898
+        ],
+        "entropy_mean": 2.7474142570471476,
+        "entropy_std": 0.14296091690819002,
+        "entropy_median": 2.774154906608405,
+        "dominant_fraction_mean": 0.2652908163265306,
+        "dominant_fraction_std": 0.06374306972523933,
+        "fraction_matching_global_mean": 0.2108316326530612,
+        "fraction_matching_global_std": 0.0836435110689468,
+        "distinct_layers_mean": 7.99,
+        "distinct_layers_std": 0.0995485304256668
+      },
+      "sensitivity_summaries": {
+        "gamma_0.02": {
+          "comparison": "Tokenwise_vs_Global",
+          "n_samples": 1000,
+          "mean_diff": 0.10743876546621323,
+          "median_diff": 0.09698867797851562,
+          "std_diff": 0.05826513096690178,
+          "cohens_dz": 1.8439633393640724,
+          "t_stat": 58.31124029422786,
+          "p_value": 0.0,
+          "wilcoxon_stat": 73.0,
+          "wilcoxon_p_value": 4.1407528914265155e-165,
+          "bootstrap_ci_95": [
+            0.10383531451225281,
+            0.1110147014260292
+          ],
+          "acc_a": 0.724,
+          "acc_b": 0.712,
+          "acc_diff": 0.01200000000000001,
+          "contingency_table": {
+            "both_correct": 712,
+            "Tokenwise_only": 12,
+            "Global_only": 0,
+            "both_incorrect": 276
+          },
+          "risk_diff": 0.012,
+          "mcnemar_stat": 10.083333333333334,
+          "mcnemar_p_value": 0.0014961642897455517,
+          "exact_mcnemar_p_value": 0.00048828125
+        },
+        "gamma_0.1": {
+          "comparison": "Tokenwise_vs_Global",
+          "n_samples": 1000,
+          "mean_diff": 0.4527879059314728,
+          "median_diff": 0.40976667404174805,
+          "std_diff": 0.2708554267883301,
+          "cohens_dz": 1.6716958980678667,
+          "t_stat": 52.86366935238113,
+          "p_value": 1.0395261643165165e-291,
+          "wilcoxon_stat": 709.0,
+          "wilcoxon_p_value": 2.7868113256256756e-164,
+          "bootstrap_ci_95": [
+            0.43652012944221497,
+            0.46931320428848267
+          ],
+          "acc_a": 0.786,
+          "acc_b": 0.73,
+          "acc_diff": 0.05600000000000005,
+          "contingency_table": {
+            "both_correct": 730,
+            "Tokenwise_only": 56,
+            "Global_only": 0,
+            "both_incorrect": 214
+          },
+          "risk_diff": 0.056,
+          "mcnemar_stat": 54.017857142857146,
+          "mcnemar_p_value": 1.9867575986578073e-13,
+          "exact_mcnemar_p_value": 2.7755575615628914e-17
+        }
+      },
+      "validation_checks": {
+        "check1_backbone_unmodified": true,
+        "check2_delta_definition_valid": true,
+        "check3_cls_untouched": true,
+        "check4_identical_patch_positions": true,
+        "check5_matched_perturbation_norm": true,
+        "check6_global_single_layer": true,
+        "check7_tokenwise_varies_patch": true,
+        "check8_frozen_random_seeds": true,
+        "check9_image_level_independence": true,
+        "check10_manifest_data_consistency": true
+      }
+    },
+    "deit_small_patch16_224": {
+      "runtime_seconds": 12.992281436920166,
+      "peak_vram_mb": 573.82275390625,
+      "token_vs_global": {
+        "comparison": "Tokenwise_vs_Global",
+        "n_samples": 1000,
+        "mean_diff": 0.1832958608865738,
+        "median_diff": 0.15184903144836426,
+        "std_diff": 0.12263008207082748,
+        "cohens_dz": 1.4947055224239967,
+        "t_stat": 47.266739708872976,
+        "p_value": 5.09701466801634e-257,
+        "wilcoxon_stat": 186.0,
+        "wilcoxon_p_value": 5.812334724716807e-165,
+        "bootstrap_ci_95": [
+          0.17567124962806702,
+          0.19081425666809082
+        ],
+        "acc_a": 0.81,
+        "acc_b": 0.796,
+        "acc_diff": 0.014000000000000012,
+        "contingency_table": {
+          "both_correct": 796,
+          "Tokenwise_only": 14,
+          "Global_only": 0,
+          "both_incorrect": 190
+        },
+        "risk_diff": 0.014,
+        "mcnemar_stat": 12.071428571428571,
+        "mcnemar_p_value": 0.0005120045221899044,
+        "exact_mcnemar_p_value": 0.0001220703125
+      },
+      "global_vs_base": {
+        "comparison": "Global_vs_Baseline",
+        "n_samples": 1000,
+        "mean_diff": 0.08815797418355942,
+        "median_diff": 0.07290983200073242,
+        "std_diff": 0.063924640417099,
+        "cohens_dz": 1.3790922187178751,
+        "t_stat": 43.61072301390828,
+        "p_value": 1.7446338857108098e-233,
+        "wilcoxon_stat": 2262.0,
+        "wilcoxon_p_value": 2.8719226370837677e-162,
+        "bootstrap_ci_95": [
+          0.08421909809112549,
+          0.09211171418428421
+        ],
+        "acc_a": 0.796,
+        "acc_b": 0.791,
+        "acc_diff": 0.0050000000000000044,
+        "contingency_table": {
+          "both_correct": 791,
+          "Global_only": 5,
+          "Baseline_only": 0,
+          "both_incorrect": 204
+        },
+        "risk_diff": 0.005,
+        "mcnemar_stat": 3.2,
+        "mcnemar_p_value": 0.07363827012030257,
+        "exact_mcnemar_p_value": 0.0625
+      },
+      "token_vs_base": {
+        "comparison": "Tokenwise_vs_Baseline",
+        "n_samples": 1000,
+        "mean_diff": 0.2714538276195526,
+        "median_diff": 0.22774314880371094,
+        "std_diff": 0.1595577597618103,
+        "cohens_dz": 1.7012887873631597,
+        "t_stat": 53.7994753129814,
+        "p_value": 2.403339201348257e-297,
+        "wilcoxon_stat": 5.0,
+        "wilcoxon_p_value": 3.3761645060984663e-165,
+        "bootstrap_ci_95": [
+          0.2616669833660126,
+          0.28134584426879883
+        ],
+        "acc_a": 0.81,
+        "acc_b": 0.791,
+        "acc_diff": 0.019000000000000017,
+        "contingency_table": {
+          "both_correct": 791,
+          "Tokenwise_only": 19,
+          "Baseline_only": 0,
+          "both_incorrect": 190
+        },
+        "risk_diff": 0.019,
+        "mcnemar_stat": 17.05263157894737,
+        "mcnemar_p_value": 3.635795520299536e-05,
+        "exact_mcnemar_p_value": 3.814697265625e-06
+      },
+      "spatial_diversity": {
+        "n_images": 1000,
+        "total_tokens_evaluated": 196000,
+        "overall_layer_counts": [
+          25995,
+          23888,
+          22659,
+          22638,
+          26802,
+          23189,
+          21372,
+          29457
+        ],
+        "overall_layer_proportions": [
+          0.13262755102040816,
+          0.12187755102040816,
+          0.11560714285714285,
+          0.1155,
+          0.13674489795918368,
+          0.11831122448979592,
+          0.1090408163265306,
+          0.1502908163265306
+        ],
+        "entropy_mean": 2.7616689051771472,
+        "entropy_std": 0.14424581480366985,
+        "entropy_median": 2.793271287195349,
+        "dominant_fraction_mean": 0.2612040816326531,
+        "dominant_fraction_std": 0.06608893381203766,
+        "fraction_matching_global_mean": 0.21539795918367347,
+        "fraction_matching_global_std": 0.08185904479501097,
+        "distinct_layers_mean": 7.994,
+        "distinct_layers_std": 0.07726558075864033
+      },
+      "sensitivity_summaries": {
+        "gamma_0.02": {
+          "comparison": "Tokenwise_vs_Global",
+          "n_samples": 1000,
+          "mean_diff": 0.07754422724246979,
+          "median_diff": 0.06495785713195801,
+          "std_diff": 0.05078587308526039,
+          "cohens_dz": 1.526885776134771,
+          "t_stat": 48.28436804823109,
+          "p_value": 1.8906178482622254e-263,
+          "wilcoxon_stat": 84.0,
+          "wilcoxon_p_value": 4.2797477970800437e-165,
+          "bootstrap_ci_95": [
+            0.07442979514598846,
+            0.080696240067482
+          ],
+          "acc_a": 0.799,
+          "acc_b": 0.793,
+          "acc_diff": 0.006000000000000005,
+          "contingency_table": {
+            "both_correct": 793,
+            "Tokenwise_only": 6,
+            "Global_only": 0,
+            "both_incorrect": 201
+          },
+          "risk_diff": 0.006,
+          "mcnemar_stat": 4.166666666666667,
+          "mcnemar_p_value": 0.041226833337163815,
+          "exact_mcnemar_p_value": 0.03125
+        },
+        "gamma_0.1": {
+          "comparison": "Tokenwise_vs_Global",
+          "n_samples": 1000,
+          "mean_diff": 0.33706897497177124,
+          "median_diff": 0.2781205177307129,
+          "std_diff": 0.23401272296905518,
+          "cohens_dz": 1.4403873887504133,
+          "t_stat": 45.5490488942406,
+          "p_value": 4.809800632228229e-246,
+          "wilcoxon_stat": 564.0,
+          "wilcoxon_p_value": 1.8051468358102536e-164,
+          "bootstrap_ci_95": [
+            0.3225487172603607,
+            0.35144561529159546
+          ],
+          "acc_a": 0.827,
+          "acc_b": 0.801,
+          "acc_diff": 0.025999999999999912,
+          "contingency_table": {
+            "both_correct": 801,
+            "Tokenwise_only": 26,
+            "Global_only": 0,
+            "both_incorrect": 173
+          },
+          "risk_diff": 0.026,
+          "mcnemar_stat": 24.03846153846154,
+          "mcnemar_p_value": 9.443043861123425e-07,
+          "exact_mcnemar_p_value": 2.9802322387695312e-08
+        }
+      },
+      "validation_checks": {
+        "check1_backbone_unmodified": true,
+        "check2_delta_definition_valid": true,
+        "check3_cls_untouched": true,
+        "check4_identical_patch_positions": true,
+        "check5_matched_perturbation_norm": true,
+        "check6_global_single_layer": true,
+        "check7_tokenwise_varies_patch": true,
+        "check8_frozen_random_seeds": true,
+        "check9_image_level_independence": true,
+        "check10_manifest_data_consistency": true
+      }
+    }
+  },
+  "decision": {
+    "decision": "OUTCOME C - INTERESTING: Evidence supports spatially selective historical delta routing.",
+    "outcome": "OUTCOME C",
+    "passes_c1_positive_diff": true,
+    "passes_c2_ci_above_zero": true,
+    "passes_c3_effect_size_dz": true,
+    "passes_c4_clean_accuracy_safe": true,
+    "passes_c5_spatial_diversity": true,
+    "rationale": [
+      "Tokenwise beats Global on Tiny (Delta_m = +0.2521, 95% CI [0.2434, 0.2608], dz = 1.761).",
+      "Tokenwise beats Global on Small (Delta_m = +0.1833, 95% CI [0.1757, 0.1908], dz = 1.495).",
+      "Genuine spatial diversity confirmed (Tiny Entropy = 2.75, Small Entropy = 2.76)."
+    ]
+  },
+  "total_runtime_seconds": 24.62716317176819,
+  "peak_vram_mb": 573.82275390625
+}
