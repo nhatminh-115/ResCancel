@@ -1,0 +1,4 @@
+model,condition,accuracy,mean_margin,damage
+deit_tiny_patch16_224,cls_calib_mean,0.664,0.9810175516605377,0.18706639075279236
+deit_tiny_patch16_224,cls_cross_image,0.626,0.7830448408126831,0.38503910160064697
+deit_tiny_patch16_224,cls_zero,0.4,-0.5819195402860642,1.7500034826993942
