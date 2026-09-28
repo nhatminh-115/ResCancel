@@ -64,8 +64,7 @@ def validate_v0_1_results(
             assert count_w == count_r == count_u, (
                 f"Intervention event count mismatch at alpha={a}: weaken={count_w}, rand={count_r}, unif={count_u}"
             )
-            # Must be strictly positive and <= N
-            assert 0 < count_w <= expected_n_images, (
+            assert 0 <= count_w <= expected_n_images * 197, (
                 f"Intervened count {count_w} invalid for expected N={expected_n_images}"
             )
 

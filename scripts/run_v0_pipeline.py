@@ -116,23 +116,28 @@ def run_experiment(args):
         print(f"Saved: {matched_csv_path}")
 
         # Step 4: Causal Intervention & Controls (strictly only_extreme=True, seeds 2501, 2502, 2503)
-        intervention_df, summary_stats = pipeline.run_causal_falsification(inst_vit, loader)
-        intervention_csv_path = os.path.join(args.output_dir, f"{model_name}_intervention_sweep.csv")
-        intervention_df.to_csv(intervention_csv_path, index=False)
-        print(f"Saved: {intervention_csv_path}")
+        sweep_cls_df, sweep_patch_df, summary_stats = pipeline.run_causal_falsification(inst_vit, loader)
+        cls_int_csv = os.path.join(args.output_dir, f"{model_name}_cls_intervention_sweep.csv")
+        patch_int_csv = os.path.join(args.output_dir, f"{model_name}_patch_intervention_sweep.csv")
+        primary_int_csv = os.path.join(args.output_dir, f"{model_name}_intervention_sweep.csv")
+        sweep_cls_df.to_csv(cls_int_csv, index=False)
+        sweep_patch_df.to_csv(patch_int_csv, index=False)
+        sweep_cls_df.to_csv(primary_int_csv, index=False)
+        print(f"Saved: {cls_int_csv}")
+        print(f"Saved: {patch_int_csv}")
 
         # Step 5: Programmatic Audit Validation Checks
         print(f"[{model_name}] Validating protocol compliance assertions...")
         validation_checks = validate_v0_1_results(
             matched_df=matched_df,
-            intervention_df=intervention_df,
+            intervention_df=sweep_cls_df,
             reg_results=confound_res["image_level_regression"],
             cls_event_df=cls_df,
             expected_n_images=args.num_samples
         )
 
         # Step 6: Decision Rule Evaluation
-        decision_info = pipeline.evaluate_decision_rule(confound_res, intervention_df)
+        decision_info = pipeline.evaluate_decision_rule(confound_res, sweep_cls_df)
         print(f"\n[V0.1 DECISION FOR {model_name}]: {decision_info['decision']}")
         for r in decision_info["rationale"]:
             print(f"  -> {r}")
@@ -164,11 +169,13 @@ def run_experiment(args):
         fig2_path = os.path.join(args.figures_dir, f"{model_name}_geometry_joint_distribution.png")
         fig3_path = os.path.join(args.figures_dir, f"{model_name}_confound_matching.png")
         fig4_path = os.path.join(args.figures_dir, f"{model_name}_causal_intervention.png")
+        fig4_patch_path = os.path.join(args.figures_dir, f"{model_name}_patch_causal_intervention.png")
 
         plot_cancellation_landscape(cls_df, model_name, fig1_path)
         plot_geometry_joint_distribution(cls_df, model_name, fig2_path)
         plot_matched_comparison(matched_df, model_name, fig3_path)
-        plot_causal_intervention(intervention_df, model_name, fig4_path)
+        plot_causal_intervention(sweep_cls_df, model_name, fig4_path)
+        plot_causal_intervention(sweep_patch_df, f"{model_name} (Patch Tokens)", fig4_patch_path)
 
     total_runtime_s = time.time() - t_start
     manifest["total_runtime_seconds"] = total_runtime_s

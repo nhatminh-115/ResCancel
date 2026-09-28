@@ -242,12 +242,14 @@ class ResCancelPipeline:
         self,
         inst_vit: InstrumentedViT,
         loader: torch.utils.data.DataLoader
-    ) -> Tuple[pd.DataFrame, Dict[str, Any]]:
+    ) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, Any]]:
         """
-        Executes causal intervention strictly on pre-registered Layer 0 Attention CLS extreme events.
+        Executes causal intervention strictly on:
+          1. Primary Scope: Layer 0 Attention CLS (only_extreme=True)
+          2. Secondary Scope: Layer 0 Attention Patch tokens (only_extreme=True, where extreme cancellation occurs)
         """
-        print(f"[{self.model_name}] Running causal intervention on Layer 0 Attention CLS (only_extreme=True)...")
-        sweep_df, summary_stats = run_intervention_sweep(
+        print(f"[{self.model_name}] Running primary causal intervention on Layer 0 Attention CLS (only_extreme=True)...")
+        sweep_cls_df, summary_cls = run_intervention_sweep(
             inst_vit=inst_vit,
             loader=loader,
             target_layer=0,
@@ -258,7 +260,25 @@ class ResCancelPipeline:
             device=self.device,
             seed=self.seed
         )
-        return sweep_df, summary_stats
+
+        print(f"[{self.model_name}] Running secondary causal intervention on Layer 0 Attention Patch tokens (only_extreme=True)...")
+        sweep_patch_df, summary_patch = run_intervention_sweep(
+            inst_vit=inst_vit,
+            loader=loader,
+            target_layer=0,
+            target_site="attn",
+            target_token="patch",
+            alphas=[1.0, 0.75, 0.50, 0.25],
+            random_seeds=[2501, 2502, 2503],
+            device=self.device,
+            seed=self.seed
+        )
+
+        combined_summary = {
+            "cls_summary": summary_cls,
+            "patch_summary": summary_patch
+        }
+        return sweep_cls_df, sweep_patch_df, combined_summary
 
     def evaluate_decision_rule(
         self,

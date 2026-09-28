@@ -1,0 +1,260 @@
+{
+  "version": "V0.1",
+  "timestamp": "2026-09-28 09:07:58",
+  "protocol_frozen": "docs/V0_PROTOCOL.md",
+  "audit_document": "docs/V0_1_AUDIT.md",
+  "models": [
+    "deit_tiny_patch16_224",
+    "deit_small_patch16_224"
+  ],
+  "sample_count": 1000,
+  "batch_size": 32,
+  "seed": 42,
+  "random_control_seeds": [
+    2501,
+    2502,
+    2503
+  ],
+  "device": "cuda",
+  "device_name": "NVIDIA GeForce RTX 5070 Laptop GPU",
+  "frozen_criteria": {
+    "cos_threshold": -0.6,
+    "r_threshold": 0.6,
+    "q_threshold": 0.85,
+    "c_l1_threshold": 2.0,
+    "alphas": [
+      1.0,
+      0.75,
+      0.5,
+      0.25
+    ],
+    "caliper_x_pct": 0.15,
+    "caliper_delta_pct": 0.15,
+    "caliper_margin": 0.5
+  },
+  "package_versions": {
+    "torch": "2.11.0+cu128",
+    "timm": "1.0.26",
+    "pandas": "2.3.3",
+    "statsmodels": "0.14.6"
+  },
+  "results": {
+    "deit_tiny_patch16_224": {
+      "clean_accuracy": 0.707,
+      "noise_flip_rate": 0.121,
+      "blur_flip_rate": 0.188,
+      "total_cls_events": 24000,
+      "extreme_cls_event_count": 0,
+      "extreme_cls_event_rate": 0.0,
+      "matching_stats": {
+        "total_extreme_candidates": 0,
+        "matched_pairs": 0,
+        "matching_rate": 0.0,
+        "protocol_violations": 0
+      },
+      "matched_margin_effect": {
+        "n_pairs": 0,
+        "mean_diff": 0.0,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0,
+        "t_stat": 0.0,
+        "p_value": 1.0,
+        "cohens_d": 0.0
+      },
+      "matched_fragility_effect": {
+        "n_pairs": 0,
+        "risk_diff": 0.0,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0,
+        "mcnemar_stat": 0.0,
+        "mcnemar_p_value": 1.0,
+        "paired_odds_ratio": 1.0
+      },
+      "image_level_regression": {
+        "n_independent_images": 1000,
+        "target_col": "any_flipped",
+        "predictor": "has_l0_attn_cls_extreme",
+        "cls_extreme_prevalence": 0.0,
+        "coef": 0.0,
+        "std_err": 0.0,
+        "z_stat": 0.0,
+        "p_value": 1.0,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0,
+        "odds_ratio": 1.0,
+        "odds_ratio_ci_lower": 1.0,
+        "odds_ratio_ci_upper": 1.0,
+        "note": "Under strict frozen criteria (cos<=-0.60, r>=0.60, q<=0.85, c_l1>=2.00), CLS token extreme cancellation has 0 prevalence."
+      },
+      "causal_intervention_summary": {
+        "cls_summary": {
+          "target_layer": 0,
+          "target_site": "attn",
+          "target_token": "cls",
+          "baseline_clean_acc": 0.707,
+          "baseline_flip_rate": 0.121,
+          "baseline_mean_margin": 2.2229511737823486,
+          "random_seeds": [
+            2501,
+            2502,
+            2503
+          ],
+          "n_images": 1000
+        },
+        "patch_summary": {
+          "target_layer": 0,
+          "target_site": "attn",
+          "target_token": "patch",
+          "baseline_clean_acc": 0.707,
+          "baseline_flip_rate": 0.121,
+          "baseline_mean_margin": 2.2229511737823486,
+          "random_seeds": [
+            2501,
+            2502,
+            2503
+          ],
+          "n_images": 1000
+        }
+      },
+      "decision": {
+        "decision": "Outcome A: KILL (no evidence of pathology)",
+        "rationale": [
+          "Confound-controlled matched risk difference is null: RD = 0.0000 (p = 1.0000).",
+          "Image-level logistic regression odds ratio: OR = 1.000 (95% CI [1.000, 1.000], spans 1.0).",
+          "No evidence that extreme cancellation is a predictive pathology."
+        ],
+        "matched_risk_diff": 0.0,
+        "matched_mcnemar_p": 1.0,
+        "image_level_odds_ratio": 1.0,
+        "image_level_or_ci": [
+          1.0,
+          1.0
+        ],
+        "weaken_margin_delta_a05": 0.0,
+        "weaken_margin_ci_a05": [
+          0.0,
+          0.0
+        ],
+        "weaken_flip_delta_a05": 0.0,
+        "rand_margin_delta_a05": 0.0
+      },
+      "validation_checks": {
+        "zero_protocol_violations": true,
+        "identical_event_mask_across_controls": true,
+        "independent_image_count_preserved": true,
+        "regression_unstandardized_binary": true,
+        "regression_valid_cis": true
+      },
+      "peak_vram_mb": 693.2880859375
+    },
+    "deit_small_patch16_224": {
+      "clean_accuracy": 0.791,
+      "noise_flip_rate": 0.058,
+      "blur_flip_rate": 0.112,
+      "total_cls_events": 24000,
+      "extreme_cls_event_count": 0,
+      "extreme_cls_event_rate": 0.0,
+      "matching_stats": {
+        "total_extreme_candidates": 0,
+        "matched_pairs": 0,
+        "matching_rate": 0.0,
+        "protocol_violations": 0
+      },
+      "matched_margin_effect": {
+        "n_pairs": 0,
+        "mean_diff": 0.0,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0,
+        "t_stat": 0.0,
+        "p_value": 1.0,
+        "cohens_d": 0.0
+      },
+      "matched_fragility_effect": {
+        "n_pairs": 0,
+        "risk_diff": 0.0,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0,
+        "mcnemar_stat": 0.0,
+        "mcnemar_p_value": 1.0,
+        "paired_odds_ratio": 1.0
+      },
+      "image_level_regression": {
+        "n_independent_images": 1000,
+        "target_col": "any_flipped",
+        "predictor": "has_l0_attn_cls_extreme",
+        "cls_extreme_prevalence": 0.0,
+        "coef": 0.0,
+        "std_err": 0.0,
+        "z_stat": 0.0,
+        "p_value": 1.0,
+        "ci_lower": 0.0,
+        "ci_upper": 0.0,
+        "odds_ratio": 1.0,
+        "odds_ratio_ci_lower": 1.0,
+        "odds_ratio_ci_upper": 1.0,
+        "note": "Under strict frozen criteria (cos<=-0.60, r>=0.60, q<=0.85, c_l1>=2.00), CLS token extreme cancellation has 0 prevalence."
+      },
+      "causal_intervention_summary": {
+        "cls_summary": {
+          "target_layer": 0,
+          "target_site": "attn",
+          "target_token": "cls",
+          "baseline_clean_acc": 0.791,
+          "baseline_flip_rate": 0.058,
+          "baseline_mean_margin": 3.2349116802215576,
+          "random_seeds": [
+            2501,
+            2502,
+            2503
+          ],
+          "n_images": 1000
+        },
+        "patch_summary": {
+          "target_layer": 0,
+          "target_site": "attn",
+          "target_token": "patch",
+          "baseline_clean_acc": 0.791,
+          "baseline_flip_rate": 0.058,
+          "baseline_mean_margin": 3.2349116802215576,
+          "random_seeds": [
+            2501,
+            2502,
+            2503
+          ],
+          "n_images": 1000
+        }
+      },
+      "decision": {
+        "decision": "Outcome A: KILL (no evidence of pathology)",
+        "rationale": [
+          "Confound-controlled matched risk difference is null: RD = 0.0000 (p = 1.0000).",
+          "Image-level logistic regression odds ratio: OR = 1.000 (95% CI [1.000, 1.000], spans 1.0).",
+          "No evidence that extreme cancellation is a predictive pathology."
+        ],
+        "matched_risk_diff": 0.0,
+        "matched_mcnemar_p": 1.0,
+        "image_level_odds_ratio": 1.0,
+        "image_level_or_ci": [
+          1.0,
+          1.0
+        ],
+        "weaken_margin_delta_a05": 0.0,
+        "weaken_margin_ci_a05": [
+          0.0,
+          0.0
+        ],
+        "weaken_flip_delta_a05": 0.0,
+        "rand_margin_delta_a05": 0.0
+      },
+      "validation_checks": {
+        "zero_protocol_violations": true,
+        "identical_event_mask_across_controls": true,
+        "independent_image_count_preserved": true,
+        "regression_unstandardized_binary": true,
+        "regression_valid_cis": true
+      },
+      "peak_vram_mb": 821.90478515625
+    }
+  },
+  "total_runtime_seconds": 260.6278793811798
+}

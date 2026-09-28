@@ -134,6 +134,14 @@ def plot_matched_comparison(matched_df: pd.DataFrame, model_name: str, output_pa
     """
     set_scientific_style()
     if len(matched_df) == 0:
+        fig, ax = plt.subplots(figsize=(7, 4))
+        ax.text(0.5, 0.5, f"No Extreme Events Matched for {model_name}\n(CLS Prevalence = 0% under Frozen Protocol Criteria)",
+                horizontalalignment='center', verticalalignment='center', fontsize=12, color="#555555")
+        ax.set_axis_off()
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        plt.savefig(output_path)
+        plt.close()
+        print(f"Saved: {output_path}")
         return
 
     fig, axes = plt.subplots(1, 2, figsize=(11, 4.5))

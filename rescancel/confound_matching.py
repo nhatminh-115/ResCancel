@@ -293,9 +293,9 @@ def run_image_level_logistic_regression(
       
     Uses statsmodels.api.Logit for exact standard errors, p-values, and 95% CIs.
     """
-    # 1. Construct image-level cancellation features from CLS events
-    l0_attn = cls_event_df[(cls_event_df["layer"] == 0) & (cls_event_df["site"] == "attn")]
-    l0_extreme_samples = set(l0_attn[l0_attn["is_extreme"] == True]["sample_id"])
+    # 1. Construct image-level cancellation features
+    l0_attn_cls = cls_event_df[(cls_event_df["layer"] == 0) & (cls_event_df["site"] == "attn")]
+    l0_extreme_samples = set(l0_attn_cls[l0_attn_cls["is_extreme"] == True]["sample_id"])
     any_extreme_samples = set(cls_event_df[cls_event_df["is_extreme"] == True]["sample_id"])
 
     cls_counts = cls_event_df[cls_event_df["is_extreme"] == True].groupby("sample_id").size().to_dict()
@@ -303,13 +303,13 @@ def run_image_level_logistic_regression(
     mean_d = cls_event_df.groupby("sample_id")["delta_norm"].mean().to_dict()
 
     analysis_df = img_df.copy()
-    analysis_df["has_l0_attn_extreme"] = analysis_df["sample_id"].apply(lambda s: 1 if s in l0_extreme_samples else 0)
+    analysis_df["has_l0_attn_cls_extreme"] = analysis_df["sample_id"].apply(lambda s: 1 if s in l0_extreme_samples else 0)
     analysis_df["has_any_cls_extreme"] = analysis_df["sample_id"].apply(lambda s: 1 if s in any_extreme_samples else 0)
     analysis_df["num_cls_extreme"] = analysis_df["sample_id"].apply(lambda s: cls_counts.get(s, 0))
     analysis_df["mean_x_norm"] = analysis_df["sample_id"].apply(lambda s: mean_x.get(s, 0.0))
     analysis_df["mean_delta_norm"] = analysis_df["sample_id"].apply(lambda s: mean_d.get(s, 0.0))
 
-    # Standardize continuous covariates only (do NOT standardize binary indicators)
+    # Standardize continuous covariates only
     m_mean, m_std = analysis_df["clean_margin"].mean(), max(analysis_df["clean_margin"].std(), 1e-6)
     x_mean, x_std = analysis_df["mean_x_norm"].mean(), max(analysis_df["mean_x_norm"].std(), 1e-6)
     d_mean, d_std = analysis_df["mean_delta_norm"].mean(), max(analysis_df["mean_delta_norm"].std(), 1e-6)
@@ -318,28 +318,42 @@ def run_image_level_logistic_regression(
     analysis_df["x_norm_std"] = (analysis_df["mean_x_norm"] - x_mean) / x_std
     analysis_df["delta_norm_std"] = (analysis_df["mean_delta_norm"] - d_mean) / d_std
 
-    y = analysis_df[target_col].values.astype(float)
-    X = analysis_df[["has_l0_attn_extreme", "margin_std", "x_norm_std", "delta_norm_std"]].copy()
-    X = sm.add_constant(X)
+    # Check if primary CLS indicator has variation
+    cls_prevalence = float(analysis_df["has_l0_attn_cls_extreme"].mean())
+    if analysis_df["has_l0_attn_cls_extreme"].nunique() >= 2:
+        predictor_col = "has_l0_attn_cls_extreme"
+        X = sm.add_constant(analysis_df[[predictor_col, "margin_std", "x_norm_std", "delta_norm_std"]])
+        y = analysis_df[target_col].values.astype(float)
+        logit_model = sm.Logit(y, X)
+        res = logit_model.fit(disp=False)
 
-    logit_model = sm.Logit(y, X)
-    res = logit_model.fit(disp=False)
-
-    coef = float(res.params["has_l0_attn_extreme"])
-    se = float(res.bse["has_l0_attn_extreme"])
-    z_stat = float(res.tvalues["has_l0_attn_extreme"])
-    p_val = float(res.pvalues["has_l0_attn_extreme"])
-    ci_lower = float(res.conf_int().loc["has_l0_attn_extreme", 0])
-    ci_upper = float(res.conf_int().loc["has_l0_attn_extreme", 1])
-
-    odds_ratio = float(np.exp(coef))
-    odds_ratio_ci_lower = float(np.exp(ci_lower))
-    odds_ratio_ci_upper = float(np.exp(ci_upper))
+        coef = float(res.params[predictor_col])
+        se = float(res.bse[predictor_col])
+        z_stat = float(res.tvalues[predictor_col])
+        p_val = float(res.pvalues[predictor_col])
+        ci_lower = float(res.conf_int().loc[predictor_col, 0])
+        ci_upper = float(res.conf_int().loc[predictor_col, 1])
+        odds_ratio = float(np.exp(coef))
+        odds_ratio_ci_lower = float(np.exp(ci_lower))
+        odds_ratio_ci_upper = float(np.exp(ci_upper))
+    else:
+        # Zero prevalence under strict frozen criteria on CLS tokens
+        predictor_col = "has_l0_attn_cls_extreme"
+        coef = 0.0
+        se = 0.0
+        z_stat = 0.0
+        p_val = 1.0
+        ci_lower = 0.0
+        ci_upper = 0.0
+        odds_ratio = 1.0
+        odds_ratio_ci_lower = 1.0
+        odds_ratio_ci_upper = 1.0
 
     return {
         "n_independent_images": len(analysis_df),
         "target_col": target_col,
-        "predictor": "has_l0_attn_extreme",
+        "predictor": predictor_col,
+        "cls_extreme_prevalence": cls_prevalence,
         "coef": coef,
         "std_err": se,
         "z_stat": z_stat,
@@ -349,6 +363,5 @@ def run_image_level_logistic_regression(
         "odds_ratio": odds_ratio,
         "odds_ratio_ci_lower": odds_ratio_ci_lower,
         "odds_ratio_ci_upper": odds_ratio_ci_upper,
-        "aic": float(res.aic),
-        "prsquared": float(res.prsquared)
+        "note": "Under strict frozen criteria (cos<=-0.60, r>=0.60, q<=0.85, c_l1>=2.00), CLS token extreme cancellation has 0 prevalence." if cls_prevalence == 0 else "CLS extreme events analyzed."
     }
