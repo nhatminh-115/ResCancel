@@ -180,21 +180,28 @@ def plot_matched_comparison(matched_df: pd.DataFrame, model_name: str, output_pa
 def plot_causal_intervention(intervention_df: pd.DataFrame, model_name: str, output_path: str):
     """
     Plots causal intervention effects across alpha in {1.0, 0.75, 0.50, 0.25}
-    for weaken_opposing vs random_direction vs uniform_scaling.
+    for weaken_opposing vs random_direction_mean vs uniform_scaling.
     """
     set_scientific_style()
     fig, axes = plt.subplots(1, 3, figsize=(16, 4.5))
 
+    main_modes = ["baseline", "weaken_opposing", "random_direction_mean", "uniform_scaling"]
+    plot_df = intervention_df[intervention_df["mode"].isin(main_modes)].copy()
+    plot_df["mode"] = plot_df["mode"].replace({
+        "random_direction_mean": "random_direction (mean)",
+        "weaken_opposing": "weaken_opposing (extreme only)"
+    })
+
     modes_palette = {
         "baseline": "black",
-        "weaken_opposing": "#d62728",
-        "random_direction": "#7f7f7f",
+        "weaken_opposing (extreme only)": "#d62728",
+        "random_direction (mean)": "#7f7f7f",
         "uniform_scaling": "#1f77b4"
     }
 
     # 1. Clean Accuracy
     sns.lineplot(
-        data=intervention_df,
+        data=plot_df,
         x="alpha",
         y="clean_acc",
         hue="mode",
@@ -211,7 +218,7 @@ def plot_causal_intervention(intervention_df: pd.DataFrame, model_name: str, out
 
     # 2. Margin Shift
     sns.lineplot(
-        data=intervention_df,
+        data=plot_df,
         x="alpha",
         y="margin_delta",
         hue="mode",
@@ -229,7 +236,7 @@ def plot_causal_intervention(intervention_df: pd.DataFrame, model_name: str, out
 
     # 3. Flip Rate under Perturbation
     sns.lineplot(
-        data=intervention_df,
+        data=plot_df,
         x="alpha",
         y="flip_rate",
         hue="mode",

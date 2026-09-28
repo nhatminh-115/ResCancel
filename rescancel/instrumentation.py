@@ -10,13 +10,13 @@ from rescancel.metrics import compute_residual_metrics, is_extreme_cancellation
 class InterventionConfig:
     """Configuration for causal intervention during forward pass."""
     active: bool = False
-    target_layer: Optional[int] = None       # None means apply to all layers
-    target_site: Optional[str] = None        # 'attn', 'mlp', or None (both)
+    target_layer: Optional[int] = 0          # Default: Layer 0
+    target_site: Optional[str] = "attn"      # Default: 'attn'
     target_token: str = "cls"                # 'cls', 'patch', or 'all'
     mode: str = "weaken_opposing"            # 'weaken_opposing', 'random_direction', 'uniform_scaling'
     alpha: float = 1.0                       # 1.0 = untouched, 0.75, 0.50, 0.25
     seed: int = 42
-    only_extreme: bool = False               # Only intervene if event satisfies extreme cancellation criteria
+    only_extreme: bool = True                # V0.1: Strictly only intervene on frozen extreme cancellation events
 
 
 @dataclass
@@ -120,6 +120,8 @@ class InstrumentedBlock(nn.Module):
 
         mode = self.intervention.mode
         delta_mod = delta.clone()
+        self.last_intervention_count = int(target_mask.sum().item())
+        self.total_intervention_events = getattr(self, "total_intervention_events", 0) + self.last_intervention_count
 
         if mode == "weaken_opposing":
             # delta' = alpha * delta_parallel + delta_perp

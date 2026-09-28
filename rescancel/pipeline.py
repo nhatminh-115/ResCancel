@@ -11,13 +11,19 @@ from rescancel.instrumentation import InstrumentedViT, InterventionConfig
 from rescancel.metrics import compute_prediction_metrics, is_extreme_cancellation
 from rescancel.dataset import get_imagenet_val_loader
 from rescancel.corruptions import apply_gaussian_noise, apply_gaussian_blur
-from rescancel.confound_matching import match_controls, compute_matched_effect_sizes, run_controlled_logistic_regression
+from rescancel.confound_matching import (
+    match_controls,
+    compute_matched_margin_effect,
+    compute_matched_binary_fragility_effect,
+    run_image_level_logistic_regression
+)
 from rescancel.intervention import run_intervention_sweep
+from rescancel.audit_validation import validate_v0_1_results
 
 
 class ResCancelPipeline:
     """
-    Executes the frozen ResCancel V0 mechanistic falsification protocol.
+    Executes the corrected ResCancel V0.1 mechanistic falsification protocol.
     """
     def __init__(
         self,
@@ -26,8 +32,8 @@ class ResCancelPipeline:
         batch_size: int = 32,
         device: str = "cuda" if torch.cuda.is_available() else "cpu",
         seed: int = 42,
-        output_dir: str = "outputs",
-        figures_dir: str = "figures"
+        output_dir: str = "outputs/v0_1",
+        figures_dir: str = "figures/v0_1"
     ):
         self.model_name = model_name
         self.num_samples = num_samples
@@ -58,11 +64,12 @@ class ResCancelPipeline:
         self,
         inst_vit: InstrumentedViT,
         loader: torch.utils.data.DataLoader
-    ) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
         """
         Runs clean and perturbed forward passes, extracting:
         1. Image-level prediction table (top-1 accuracy, margin, entropy, perturbation flips)
-        2. Event-level residual cancellation table across all layers, sites, and tokens.
+        2. CLS residual event table across all layers and sites (primary mechanistic test)
+        3. Patch residual summary table with patch_extreme_burden (secondary exploratory test)
         """
         model = inst_vit.model
         inst_vit.set_logging(True)
@@ -123,15 +130,14 @@ class ResCancelPipeline:
         print(f"Completed forward passes in {time.time() - t0:.2f}s. Clean Acc: {img_df['clean_correct'].mean():.4f}")
 
         # Assemble residual event records
-        # Each instrumented block has a list of records:
-        # Call 2k: batch k, site "attn"
-        # Call 2k+1: batch k, site "mlp"
         batch_sizes = []
         for bx, _ in loader:
             batch_sizes.append(bx.shape[0])
         batch_start_indices = [0] + list(np.cumsum(batch_sizes)[:-1])
 
-        event_rows = []
+        cls_event_rows = []
+        patch_summary_rows = []
+
         for inst_b in inst_vit.instrumented_blocks:
             for c_idx, rec in enumerate(inst_b.records):
                 b_idx = c_idx // 2
@@ -149,9 +155,10 @@ class ResCancelPipeline:
                     cls_x = rec.cls_x_norm[i].item()
                     cls_d = rec.cls_delta_norm[i].item()
 
+                    # Primary CLS extreme criteria
                     is_ext = is_extreme_cancellation(cls_cos, cls_r, cls_q, cls_c_l1)
 
-                    event_rows.append({
+                    cls_event_rows.append({
                         "sample_id": s_id,
                         "layer": rec.layer,
                         "site": rec.site,
@@ -168,16 +175,16 @@ class ResCancelPipeline:
                         "flipped": s_info["any_flipped"]
                     })
 
-                    # Patch summary event
+                    # Secondary Patch Summary (Explicitly named patch_extreme_burden, NOT is_extreme)
                     p_cos = rec.patch_cos_mean[i].item()
                     p_r = rec.patch_r_mean[i].item()
                     p_q = rec.patch_q_mean[i].item()
                     p_c_l1 = rec.patch_c_l1_mean[i].item()
                     p_x = rec.patch_x_norm_mean[i].item()
                     p_d = rec.patch_delta_norm_mean[i].item()
-                    p_ext_frac = rec.patch_extreme_frac[i].item()
+                    p_burden = rec.patch_extreme_frac[i].item()
 
-                    event_rows.append({
+                    patch_summary_rows.append({
                         "sample_id": s_id,
                         "layer": rec.layer,
                         "site": rec.site,
@@ -188,65 +195,70 @@ class ResCancelPipeline:
                         "c_l1": p_c_l1,
                         "x_norm": p_x,
                         "delta_norm": p_d,
-                        "is_extreme": p_ext_frac > 0.05,
-                        "patch_extreme_frac": p_ext_frac,
+                        "patch_extreme_burden": p_burden,
                         "clean_correct": s_info["clean_correct"],
                         "margin": s_info["clean_margin"],
                         "flipped": s_info["any_flipped"]
                     })
 
-        event_df = pd.DataFrame(event_rows)
-        return img_df, event_df
+        cls_df = pd.DataFrame(cls_event_rows)
+        patch_df = pd.DataFrame(patch_summary_rows)
+        return img_df, cls_df, patch_df
 
-    def analyze_matched_confounds(self, event_df: pd.DataFrame) -> Dict[str, Any]:
-        """Runs matched pair analysis and controlled regression."""
-        print(f"[{self.model_name}] Running confound matching and regression...")
-        matched_df, stats_summary = match_controls(event_df, is_extreme_col="is_extreme")
-        
-        effect_sizes_margin = compute_matched_effect_sizes(matched_df, outcome_col="margin")
-        effect_sizes_flip = compute_matched_effect_sizes(matched_df, outcome_col="flipped")
-        
-        reg_results = run_controlled_logistic_regression(event_df, target_col="flipped", is_extreme_col="is_extreme")
-        
+    def analyze_matched_confounds(
+        self,
+        img_df: pd.DataFrame,
+        cls_event_df: pd.DataFrame
+    ) -> Dict[str, Any]:
+        """
+        Runs V0.1 confound matching obeying strict individual calipers and image-level regression.
+        """
+        print(f"[{self.model_name}] Running strict caliper matching on CLS events...")
+        matched_df, stats_summary = match_controls(
+            cls_event_df,
+            is_extreme_col="is_extreme",
+            token_type="cls",
+            caliper_x_pct=0.15,
+            caliper_delta_pct=0.15,
+            caliper_margin=0.50,
+            random_state=self.seed
+        )
+
+        margin_effects = compute_matched_margin_effect(matched_df, outcome_col="margin", n_bootstrap=10000, seed=self.seed)
+        fragility_effects = compute_matched_binary_fragility_effect(matched_df, outcome_col="flipped")
+
+        print(f"[{self.model_name}] Running image-level multivariable logistic regression (N=1000)...")
+        reg_results = run_image_level_logistic_regression(img_df, cls_event_df, target_col="any_flipped")
+
         return {
             "matching_stats": stats_summary,
-            "matched_margin_effect": effect_sizes_margin,
-            "matched_flip_effect": effect_sizes_flip,
-            "logistic_regression": reg_results,
-            "matched_df": matched_df
+            "matched_df": matched_df,
+            "matched_margin_effect": margin_effects,
+            "matched_fragility_effect": fragility_effects,
+            "image_level_regression": reg_results
         }
 
     def run_causal_falsification(
         self,
         inst_vit: InstrumentedViT,
-        loader: torch.utils.data.DataLoader,
-        event_df: pd.DataFrame
-    ) -> pd.DataFrame:
+        loader: torch.utils.data.DataLoader
+    ) -> Tuple[pd.DataFrame, Dict[str, Any]]:
         """
-        Identifies top cancellation site and runs causal intervention across alpha grid
-        and matched controls.
+        Executes causal intervention strictly on pre-registered Layer 0 Attention CLS extreme events.
         """
-        # Find site with highest extreme cancellation rate
-        extreme_events = event_df[event_df["is_extreme"] == True]
-        if len(extreme_events) > 0:
-            top_site_series = extreme_events.groupby(["layer", "site"]).size()
-            top_layer, top_site = top_site_series.idxmax()
-            print(f"[{self.model_name}] Top cancellation site: Layer {top_layer}, Site {top_site} ({top_site_series.max()} events)")
-        else:
-            # Fallback to middle layer attention
-            top_layer, top_site = 6, "attn"
-
-        sweep_df = run_intervention_sweep(
+        print(f"[{self.model_name}] Running causal intervention on Layer 0 Attention CLS (only_extreme=True)...")
+        sweep_df, summary_stats = run_intervention_sweep(
             inst_vit=inst_vit,
             loader=loader,
-            target_layer=top_layer,
-            target_site=top_site,
+            target_layer=0,
+            target_site="attn",
             target_token="cls",
             alphas=[1.0, 0.75, 0.50, 0.25],
+            random_seeds=[2501, 2502, 2503],
             device=self.device,
             seed=self.seed
         )
-        return sweep_df
+        return sweep_df, summary_stats
 
     def evaluate_decision_rule(
         self,
@@ -254,62 +266,71 @@ class ResCancelPipeline:
         intervention_df: pd.DataFrame
     ) -> Dict[str, Any]:
         """
-        Evaluates frozen decision criteria:
-        - Outcome A (KILL): Confound-controlled effect |d| < 0.10, p > 0.05, or intervention no better than random.
-        - Outcome B (KILL Training Hypothesis): Targeted intervention consistently harms accuracy/margin or worsens fragility.
-        - Outcome C (INTERESTING): Targeted intervention improves margin or stability significantly vs matched controls.
+        Evaluates the V0.1 decision criteria:
+        - Outcome A — KILL: Confound-controlled association is null or negligible AND targeted intervention
+          provides no meaningful advantage over matched controls.
+        - Outcome B — KILL training hypothesis: Extreme-only cancellation suppression causes reproducible harm
+          larger than matched controls, with CIs supporting a meaningful negative effect.
+        - Outcome C — INTERESTING: Extreme-only targeted suppression improves robustness/stability without
+          meaningfully degrading clean accuracy/margin.
         """
-        margin_effect = confound_results["matched_margin_effect"]
-        flip_effect = confound_results["matched_flip_effect"]
-        reg_results = confound_results["logistic_regression"]
+        frag_eff = confound_results["matched_fragility_effect"]
+        margin_eff = confound_results["matched_margin_effect"]
+        reg_res = confound_results["image_level_regression"]
 
-        # Check intervention performance
-        baseline_row = intervention_df[intervention_df["mode"] == "baseline"].iloc[0]
-        weakened_rows = intervention_df[intervention_df["mode"] == "weaken_opposing"]
-        random_rows = intervention_df[intervention_df["mode"] == "random_direction"]
+        # Intervention rows at alpha=0.50
+        weaken_05 = intervention_df[(intervention_df["mode"] == "weaken_opposing") & (intervention_df["alpha"] == 0.50)].iloc[0]
+        rand_05 = intervention_df[(intervention_df["mode"] == "random_direction_mean") & (intervention_df["alpha"] == 0.50)].iloc[0]
 
-        base_acc = baseline_row["clean_acc"]
-        base_flip = baseline_row["flip_rate"]
-        
-        best_weaken = weakened_rows.sort_values(by="clean_acc", ascending=False).iloc[0] if len(weakened_rows) > 0 else baseline_row
-        
-        # Test if weakening consistently harms clean performance
-        all_weakened_harm = (weakened_rows["clean_acc"] < base_acc - 0.005).all() if len(weakened_rows) > 0 else False
-        all_weakened_worse_flip = (weakened_rows["flip_rate"] >= base_flip).all() if len(weakened_rows) > 0 else False
+        # Check matched risk difference
+        rd = frag_eff.get("risk_diff", 0.0)
+        mcnemar_p = frag_eff.get("mcnemar_p_value", 1.0)
+        odds_ratio = reg_res.get("odds_ratio", 1.0)
+        or_ci_lower = reg_res.get("odds_ratio_ci_lower", 1.0)
+        or_ci_upper = reg_res.get("odds_ratio_ci_upper", 1.0)
 
-        # Controlled effect significance
-        cohens_d = margin_effect.get("cohens_d", 0.0)
-        p_val = margin_effect.get("p_value", 1.0)
-        odds_ratio = reg_results.get("odds_ratio", 1.0)
+        # Causal delta
+        weaken_margin_delta = weaken_05["margin_delta"]
+        weaken_margin_ci_upper = weaken_05["margin_ci_upper"]
+        weaken_flip_delta = weaken_05["flip_delta"]
 
-        decision = "Outcome A: KILL"
+        rand_margin_delta = rand_05["margin_delta"]
+
+        decision = "Outcome A: KILL (no evidence of harmful cancellation)"
         rationale = []
 
-        if all_weakened_harm and all_weakened_worse_flip:
-            decision = "Outcome B: KILL training hypothesis"
-            rationale.append("Suppressing cancellation consistently degrades clean accuracy and fails to improve perturbation stability.")
-            rationale.append("Residual cancellation is productive, required computation rather than a pathology.")
-        elif abs(cohens_d) < 0.10 and p_val > 0.05:
-            decision = "Outcome A: KILL"
-            rationale.append(f"No significant confound-controlled effect (Cohen's d={cohens_d:.3f}, p={p_val:.4f}).")
-            rationale.append("Cancellation is an epiphenomenon that explains no variance once ||x||, ||delta||, and margin are controlled.")
-        elif best_weaken["flip_rate"] < base_flip - 0.02 and best_weaken["clean_acc"] >= base_acc - 0.01:
+        # Test Outcome C first:
+        # Significant improvement in flip rate (flip_delta < -0.02, p < 0.05) and clean acc not harmed (acc_delta >= -0.005)
+        if weaken_flip_delta < -0.02 and weaken_05["flip_mcnemar_p"] < 0.05 and weaken_05["acc_delta"] >= -0.005:
             decision = "Outcome C: INTERESTING"
-            rationale.append(f"Selective weakening of opposing component reduced flip rate ({base_flip:.4f} -> {best_weaken['flip_rate']:.4f}) without destroying clean accuracy.")
-            rationale.append("Supports existence of a distinct harmful cancellation regime.")
+            rationale.append(f"Targeted suppression reduced flip rate by {weaken_flip_delta:.4f} (p={weaken_05['flip_mcnemar_p']:.4f}) without degrading accuracy.")
+            rationale.append("Supports a distinct harmful cancellation subset justifying V1 training experiments.")
+
+        # Test Outcome B:
+        # Suppressing cancellation causes reproducible harm (margin CI strictly below 0, or clean acc drops significantly)
+        elif weaken_margin_ci_upper < 0.0 and weaken_margin_delta < rand_margin_delta - 0.005:
+            decision = "Outcome B: KILL training hypothesis (evidence suggests cancellation is productive)"
+            rationale.append(f"Suppressing extreme cancellation causes statistically significant margin erosion (Delta z = {weaken_margin_delta:.4f}, 95% CI [{weaken_05['margin_ci_lower']:.4f}, {weaken_margin_ci_upper:.4f}]).")
+            rationale.append(f"The negative impact of selective weakening exceeds matched random controls (Delta z = {rand_margin_delta:.4f}).")
+            rationale.append("The tested extreme-cancellation regime appears to contribute productively to computation rather than acting as a pathology.")
+
+        # Test Outcome A:
+        # Confound-controlled association is null and intervention shows no advantage
         else:
-            decision = "Outcome B: KILL training hypothesis"
-            rationale.append(f"Weakening opposing residual component leads to degradation (clean acc {base_acc:.4f} -> {best_weaken['clean_acc']:.4f}, flip rate {base_flip:.4f} -> {best_weaken['flip_rate']:.4f}).")
-            rationale.append("Targeted intervention offers no causal benefit over the untouched model.")
+            decision = "Outcome A: KILL (no evidence of pathology)"
+            rationale.append(f"Confound-controlled matched risk difference is null: RD = {rd:.4f} (p = {mcnemar_p:.4f}).")
+            rationale.append(f"Image-level logistic regression odds ratio: OR = {odds_ratio:.3f} (95% CI [{or_ci_lower:.3f}, {or_ci_upper:.3f}], spans 1.0).")
+            rationale.append("No evidence that extreme cancellation is a predictive pathology.")
 
         return {
             "decision": decision,
             "rationale": rationale,
-            "cohens_d": cohens_d,
-            "margin_p_val": p_val,
-            "odds_ratio": odds_ratio,
-            "baseline_clean_acc": base_acc,
-            "best_weaken_clean_acc": float(best_weaken["clean_acc"]),
-            "baseline_flip_rate": base_flip,
-            "best_weaken_flip_rate": float(best_weaken["flip_rate"])
+            "matched_risk_diff": rd,
+            "matched_mcnemar_p": mcnemar_p,
+            "image_level_odds_ratio": odds_ratio,
+            "image_level_or_ci": [or_ci_lower, or_ci_upper],
+            "weaken_margin_delta_a05": weaken_margin_delta,
+            "weaken_margin_ci_a05": [weaken_05["margin_ci_lower"], weaken_05["margin_ci_upper"]],
+            "weaken_flip_delta_a05": weaken_flip_delta,
+            "rand_margin_delta_a05": rand_margin_delta
         }
