@@ -4,7 +4,7 @@ import json
 import torch
 import numpy as np
 import pandas as pd
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Optional, Tuple
 
 import timm
 from rescancel.instrumentation import InstrumentedViT, InterventionConfig
@@ -123,23 +123,23 @@ class ResCancelPipeline:
         print(f"Completed forward passes in {time.time() - t0:.2f}s. Clean Acc: {img_df['clean_correct'].mean():.4f}")
 
         # Assemble residual event records
-        raw_records = inst_vit.collect_records()
+        # Each instrumented block has a list of records:
+        # Call 2k: batch k, site "attn"
+        # Call 2k+1: batch k, site "mlp"
+        batch_sizes = []
+        for bx, _ in loader:
+            batch_sizes.append(bx.shape[0])
+        batch_start_indices = [0] + list(np.cumsum(batch_sizes)[:-1])
+
         event_rows = []
-
-        # Map by batch and layer/site
-        # In InstrumentedViT, each block appends a record of batch length B for each batch
-        num_batches = len(loader)
-        records_per_batch = 12 * 2  # 12 layers * 2 sites
-
-        for b_idx in range(num_batches):
-            batch_records = raw_records[b_idx * records_per_batch : (b_idx + 1) * records_per_batch]
-            batch_start_id = b_idx * self.batch_size
-            
-            for rec in batch_records:
+        for inst_b in inst_vit.instrumented_blocks:
+            for c_idx, rec in enumerate(inst_b.records):
+                b_idx = c_idx // 2
+                start_s_id = batch_start_indices[b_idx]
                 batch_len = rec.cls_cos.shape[0]
+
                 for i in range(batch_len):
-                    s_id = batch_start_id + i
-                    # Retrieve sample's clean margin and flip status
+                    s_id = start_s_id + i
                     s_info = img_df.loc[s_id]
 
                     cls_cos = rec.cls_cos[i].item()
@@ -188,7 +188,7 @@ class ResCancelPipeline:
                         "c_l1": p_c_l1,
                         "x_norm": p_x,
                         "delta_norm": p_d,
-                        "is_extreme": p_ext_frac > 0.05, # >5% of patches extreme
+                        "is_extreme": p_ext_frac > 0.05,
                         "patch_extreme_frac": p_ext_frac,
                         "clean_correct": s_info["clean_correct"],
                         "margin": s_info["clean_margin"],

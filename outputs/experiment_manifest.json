@@ -1,0 +1,123 @@
+{
+  "timestamp": "2026-09-28 08:48:22",
+  "protocol_frozen": "docs/V0_PROTOCOL.md",
+  "models": [
+    "deit_tiny_patch16_224",
+    "deit_small_patch16_224"
+  ],
+  "sample_count": 1000,
+  "batch_size": 32,
+  "seed": 42,
+  "device": "cuda",
+  "device_name": "NVIDIA GeForce RTX 5070 Laptop GPU",
+  "frozen_criteria": {
+    "cos_threshold": -0.6,
+    "r_threshold": 0.6,
+    "q_threshold": 0.85,
+    "c_l1_threshold": 2.0,
+    "alphas": [
+      1.0,
+      0.75,
+      0.5,
+      0.25
+    ]
+  },
+  "package_versions": {
+    "torch": "2.11.0+cu128",
+    "timm": "1.0.26",
+    "pandas": "2.3.3"
+  },
+  "results": {
+    "deit_tiny_patch16_224": {
+      "clean_accuracy": 0.707,
+      "noise_flip_rate": 0.121,
+      "blur_flip_rate": 0.188,
+      "extreme_event_count": 2107,
+      "extreme_event_rate": 0.043895833333333335,
+      "matched_pairs": 86,
+      "matched_margin_effect": {
+        "n_pairs": 86,
+        "mean_diff": 0.1742909786313079,
+        "std_diff": 0.3867561340289124,
+        "t_stat": 4.179140033788098,
+        "p_value": 7.06850574658751e-05,
+        "cohens_d": 0.450648247796882
+      },
+      "matched_flip_effect": {
+        "n_pairs": 86,
+        "mean_diff": -0.023255813953488372,
+        "std_diff": 0.48450688542540216,
+        "t_stat": -0.4451238009084643,
+        "p_value": 0.6573618060175076,
+        "cohens_d": -0.047998932880138935
+      },
+      "logistic_regression": {
+        "coef_is_extreme": 0.012475706076615425,
+        "odds_ratio": 1.0125538523361186,
+        "intercept": -2.5500114124098956,
+        "sample_size": 48000
+      },
+      "decision": {
+        "decision": "Outcome B: KILL training hypothesis",
+        "rationale": [
+          "Weakening opposing residual component leads to degradation (clean acc 0.7070 -> 0.7030, flip rate 0.1210 -> 0.1170).",
+          "Targeted intervention offers no causal benefit over the untouched model."
+        ],
+        "cohens_d": 0.450648247796882,
+        "margin_p_val": 7.06850574658751e-05,
+        "odds_ratio": 1.0125538523361186,
+        "baseline_clean_acc": 0.7070000171661377,
+        "best_weaken_clean_acc": 0.703000009059906,
+        "baseline_flip_rate": 0.1210000067949295,
+        "best_weaken_flip_rate": 0.11700000613927841
+      },
+      "peak_vram_mb": 688.66357421875
+    },
+    "deit_small_patch16_224": {
+      "clean_accuracy": 0.791,
+      "noise_flip_rate": 0.058,
+      "blur_flip_rate": 0.112,
+      "extreme_event_count": 1819,
+      "extreme_event_rate": 0.03789583333333333,
+      "matched_pairs": 77,
+      "matched_margin_effect": {
+        "n_pairs": 77,
+        "mean_diff": 0.07476689598777077,
+        "std_diff": 0.5372971902943398,
+        "t_stat": 1.2210688265262104,
+        "p_value": 0.22583457333520426,
+        "cohens_d": 0.13915370477793723
+      },
+      "matched_flip_effect": {
+        "n_pairs": 77,
+        "mean_diff": 0.03896103896103896,
+        "std_diff": 0.37841631354475325,
+        "t_stat": 0.903453992710812,
+        "p_value": 0.369139750999784,
+        "cohens_d": 0.10295813509332202
+      },
+      "logistic_regression": {
+        "coef_is_extreme": 0.02301118700295299,
+        "odds_ratio": 1.0232779868970476,
+        "intercept": -4.123256503673029,
+        "sample_size": 48000
+      },
+      "decision": {
+        "decision": "Outcome B: KILL training hypothesis",
+        "rationale": [
+          "Weakening opposing residual component leads to degradation (clean acc 0.7910 -> 0.7930, flip rate 0.0580 -> 0.0550).",
+          "Targeted intervention offers no causal benefit over the untouched model."
+        ],
+        "cohens_d": 0.13915370477793723,
+        "margin_p_val": 0.22583457333520426,
+        "odds_ratio": 1.0232779868970476,
+        "baseline_clean_acc": 0.7910000085830688,
+        "best_weaken_clean_acc": 0.7930000424385071,
+        "baseline_flip_rate": 0.058000002056360245,
+        "best_weaken_flip_rate": 0.055000003427267075
+      },
+      "peak_vram_mb": 817.3037109375
+    }
+  },
+  "total_runtime_seconds": 71.76884055137634
+}

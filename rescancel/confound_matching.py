@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional, Any
 import scipy.stats as stats
 
 
@@ -166,7 +166,7 @@ def run_controlled_logistic_regression(
     X_scaled = scaler.fit_transform(X_num)
     y = clean_df[target_col].values.astype(int)
     
-    clf = LogisticRegression(penalty=None, solver="lbfgs", max_iter=500)
+    clf = LogisticRegression(C=1e9, solver="lbfgs", max_iter=500)
     clf.fit(X_scaled, y)
     
     # Feature 0 is is_extreme_col

@@ -143,9 +143,11 @@ def plot_matched_comparison(matched_df: pd.DataFrame, model_name: str, output_pa
         data=matched_df,
         x="group",
         y="margin",
+        hue="group",
         palette={"extreme": "#d62728", "control": "#2ca02c"},
         ax=axes[0],
-        width=0.4
+        width=0.4,
+        legend=False
     )
     axes[0].set_title("Classification Margin (Top-1 vs Top-2)")
     axes[0].set_xlabel("Residual Observation Group")
@@ -157,9 +159,11 @@ def plot_matched_comparison(matched_df: pd.DataFrame, model_name: str, output_pa
         data=flip_rates,
         x="group",
         y="flipped",
+        hue="group",
         palette={"extreme": "#d62728", "control": "#2ca02c"},
         ax=axes[1],
-        width=0.4
+        width=0.4,
+        legend=False
     )
     axes[1].set_title("Perturbation Flip Rate (Fragility)")
     axes[1].set_xlabel("Residual Observation Group")
