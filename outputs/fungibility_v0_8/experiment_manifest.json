@@ -1,0 +1,46 @@
+{
+  "protocol_version": "Fungibility V0.8",
+  "timestamp": "2026-09-29 03:40:39",
+  "models": [
+    "deit_tiny_patch16_224",
+    "deit_small_patch16_224"
+  ],
+  "target_depth": 8,
+  "n_calib": 1000,
+  "n_eval": 1000,
+  "cls_untouched": true,
+  "primary_replacement_token_count": 196,
+  "pca_ranks": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64
+  ],
+  "grouped_k": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    196
+  ],
+  "max_random_ortho_error": 5.960464477539062e-07,
+  "shared_and_indep_identical_dist": true,
+  "grouped_k_exact": true,
+  "seeds_match_protocol": true,
+  "zero_labels_or_gradients": true,
+  "representation_ranks_computed": true,
+  "attention_diagnostics_computed": true,
+  "machine_readable_exported": true,
+  "tiny_runtime_s": 8264.794803380966,
+  "small_runtime_s": 14601.07563996315,
+  "tiny_peak_vram_mb": 294.15771484375,
+  "small_peak_vram_mb": 596.33544921875,
+  "verdict": "OUTCOME_D",
+  "verdict_description": "OUTCOME D \u2014 HIGH-DIMENSIONAL STRUCTURE REQUIRED: Diversity matters, but recovery requires high-dimensional rank."
+}
