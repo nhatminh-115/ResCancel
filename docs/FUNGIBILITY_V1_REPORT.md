@@ -26,16 +26,16 @@ V1 directly evaluated whether this phenomenon replicates outside the DeiT family
 3. **Readout Topologies**: Moving from single-token classification ($\text{CLS}$) to dual-stream pooled classification ($\text{CLS} \oplus \text{mean}(\text{Patches})$).
 
 ### Key Findings:
-1. **Signature A (Late-Layer Content Fungibility) Generalizes Definitively**:
+1. **Signature A (Late-Layer Content Fungibility) Generalizes Strongly**:
    - In **ViT-B AugReg**, zeroing 25% of patches at Depth 7 incurs $1.095$ margin damage; inserting the held-out static calibration centroid recovers **81.8%** of this damage (recovering accuracy to $74.5\%$ vs. $76.1\%$ clean baseline).
-   - In **DINOv2 ViT-S/14**, zeroing 25% of patches at Depth 9 destroys the classifier input, collapsing accuracy from $78.8\%$ to **$4.5\%$** (margin damage $= 8.569$). Inserting the static calibration centroid restores accuracy to **$74.1\%$**—a **93.4% recovery** of damage. Held-out diagonal Gaussian restores accuracy to **$75.1\%$** (94.8% recovery).
-2. **Signature B (Geometric Feature Constraint) Generalizes Definitively**:
+   - In **DINOv2 ViT-S/14**, zeroing 25% of patches at Depth 9 destroys the classifier input, collapsing accuracy from $78.8\%$ to **$4.5\%$** (margin damage $= 8.569$). Inserting the static calibration centroid restores accuracy to **$74.1\%$**—a **93.4% recovery** of damage. Held-out diagonal Gaussian restores accuracy to **$75.1\%$** (94.9% recovery).
+2. **Signature B (Geometric Feature Constraint) Generalizes Strongly**:
    - In both models, coordinate permutations $\pi(\mu)$ and sign flips $-\mu$ that preserve activation scale, variance, and $L_2$ norm completely fail.
    - In ViT-B at 75% replacement, true centroid retains $65.4\%$ accuracy, while permuted centroids crash to $29.6\% - 44.9\%$ ($d_z = 0.214$) and sign flip crashes to $27.9\%$ ($d_z = 0.335$).
    - In DINOv2 at 25% replacement, true centroid preserves $74.6\%$ accuracy, while permuted centroids drop to $5.9\% - 48.2\%$ ($d_z = 1.120$) and sign flip drops to **$0.1\%$** ($d_z = 2.509$, accuracy loss of $-74.5\%$).
-3. **Signature C (Token Diversity under Complete Stream Replacement) Generalizes Definitively**:
+3. **Signature C (Token Diversity under Complete Stream Replacement) Generalizes with Topology-Dependent Readout Expression**:
    - In **ViT-B**, replacing 100% of spatial patches with Shared Gaussian noise collapses accuracy to $2.94\%$. Introducing independent per-patch noise with identical marginal distribution and matched perturbation energy dramatically rescues accuracy to **$14.68\%$** (a **$+11.74$ percentage point** gain, $d_z = 1.005$, $p < 10^{-50}$).
-   - In **DINOv2**, where the linear head directly consumes the patch mean, Independent Gaussian maintains a **$+1.123$ margin advantage** over Shared Gaussian ($d_z = 0.301 \ge 0.20$).
+   - In **DINOv2**, where the linear head directly consumes the patch mean, Independent token variation improves downstream compatibility at the margin level under complete patch-stream replacement (**$+1.124$ margin gain**, $d_z = 0.301 \ge 0.20$), although Top-1 accuracy remains at floor ($0.12\%$ vs $0.24\%$) because the official linear classifier directly consumes the final patch mean. The strongest accuracy-level diversity evidence comes from DeiT-Tiny, DeiT-Small, and ViT-B AugReg; DINOv2 provides supporting margin-level evidence under a classifier-readout floor.
 4. **Natural Low-Dimensional Variation (Phase 4)**:
    - In **ViT-B**, replacing 100% of spatial patches with 1D variation along **Natural PC1** ($v_1$, variance $\lambda_1$) yields **$40.1\%$ accuracy**, massively outperforming energy-matched Random 1D directions ($6.70\%$, a **$+33.4$ percentage point** advantage) and Natural PC2 ($1.80\%$).
 
@@ -47,29 +47,30 @@ Experimental escalation is terminated. The project transitions directly to paper
 
 ## 2. Comprehensive Cross-Family Comparison Table
 
-Below is the definitive cross-model comparison synthesizing findings from DeiT-Tiny, DeiT-Small, Supervised ViT-B AugReg, and Self-Supervised DINOv2 ViT-S/14:
+Below is the audited cross-model comparison synthesizing findings across all four evaluated architectures. Historical DeiT values are strictly drawn from canonical frozen outputs: V0.6 for depth/recovery, V0.7 for geometry, V0.8 for complete-stream diversity, and V0.9 for unscaled natural-amplitude PC1:
 
 | Feature / Metric | DeiT-Tiny ($D=192$) | DeiT-Small ($D=384$) | ViT-B/16 AugReg ($D=768$) | DINOv2 ViT-S/14 ($D=384$) |
 | :--- | :---: | :---: | :---: | :---: |
-| **Training Regime** | Supervised + Distillation | Supervised + Distillation | Supervised AugReg | Self-Supervised (DINOv2) |
+| **Training Regime** | Supervised + Distillation | Supervised + Distillation | Supervised AugReg | **Self-Supervised (DINOv2)** |
 | **Backbone Checkpoint** | `deit_tiny_patch16_224` | `deit_small_patch16_224` | `vit_base_patch16_224.augreg_in1k` | `dinov2_vits14_lc` (layers=1) |
 | **Spatial Patch Count ($N$)** | 196 ($14 \times 14$) | 196 ($14 \times 14$) | 196 ($14 \times 14$) | **256** ($16 \times 16$) |
 | **Classifier Readout** | CLS Token Head | CLS Token Head | CLS Token Head | **CLS $\oplus$ Mean(Patch) Head** |
-| **Clean Baseline Top-1 Acc** | 67.9% (V0.6) / 70.7% (V0) | 76.1% (V0.6) / 79.1% (V0) | **76.1%** | **78.8%** |
-| **Clean Mean Margin** | +2.78 | +3.32 | +3.19 | +2.76 |
-| **Fungibility Window** | Blocks 7–9 (Peak Blk 8) | Blocks 7–9 (Peak Blk 8) | Blocks 7–9 (Peak Blk 7) | Blocks 7–10 (Peak Blk 9) |
-| **Zero Sensitivity (25% Patches)** | Damaged (59.2% Acc, -0.58 margin) | Damaged (68.4% Acc, -0.57 margin) | Damaged (70.4% Acc, -1.09 margin) | **Catastrophic (4.5% Acc, -8.57 margin)** |
-| **Centroid Recovery Rate** | **96.6%** (67.6% Acc) | **100.0%** (76.1% Acc) | **81.8%** (74.5% Acc) | **93.4%** (74.1% Acc) |
-| **Held-out Gaussian Recovery Rate**| 88.5% (66.9% Acc) | 93.0% (75.6% Acc) | **90.2%** (74.1% Acc) | **94.8%** (75.1% Acc) |
+| **Clean Baseline Top-1 Acc** | **67.90%** `[V0.6]` | **76.10%** `[V0.6]` | **76.10%** `[V1]` | **78.80%** `[V1]` |
+| **Clean Mean Margin** | **+1.1681** `[V0.8]` | **+2.2423** `[V0.8]` | **+3.1923** `[V1]` | **+2.7605** `[V1]` |
+| **Fungibility Window** | Blocks 7–9 (Peak Blk 8) `[V0.6]` | Blocks 7–9 (Peak Blk 8) `[V0.6]` | Blocks 7–9 (Peak Blk 7) `[V1]` | Blocks 7–10 (Peak Blk 9) `[V1]` |
+| **Zero Sensitivity (25% Patches)** | Damaged (59.1% Acc, Dmg 0.763) `[V0.6]` | Damaged (69.6% Acc, Dmg 1.432) `[V0.6]` | Damaged (70.4% Acc, Dmg 1.095) `[V1]` | **Catastrophic (4.5% Acc, Dmg 8.569)** `[V1]` |
+| **Centroid Recovery Rate** | **93.8%** (67.2% Acc, Dmg 0.048) `[V0.6]` | **97.5%** (76.1% Acc, Dmg 0.035) `[V0.6]` | **81.8%** (74.5% Acc, Dmg 0.200) `[V1]` | **93.4%** (74.1% Acc, Dmg 0.565) `[V1]` |
+| **Held-out Gaussian Recovery** | **87.9%** (66.7% Acc, Dmg 0.093) `[V0.6]` | **94.7%** (75.3% Acc, Dmg 0.076) `[V0.6]` | **90.2%** (74.2% Acc, Dmg 0.108) `[V1]` | **94.9%** (75.0% Acc, Dmg 0.445) `[V1]` |
 | **Signature A (Content Fungibility)**| **CONFIRMED** | **CONFIRMED** | **CONFIRMED** | **CONFIRMED** |
-| **Geometry Constraint (Perm / Flip)**| **CONFIRMED** ($d_z > 0.40$) | **CONFIRMED** ($d_z > 0.50$) | **CONFIRMED** ($d_z = 0.335$, Sign) | **CONFIRMED** ($d_z = 2.509$, Sign) |
+| **Geometry Constraint (Perm / Flip)**| **CONFIRMED** (Perm/Flip fail) `[V0.7]` | **CONFIRMED** (Perm/Flip fail) `[V0.7]` | **CONFIRMED** ($d_z = 0.335$, Sign) `[V1]` | **CONFIRMED** ($d_z = 2.509$, Sign) `[V1]` |
 | **Signature B (Geometry Constraint)**| **CONFIRMED** | **CONFIRMED** | **CONFIRMED** | **CONFIRMED** |
-| **100% Replacement: Shared Gaussian**| Collapses (2.5% Acc) | Collapses (3.8% Acc) | Collapses (2.94% Acc) | Collapses (Margin: -9.07) |
-| **100% Replacement: Independent** | Rescues (**14.4%** Acc) | Rescues (**38.2%** Acc) | Rescues (**14.68%** Acc) | Rescues (Margin: **-7.95**) |
-| **Diversity Gain (Indep vs. Shared)**| **+11.9% Acc** | **+34.4% Acc** | **+11.74% Acc** ($d_z = 1.005$) | **+1.12 Margin** ($d_z = 0.301$) |
-| **Signature C (Token Diversity)** | **CONFIRMED** | **CONFIRMED** | **CONFIRMED** | **CONFIRMED** |
-| **Learned 1D (PC1) vs Random 1D** | PC1 (18.6%) > Rand (10.8%) | PC1 (28.1%) > Rand (20.8%) | **PC1 (40.1%) >> Rand (6.7%)** | **PC1 Margin (-8.43) > Rand (-8.65)** |
+| **100% Replacement: Shared Noise**| Collapses (**1.02% ± 0.31%**) `[V0.8]` | Collapses (**9.28% ± 0.32%**) `[V0.8]` | Collapses (**2.94% ± 0.10%**) `[V1]` | Collapses (Margin: **-9.077 ± 0.28**) `[V1]` |
+| **100% Replacement: Independent**| Rescues (**26.34% ± 0.30%**) `[V0.8]` | Rescues (**46.36% ± 0.77%**) `[V0.8]` | Rescues (**14.68% ± 0.05%**) `[V1]` | Rescues Margin (**-7.953 ± 0.07**) `[V1]` |
+| **Diversity Gain (Indep vs. Shared)**| **+25.32 pp Acc** `[V0.8]` | **+37.08 pp Acc** `[V0.8]` | **+11.74 pp Acc** ($d_z = 1.005$) `[V1]` | **+1.124 Margin** ($d_z = 0.301$, floor) `[V1]` |
+| **Signature C (Token Diversity)** | **CONFIRMED (Acc Gain)** | **CONFIRMED (Acc Gain)** | **CONFIRMED (Acc Gain)** | **CONFIRMED (Margin Gain, floor)** |
+| **Learned 1D (PC1) vs Random 1D** | PC1 (18.64%) > Rand (10.80%) `[V0.9]` | PC1 (28.08%) > Rand (20.78%) `[V0.9]` | **PC1 (40.10%) >> Rand (6.70%)** `[V1]` | **PC1 Margin (-8.438) > Rand (-8.654)** `[V1]` |
 | **Overall Scientific Verdict** | Established | Established | **BROAD REPLICATION** | **BROAD REPLICATION** |
+
 
 ---
 
@@ -165,7 +166,7 @@ DINOv2 ViT-S/14 (100% Spatial Replacement):
   Isotropic Independent:     0.12% Acc  (Margin -7.995 ± 0.14)
 ```
 
-In ViT-B, the causal diversity mechanism replicates with high statistical significance: making Gaussian noise independent across tokens produces an immediate **$+11.74$ percentage point** accuracy improvement ($p < 10^{-50}$, Cohen's $d_z = 1.005$) over shared noise. In DINOv2, where accuracy is floored by 100% replacement in the pooled classifier readout, the causal benefit is manifested as a $+1.124$ margin recovery ($d_z = 0.301$).
+In ViT-B, the causal diversity mechanism replicates with high statistical significance: making Gaussian noise independent across tokens produces an immediate **$+11.74$ percentage point** accuracy improvement ($p < 10^{-50}$, Cohen's $d_z = 1.005$) over shared noise. In DINOv2, where accuracy is floored by 100% replacement in the pooled classifier readout, independent token variation improves downstream compatibility at the margin level under complete patch-stream replacement (**$+1.124$ margin gain**, $d_z = 0.301$), although Top-1 accuracy remains at floor ($0.12\%$ vs $0.24\%$) because the official linear classifier directly consumes the final spatial patch mean. Consequently, the primary accuracy-level diversity evidence is provided by DeiT-Tiny, DeiT-Small, and ViT-B AugReg, while DINOv2 contributes supporting margin-level evidence under an architectural readout floor.
 
 ### 3.5 Phase 4: Low-Dimensional 1D Variation (Depth 8, 100% Replacement)
 We tested variation restricted to a single 1D axis ($h_t = \mu_8 + z_t \sqrt{\lambda} v$):
