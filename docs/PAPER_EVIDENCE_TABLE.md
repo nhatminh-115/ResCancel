@@ -79,15 +79,26 @@
 **Protocol Reference**: [`docs/FUNGIBILITY_COMPRESSION_POC_PROTOCOL.md`](file:///d:/Study/ResCancel/docs/FUNGIBILITY_COMPRESSION_POC_PROTOCOL.md)  
 **Detailed Report**: [`docs/FUNGIBILITY_COMPRESSION_POC_REPORT.md`](file:///d:/Study/ResCancel/docs/FUNGIBILITY_COMPRESSION_POC_REPORT.md)  
 **Equivalence Outcome**: **`Outcome A — EXACT CARRIER WORKS`** ($\max \text{error} = 4.49 \times 10^{-5}$, prediction agreement $100.0\%$).  
-**Utility Classification**: **`USEFUL APPLICATION`** (+18.4% to +32.3% physical GPU latency reduction on standard ViTs).  
+**Utility Classification**: **`NOT COMPETITIVE`** (as practical compression) / **`MECHANISTIC DEMONSTRATION ONLY`** (confirms exact mathematical collapsing of redundant tokens; simple Random Pruning matches or dominates the compression frontier).  
 
 ### 4.1 Compression Operating Points & Physical GPU Latency (RTX 5070, BS=16)
 
 | Model Family | Intervention Depth | Operating Point | Replaced Tokens ($k$) | Downstream Tokens ($T_{\text{orig}} \to T_{\text{comp}}$) | Tail Token Reduction (%) | Top-1 Accuracy (% Clean Retained) | Total Model FLOP Reduction (%) | Clean End-to-End Latency | Compressed End-to-End Latency | Physical Latency Reduction (%) | Machine-Readable Source File |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
 | **ViT-B/16 AugReg** | Depth 7 | $F_{90}$ Point | 125 (63.8%) | $197 \to 73$ | **62.9%** | 68.70% (90.3%) | **26.6%** (9.36 GF) | $72.96\text{ ms}$ | **$49.42\text{ ms}$** | **+32.3% faster** | [`outputs/fungibility_compression_poc/latency_summary.csv`](file:///d:/Study/ResCancel/outputs/fungibility_compression_poc/latency_summary.csv) |
-| **DeiT-Small** | Depth 8 | $F_{90}$ Point | 147 (75.0%) | $197 \to 51$ | **74.1%** | 72.14% (94.8%) | **25.2%** (1.18 GF) | $20.06\text{ ms}$ | **$16.36\text{ ms}$** | **+18.4% faster** | [`outputs/fungibility_compression_poc/latency_summary.csv`](file:///d:/Study/ResCancel/outputs/fungibility_compression_poc/latency_summary.csv) |
+| **DeiT-Small** | Depth 8 | Common $\ge 90\%$ | 147 (75.0%) | $197 \to 51$ | **74.1%** | 72.14% (94.8%) | **25.2%** (1.18 GF) | $20.06\text{ ms}$ | **$16.36\text{ ms}$** | **+18.4% faster** | [`outputs/fungibility_compression_poc/latency_summary.csv`](file:///d:/Study/ResCancel/outputs/fungibility_compression_poc/latency_summary.csv) |
 | **DINOv2 ViT-S/14** | Depth 9 | $F_{90}$ Point | 74 (28.9%) | $257 \to 184$ | **28.4%** | 71.48% (90.7%) | **7.6%** (0.50 GF) | $27.97\text{ ms}$ | **$25.20\text{ ms}$** | **+9.9% faster** | [`outputs/fungibility_compression_poc/latency_summary.csv`](file:///d:/Study/ResCancel/outputs/fungibility_compression_poc/latency_summary.csv) |
 | **DeiT-Tiny** | Depth 8 | $F_{90}$ Point | 153 (78.1%) | $197 \to 45$ | **77.2%** | 61.22% (90.2%) | **26.6%** (0.65 GF) | $7.33\text{ ms}$ | $8.47\text{ ms}$ | -15.5% (overhead) | [`outputs/fungibility_compression_poc/latency_summary.csv`](file:///d:/Study/ResCancel/outputs/fungibility_compression_poc/latency_summary.csv) |
+
+*(Note on DeiT-Small $F_{90}$ Point:* The dense-sweep $F_{90}$ point at $86.7\%$ replacement [$k=170$, $T=28$] averages $68.38\%$ in the 1,000-image 5-seed evaluation, which is $89.85\%$ clean retention, slightly below $90.0\%$. 75.0% is the highest evaluated common point strictly satisfying $\ge 90\%$ retention.)
+
+### 4.2 Matched-Budget Baseline Audit & Utility Downgrade
+- **Source of Truth**: [`outputs/fungibility_compression_poc/baseline_comparison.csv`](file:///d:/Study/ResCancel/outputs/fungibility_compression_poc/baseline_comparison.csv)
+- **Key Finding**: Simple **Random Pruning** (discarding tokens without a carrier) and **Unweighted Centroid** ($s=1$) systematically match or outperform the **Weighted Centroid Carrier** ($s=m$) at matched downstream patch budget $B$:
+  - DeiT-Small (75% replacement, $B=50$): Random Pruning = **$72.40\%$**, Unweighted Centroid = **$72.50\%$**, Weighted Carrier = **$72.14\%$**.
+  - ViT-B AugReg (63.8% replacement, $B=72$): Random Pruning = **$72.48\%$**, Unweighted Centroid = **$72.40\%$**, Weighted Carrier = **$68.70\%$** (Pruning $+3.78\%$ higher).
+  - DINOv2 (28.9% replacement, $B=183$): Random Pruning = **$77.40\%$**, Unweighted Centroid = **$77.30\%$**, Weighted Carrier = **$71.48\%$** (Pruning $+5.92\%$ higher).
+- **Mechanistic Cause & Takeaway**: Preserving the full uncompressed attention mass of fungible surrogate tokens ($+\log(m)$) is mathematically necessary to reproduce the uncompressed centroid intervention (Outcome A), but is **unnecessary and actively detrimental** once sequence length shrinks, because it diverts softmax attention away from surviving discriminative image patches. Per pre-registered protocol, the application verdict is downgraded to **`NOT COMPETITIVE`** as an acceleration method.
+
 
 

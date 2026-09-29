@@ -169,14 +169,21 @@ No existing paper claims are retracted, weakened, or altered. The experiment pro
 
 Following the completion of the pre-registered **Fungibility-to-Compression Proof of Concept** (`outputs/fungibility_compression_poc/`), the application claims were audited against empirical evidence.
 
-### Audit Verdict: **`USEFUL APPLICATION AS DIRECT ENGINEERING CONSEQUENCE`**
-- **Outcome A Confirmed**: Multiplicity-aware carrier compression achieves exact numerical equivalence ($\max \text{error} = 4.49 \times 10^{-5}$, $100.0\%$ prediction agreement) across all tested models.
-- **Physical Inference Acceleration**: On an NVIDIA GeForce RTX 5070 GPU (BS=16), downstream sequence compression delivers **$+32.3\%$ end-to-end latency reduction** in ViT-Base ($72.96\text{ ms} \to 49.42\text{ ms}$) and **$+18.4\%$** in DeiT-Small ($20.06\text{ ms} \to 16.36\text{ ms}$).
-- **Claim Boundaries & Framing Guardrails**:
-  1. *Non-Novelty of Multiplicity-Aware Attention:* The mathematical formulation of proportional attention ($+\log(s_j)$) is related to existing token-merging literature (e.g., ToMe). The paper **must not** claim proportional attention math as a novel algorithmic invention.
-  2. *Mechanistic Primacy:* The manuscript remains primarily a study of late-layer representation geometry and content fungibility. Sequence compression is presented as an empirical validation that fungible tokens are computationally redundant.
-  3. *Lightweight Model Caveat:* End-to-end speedups do not materialize for ultra-small models (DeiT-Tiny) where PyTorch kernel launch overhead dominates downstream savings. Speedup scales with model capacity.
-- **Allowed Paper Framing**: *"Because late Vision Transformer patch tokens become content-fungible with respect to a class-agnostic prototype, identical replaced tokens can be collapsed into a single multiplicity-aware carrier token, yielding up to 32% end-to-end physical inference acceleration without fine-tuning or retraining."*
-- **Forbidden Framing**: *"We introduce a novel proportional attention mechanism that outperforms all token pruning methods."*
+### Audit Verdict: **`MECHANISTIC DEMONSTRATION ONLY / NOT COMPETITIVE AS STANDALONE COMPRESSION METHOD`**
+- **Outcome A Confirmed (Exact Mathematical Equivalence):** Multiplicity-aware carrier compression achieves exact numerical equivalence to the uncompressed centroid intervention ($\max \text{error} = 4.49 \times 10^{-5}$, $100.0\%$ prediction agreement) across all tested models. This rigorously confirms that identical surrogate tokens in permutation-equivariant ViT blocks are computationally collapsible without loss of intervention fidelity.
+- **Compression Frontier Reality (Not Competitive):** Evaluated at matched downstream token budget $B = M + 1$, simple **Random Pruning** (discarding tokens with no carrier) and **Unweighted Centroid** ($s=1$) systematically match or outperform the **Weighted Centroid Carrier** ($s=m$):
+  - DeiT-Small at 75%: Random Pruning achieves **$72.40\%$** vs Weighted Carrier **$72.14\%$**.
+  - ViT-B AugReg at 63.8%: Random Pruning achieves **$72.48\%$** vs Weighted Carrier **$68.70\%$** (Pruning $+3.78\%$ higher).
+  - DINOv2 at 28.9%: Random Pruning achieves **$77.40\%$** vs Weighted Carrier **$71.48\%$** (Pruning $+5.92\%$ higher).
+- **Scientific Takeaway & Crucial Distinction:**
+  - *Distinction:* Reproducing the centroid intervention exactly (Outcome A) is **not equivalent** to being a competitive compression algorithm.
+  - *Mechanistic Cause:* Adding $+\log(m)$ correctly preserves the full uncompressed attention mass of the surrogate background. But in a shortened sequence, forcing a massive attention bonus onto a single generic prototype diverts softmax attention away from surviving image-specific real anchors. Simple pruning naturally redistributes attention onto discriminative patches.
+  - *Implication:* Preserving the collective attention mass of fungible surrogate tokens is not required and can be detrimental once sequence length is allowed to shrink.
+- **Physical Inference Measurement:** While physical latency reductions materialize on standard ViTs on RTX 5070 GPU (up to $+32.3\%$ in ViT-B and $+18.4\%$ in DeiT-Small at BS=16), these speedups are property of sequence reduction itself, which Random Pruning achieves with equal or better accuracy.
+- **Allowed Paper Framing**: *"Because late Vision Transformer patch tokens become content-fungible with respect to a class-agnostic prototype, identical replaced tokens admit an exact multiplicity-aware compression to a single carrier token in downstream blocks. However, at matched downstream token budgets, simple token pruning matches or outperforms weighted carrier retention, demonstrating that preserving the collective attention mass of fungible tokens is unnecessary once sequence length shrinks."*
+- **Forbidden Framing**:
+  - *"Weighted Centroid Carrier outperforms random pruning or token merging baselines."*
+  - *"We introduce a competitive inference acceleration method based on multiplicity-aware attention."*
+
 
 
