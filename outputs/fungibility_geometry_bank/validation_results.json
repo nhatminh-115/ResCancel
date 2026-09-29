@@ -1,0 +1,16 @@
+{
+  "verdict": "KILL APPLICATION",
+  "promising_models": [],
+  "max_delta_by_model": {
+    "deit_tiny": -0.005999994277954101,
+    "deit_small": -0.0067999958992004395,
+    "vit_base": -0.0016000032424926757,
+    "dinov2": -0.0019999980926513673
+  },
+  "decision_rule": {
+    "promising_criterion": "beats Random Pruning by >= +1.0% on >= 2 model families",
+    "kill_criterion": "Random Pruning matches or beats geometry banks across tested budgets"
+  },
+  "latency_benchmarking_triggered": false,
+  "elapsed_seconds": 257.8600318431854
+}

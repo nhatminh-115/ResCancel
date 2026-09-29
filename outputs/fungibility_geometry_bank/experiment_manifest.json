@@ -1,0 +1,25 @@
+{
+  "experiment_name": "GEOMETRY-DIVERSITY BANK POC",
+  "date": "2026-09-29",
+  "models": [
+    "deit_tiny",
+    "deit_small",
+    "vit_base",
+    "dinov2"
+  ],
+  "mask_seeds": [
+    31001,
+    31002,
+    31003,
+    31004,
+    31005
+  ],
+  "K_values": [
+    4,
+    8,
+    16
+  ],
+  "verdict": "KILL APPLICATION",
+  "smoke_test": false,
+  "elapsed_seconds": 257.8600318431854
+}
