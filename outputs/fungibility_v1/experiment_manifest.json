@@ -1,0 +1,26 @@
+{
+  "experiment": "PATCH_FUNGIBILITY_V1",
+  "timestamp": "2026-09-29 11:46:59",
+  "smoke_test": false,
+  "device": "cuda",
+  "peak_vram_gb": 0.685213565826416,
+  "vitb_runtime_sec": 241.2418577671051,
+  "dinov2_runtime_sec": 86.37719964981079,
+  "decision": {
+    "outcome": "OUTCOME A \u2014 BROAD GENERALIZATION",
+    "supported_level": "LEVEL 3: Late patch-content fungibility generalizes across supervised and self-supervised ViTs.",
+    "ready_for_paper": true,
+    "interpretation": "Late-layer patch content fungibility with geometric and diversity constraints generalizes across supervised and self-supervised Vision Transformers.",
+    "vitb_signatures": {
+      "A": true,
+      "B": true,
+      "C": true
+    },
+    "dinov2_signatures": {
+      "A": true,
+      "B": true,
+      "C": true
+    }
+  },
+  "validation_passed": true
+}

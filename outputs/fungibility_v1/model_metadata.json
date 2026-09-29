@@ -1,0 +1,37 @@
+{
+  "model_a": {
+    "model_id": "vit_base_patch16_224.augreg_in1k",
+    "source": "timm",
+    "embed_dim": 768,
+    "depth": 12,
+    "num_heads": 12,
+    "patch_size": 16,
+    "num_patches": 196,
+    "regime": "supervised_augreg",
+    "readout": "cls_token",
+    "data_config": {
+      "input_size": "(3, 224, 224)",
+      "interpolation": "bicubic",
+      "mean": "(0.5, 0.5, 0.5)",
+      "std": "(0.5, 0.5, 0.5)",
+      "crop_pct": "0.9",
+      "crop_mode": "center"
+    }
+  },
+  "model_b": {
+    "model_id": "dinov2_vits14_lc_layers1",
+    "source": "facebookresearch/dinov2",
+    "embed_dim": 384,
+    "depth": 12,
+    "num_heads": 6,
+    "patch_size": 14,
+    "num_patches": 256,
+    "regime": "self_supervised_dinov2",
+    "readout": "cls_and_patch_mean",
+    "head_in_features": 768,
+    "num_classes": 1000
+  },
+  "smoke_test": false,
+  "device": "cuda",
+  "timestamp": "2026-09-29 11:40:53"
+}

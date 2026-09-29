@@ -1,0 +1,16 @@
+{
+  "vit_base_patch16_224.augreg_in1k": {
+    "n_evaluated": 64,
+    "max_abs_logit_diff": 0.0,
+    "prediction_agreement_count": 64,
+    "prediction_agreement_pct": 100.0,
+    "passed": true
+  },
+  "dinov2_vits14_lc": {
+    "n_evaluated": 64,
+    "max_abs_logit_diff": 0.0,
+    "prediction_agreement_count": 64,
+    "prediction_agreement_pct": 100.0,
+    "passed": true
+  }
+}

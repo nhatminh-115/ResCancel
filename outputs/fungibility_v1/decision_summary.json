@@ -1,0 +1,158 @@
+{
+  "decision": {
+    "outcome": "OUTCOME A \u2014 BROAD GENERALIZATION",
+    "supported_level": "LEVEL 3: Late patch-content fungibility generalizes across supervised and self-supervised ViTs.",
+    "ready_for_paper": true,
+    "interpretation": "Late-layer patch content fungibility with geometric and diversity constraints generalizes across supervised and self-supervised Vision Transformers.",
+    "vitb_signatures": {
+      "A": true,
+      "B": true,
+      "C": true
+    },
+    "dinov2_signatures": {
+      "A": true,
+      "B": true,
+      "C": true
+    }
+  },
+  "vitb_evaluation": {
+    "model_name": "ViT-B AugReg",
+    "signature_a": true,
+    "signature_a_details": {
+      "7": {
+        "depth": 7,
+        "damage_zero": 1.0945186614990234,
+        "damage_centroid": 0.19958512485027313,
+        "recovery_centroid": 0.8176503225838775,
+        "centroid_ci_lower": 0.7798737287521362,
+        "centroid_qualifies": true,
+        "gaussian_qualifies": true,
+        "qualifies": true
+      },
+      "8": {
+        "depth": 8,
+        "damage_zero": 0.22732968628406525,
+        "damage_centroid": 0.1741175800561905,
+        "recovery_centroid": 0.2340746037074203,
+        "centroid_ci_lower": -0.0001959003129741177,
+        "centroid_qualifies": false,
+        "gaussian_qualifies": true,
+        "qualifies": true
+      },
+      "9": {
+        "depth": 9,
+        "damage_zero": 0.2557801902294159,
+        "damage_centroid": 0.1382139027118683,
+        "recovery_centroid": 0.45963797044680965,
+        "centroid_ci_lower": 0.06484169512987137,
+        "centroid_qualifies": false,
+        "gaussian_qualifies": true,
+        "qualifies": true
+      }
+    },
+    "signature_b": true,
+    "signature_b_details": {
+      "sign_flip_dz": 0.3353591156838483,
+      "sign_flip_acc_diff": 0.03300000000000003,
+      "mean_permuted_dz": 0.2138698669391305,
+      "permuted_acc_diffs": [
+        0.0010000000000000009,
+        -0.0030000000000000027,
+        0.02400000000000002
+      ],
+      "passed": true
+    },
+    "signature_c": true,
+    "signature_c_details": {
+      "mean_cohen_dz": 1.0051749117554032,
+      "mean_acc_gain": 0.11739999999999999,
+      "mean_margin_diff": 1.3703425645828247,
+      "seed_dzes": [
+        1.0134601293850707,
+        1.0105798441373268,
+        1.0149973182956815,
+        0.9013306251075405,
+        1.0855066418513963
+      ],
+      "seed_acc_gains": [
+        0.11299999999999999,
+        0.136,
+        0.09999999999999999,
+        0.11599999999999999,
+        0.12199999999999998
+      ],
+      "passed": true
+    },
+    "secondary_depth_candidate": 7
+  },
+  "dinov2_evaluation": {
+    "model_name": "DINOv2 ViT-S/14",
+    "signature_a": true,
+    "signature_a_details": {
+      "7": {
+        "depth": 7,
+        "damage_zero": 1.4706076383590698,
+        "damage_centroid": 0.62977135181427,
+        "recovery_centroid": 0.5717611309859779,
+        "centroid_ci_lower": 0.7254886627197266,
+        "centroid_qualifies": true,
+        "gaussian_qualifies": true,
+        "qualifies": true
+      },
+      "8": {
+        "depth": 8,
+        "damage_zero": 3.860342264175415,
+        "damage_centroid": 0.6156932711601257,
+        "recovery_centroid": 0.8405081132639828,
+        "centroid_ci_lower": 3.045459508895874,
+        "centroid_qualifies": true,
+        "gaussian_qualifies": true,
+        "qualifies": true
+      },
+      "9": {
+        "depth": 9,
+        "damage_zero": 8.56941032409668,
+        "damage_centroid": 0.5648277401924133,
+        "recovery_centroid": 0.9340879105060297,
+        "centroid_ci_lower": 7.723474025726318,
+        "centroid_qualifies": true,
+        "gaussian_qualifies": true,
+        "qualifies": true
+      }
+    },
+    "signature_b": true,
+    "signature_b_details": {
+      "sign_flip_dz": 2.5093453505231986,
+      "sign_flip_acc_diff": 0.745,
+      "mean_permuted_dz": 1.1198059810941698,
+      "permuted_acc_diffs": [
+        0.332,
+        0.687,
+        0.264
+      ],
+      "passed": true
+    },
+    "signature_c": true,
+    "signature_c_details": {
+      "mean_cohen_dz": 0.30128645520395525,
+      "mean_acc_gain": -0.0012000000000000001,
+      "mean_margin_diff": 1.1233641028404235,
+      "seed_dzes": [
+        0.32811251283626724,
+        0.15899461704442114,
+        0.28811230087546974,
+        0.3690812554932506,
+        0.3621315897703675
+      ],
+      "seed_acc_gains": [
+        0.001,
+        -0.001,
+        -0.004,
+        -0.002,
+        0.0
+      ],
+      "passed": true
+    },
+    "secondary_depth_candidate": 9
+  }
+}
