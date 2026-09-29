@@ -100,3 +100,36 @@
    - Diagnostic heatmaps demonstrating spatial attention collapse under Shared noise and its restoration under Independent noise.
 5. **Appendix Table S1: Complete Statistical Test Matrix**
    - Full reporting of paired $t$-tests, Wilcoxon signed-rank tests, Cohen's $d_z$, McNemar exact tests, and Benjamini-Hochberg FDR $q$-values for all tested conditions.
+
+---
+
+## 4. Dense Fraction and Spatial-Mask Robustness Figures (Reviewer Robustness Suite)
+
+The final paper robustness experiment produced 5 dedicated publication-quality figures evaluating continuous dose-response and spatial permutation invariance:
+
+1. **Figure R1 (Primary Dose-Response): Continuous Replacement Dose-Response Curves**
+   - **Path**: [`figures/fungibility_dense_fraction/dense_fraction_accuracy.png`](file:///d:/Study/ResCancel/figures/fungibility_dense_fraction/dense_fraction_accuracy.png)
+   - **Structure**: 4-panel grid (DeiT-Tiny D8, DeiT-Small D8, ViT-B AugReg D7, DINOv2 ViT-S/14 D9).
+   - **Axes**: Actual fraction of replaced patches (0% to 100%, 101 points) vs. Top-1 Accuracy (%).
+   - **Features**: Solid lines for mean trajectories; shaded bands for $\pm 1$ SD across 5 independent spatial mask permutations; dashed line for clean baseline.
+   - **Manuscript Placement**: Main text Section 4 or Supplementary Appendix.
+
+2. **Figure R2: Margin Dynamics Across the Continuous Fraction Grid**
+   - **Path**: [`figures/fungibility_dense_fraction/dense_fraction_margin.png`](file:///d:/Study/ResCancel/figures/fungibility_dense_fraction/dense_fraction_margin.png)
+   - **Structure**: 4-panel grid displaying true-class logit margin across the full 0% to 100% replacement sweep.
+   - **Features**: Clean baseline reference; zero-margin reference line showing boundary of classification errors.
+
+3. **Figure R3: Continuous Damage Recovery Fraction $R(f)$**
+   - **Path**: [`figures/fungibility_dense_fraction/dense_fraction_recovery.png`](file:///d:/Study/ResCancel/figures/fungibility_dense_fraction/dense_fraction_recovery.png)
+   - **Structure**: 4-panel grid tracking Recovery $(f) = \frac{\Delta m_{\text{zero}} - \Delta m_{\text{replacement}}}{\Delta m_{\text{zero}}}$.
+   - **Features**: Filtered where $\Delta m_{\text{zero}} \ge 0.10$ to avoid low-damage ratio instability; demonstrates persistent $>80\%-95\%$ recovery across wide fraction intervals.
+
+4. **Figure R4 (Mask Invariance): Individual Spatial Permutation Overlay**
+   - **Path**: [`figures/fungibility_dense_fraction/mask_seed_robustness.png`](file:///d:/Study/ResCancel/figures/fungibility_dense_fraction/mask_seed_robustness.png)
+   - **Structure**: 4-panel grid displaying all 5 individual spatial mask curves faintly overlaid with the bold mean trajectory and Zero baseline.
+   - **Key Visual Proof**: Directly demonstrates to reviewers that the phenomenon is spatially invariant and not driven by a fortunate spatial mask choice.
+
+5. **Figure R5: Retention Threshold Comparison ($F_{95}, F_{90}, F_{80}$)**
+   - **Path**: [`figures/fungibility_dense_fraction/threshold_summary.png`](file:///d:/Study/ResCancel/figures/fungibility_dense_fraction/threshold_summary.png)
+   - **Structure**: 3-panel grouped bar chart comparing maximum fraction retaining $\ge 95\%$, $\ge 90\%$, and $\ge 80\%$ of clean accuracy across Zero, Centroid, and Gaussian conditions, with mask-seed SD error bars.
+

@@ -40,3 +40,35 @@
 - **Image Independence**: Unit of analysis is the individual image ($N=1,000$ calibration, $N=1,000$ disjoint evaluation). No pooling of image-seed draws as independent degrees of freedom.
 - **Multiple Seeds**: Stochastic conditions evaluated with 3 to 5 deterministic frozen seeds; seed-level means and standard deviations computed prior to hypothesis tests.
 - **Hypothesis Testing**: Two-sided paired $t$-tests, Wilcoxon signed-rank tests, Cohen's $d_z = \frac{\bar{d}}{s_d}$, 10,000-sample percentile bootstrap 95% confidence intervals, and two-sided exact binomial McNemar tests for classification accuracy.
+
+---
+
+## 3. Dense Fraction and Spatial-Mask Robustness (Final Paper Robustness Experiment)
+
+**Protocol Reference**: [`docs/FUNGIBILITY_DENSE_FRACTION_PROTOCOL.md`](file:///d:/Study/ResCancel/docs/FUNGIBILITY_DENSE_FRACTION_PROTOCOL.md)  
+**Detailed Report**: [`docs/FUNGIBILITY_DENSE_FRACTION_REPORT.md`](file:///d:/Study/ResCancel/docs/FUNGIBILITY_DENSE_FRACTION_REPORT.md)  
+**Primary Decision**: **`ROBUST`** across all four model families.  
+
+### 3.1 Quantitative Dose-Response & Retention Threshold Table
+
+| Model | Depth | Primary | Condition | AUC (Acc) | AUC (Margin) | $F_{95}$ ($\ge 95\%$ clean) | $F_{90}$ ($\ge 90\%$ clean) | $F_{80}$ ($\ge 80\%$ clean) | Max Mask Spread | Degradation Cliff (1% drop) | Machine-Readable Source File |
+| :--- | :---: | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **DeiT-Tiny** | 8 | Yes | Zero | 0.5623 | 0.4496 | $30.5\% \pm 4.6\%$ | $53.9\% \pm 2.7\%$ | $75.0\% \pm 2.4\%$ | 11.3% | $99\% \to 100\%$ (-4.6% Acc) | [`outputs/fungibility_dense_fraction/summary_across_masks.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/summary_across_masks.csv) |
+| DeiT-Tiny | 8 | Yes | **Centroid $\mu_8$** | **0.6218** | **0.7472** | **$63.7\% \pm 1.4\%$** | **$77.9\% \pm 1.7\%$** | **$88.5\% \pm 1.3\%$** | 6.8% | $99\% \to 100\%$ (-16.5% Acc) | [`outputs/fungibility_dense_fraction/threshold_crossings.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/threshold_crossings.csv) |
+| DeiT-Tiny | 8 | Yes | Diag Gauss | 0.5941 | 0.6274 | $53.5\% \pm 3.3\%$ | $67.2\% \pm 2.7\%$ | $80.7\% \pm 1.2\%$ | 8.1% | $99\% \to 100\%$ (-8.6% Acc) | [`outputs/fungibility_dense_fraction/auc_summary.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/auc_summary.csv) |
+| **DeiT-Small** | 8 | Yes | Zero | 0.5780 | 0.8420 | $33.4\% \pm 2.8\%$ | $43.7\% \pm 1.7\%$ | $60.1\% \pm 1.7\%$ | 8.4% | $92\% \to 93\%$ (-2.2% Acc) | [`outputs/fungibility_dense_fraction/summary_across_masks.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/summary_across_masks.csv) |
+| DeiT-Small | 8 | Yes | **Centroid $\mu_8$** | **0.7146** | **1.7680** | **$74.6\% \pm 4.9\%$** | **$86.5\% \pm 1.0\%$** | **$91.0\% \pm 0.9\%$** | 9.7% | $99\% \to 100\%$ (-16.3% Acc) | [`outputs/fungibility_dense_fraction/threshold_crossings.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/threshold_crossings.csv) |
+| DeiT-Small | 8 | Yes | Diag Gauss | 0.6895 | 1.6062 | $56.7\% \pm 3.7\%$ | $72.1\% \pm 0.9\%$ | $85.0\% \pm 0.9\%$ | 7.9% | $99\% \to 100\%$ (-10.1% Acc) | [`outputs/fungibility_dense_fraction/auc_summary.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/auc_summary.csv) |
+| **ViT-B AugReg** | 7 | Yes | Zero | 0.4502 | 0.4554 | $20.1\% \pm 0.9\%$ | $28.3\% \pm 2.0\%$ | $42.2\% \pm 0.6\%$ | 6.5% | $71\% \to 72\%$ (-2.1% Acc) | [`outputs/fungibility_dense_fraction/summary_across_masks.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/summary_across_masks.csv) |
+| ViT-B AugReg | 7 | Yes | Centroid $\mu_7$ | 0.6568 | 2.0218 | $43.7\% \pm 5.7\%$ | $63.7\% \pm 1.8\%$ | $79.5\% \pm 0.9\%$ | 7.3% | $99\% \to 100\%$ (-8.3% Acc) | [`outputs/fungibility_dense_fraction/threshold_crossings.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/threshold_crossings.csv) |
+| ViT-B AugReg | 7 | Yes | **Diag Gauss** | **0.6571** | **2.2637** | **$49.2\% \pm 5.0\%$** | **$67.4\% \pm 2.1\%$** | **$79.7\% \pm 1.2\%$** | 6.1% | $99\% \to 100\%$ (-5.1% Acc) | [`outputs/fungibility_dense_fraction/auc_summary.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/auc_summary.csv) |
+| ViT-B AugReg | 8 | No | Zero | 0.6526 | 2.0734 | $51.8\% \pm 4.9\%$ | $69.1\% \pm 2.6\%$ | $80.1\% \pm 1.2\%$ | 6.8% | $93\% \to 94\%$ (-5.8% Acc) | [`outputs/fungibility_dense_fraction/summary_across_masks.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/summary_across_masks.csv) |
+| ViT-B AugReg | 8 | No | Centroid $\mu_8$ | 0.6447 | 2.0984 | $51.0\% \pm 4.0\%$ | $66.4\% \pm 2.3\%$ | $78.1\% \pm 1.2\%$ | 5.9% | $92\% \to 93\%$ (-4.0% Acc) | [`outputs/fungibility_dense_fraction/threshold_crossings.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/threshold_crossings.csv) |
+| ViT-B AugReg | 8 | No | Diag Gauss | 0.6665 | 2.3152 | $45.1\% \pm 4.2\%$ | $65.2\% \pm 1.4\%$ | $80.9\% \pm 1.1\%$ | 6.2% | $99\% \to 100\%$ (-6.8% Acc) | [`outputs/fungibility_dense_fraction/auc_summary.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/auc_summary.csv) |
+| **DINOv2** | 9 | Yes | Zero | 0.0936 | -6.8496 | $3.1\% \pm 0.0\%$ | $3.9\% \pm 0.0\%$ | $5.4\% \pm 0.4\%$ | 1.8% | $8\% \to 9\%$ (-6.8% Acc) | [`outputs/fungibility_dense_fraction/summary_across_masks.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/summary_across_masks.csv) |
+| DINOv2 | 9 | Yes | Centroid $\mu_9$ | 0.4818 | -0.5881 | $23.1\% \pm 0.8\%$ | $29.0\% \pm 0.7\%$ | $39.7\% \pm 1.1\%$ | 4.3% | $79\% \to 80\%$ (-1.7% Acc) | [`outputs/fungibility_dense_fraction/threshold_crossings.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/threshold_crossings.csv) |
+| DINOv2 | 9 | Yes | **Diag Gauss** | **0.5353** | **0.2773** | **$29.6\% \pm 1.1\%$** | **$43.0\% \pm 0.0\%$** | **$55.0\% \pm 0.7\%$** | 3.9% | $77\% \to 78\%$ (-3.2% Acc) | [`outputs/fungibility_dense_fraction/auc_summary.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/auc_summary.csv) |
+| DINOv2 | 8 | No | Zero | 0.2063 | -3.8213 | $3.1\% \pm 0.0\%$ | $3.9\% \pm 0.0\%$ | $7.3\% \pm 0.4\%$ | 2.1% | $6\% \to 7\%$ (-3.4% Acc) | [`outputs/fungibility_dense_fraction/summary_across_masks.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/summary_across_masks.csv) |
+| DINOv2 | 8 | No | Centroid $\mu_8$ | 0.4648 | -0.8023 | $22.7\% \pm 0.8\%$ | $31.3\% \pm 1.1\%$ | $41.7\% \pm 1.0\%$ | 3.8% | $68\% \to 69\%$ (-2.5% Acc) | [`outputs/fungibility_dense_fraction/threshold_crossings.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/threshold_crossings.csv) |
+| DINOv2 | 8 | No | Diag Gauss | 0.5106 | -0.2817 | $29.4\% \pm 1.5\%$ | $40.9\% \pm 1.1\%$ | $52.0\% \pm 0.7\%$ | 4.2% | $77\% \to 78\%$ (-3.3% Acc) | [`outputs/fungibility_dense_fraction/auc_summary.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/auc_summary.csv) |
+
