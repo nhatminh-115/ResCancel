@@ -1,0 +1,31 @@
+{
+  "assertions": {
+    "1_weights_frozen": true,
+    "2_same_canonical_evaluation_set": true,
+    "3_same_canonical_calibration_set": true,
+    "4_zero_overlap": true,
+    "5_intervention_depth_frozen": true,
+    "6_cls_untouched": true,
+    "7_mask_permutations_valid": true,
+    "8_five_mask_seeds_distinct": true,
+    "9_masks_nested_within_every_seed": true,
+    "10_masks_independent_of_content": true,
+    "11_exact_patch_counts_correct": true,
+    "12_actual_fraction_logged": true,
+    "13_mask_seed_gaussian_seed_separated": true,
+    "14_clean_baseline_reproduces_canonical": true,
+    "15_centroid_matches_frozen_statistics": true,
+    "16_no_evaluation_leakage": true,
+    "17_fraction_zero_matches_clean": true,
+    "18_fraction_one_replaces_all_patches": true,
+    "19_aggregation_follows_hierarchy": true,
+    "20_unique_keyed_rows_and_reproducible": true
+  },
+  "clean_baseline_parity": {
+    "deit_tiny": 0.679,
+    "deit_small": 0.761,
+    "vit_base": 0.761,
+    "dinov2": 0.788
+  },
+  "all_assertions_passed": true
+}

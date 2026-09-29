@@ -1,0 +1,69 @@
+{
+  "experiment_name": "PATCH FUNGIBILITY \u2014 DENSE FRACTION / MASK ROBUSTNESS SWEEP",
+  "timestamp": "2026-09-29 18:03:01",
+  "total_runtime_seconds": 14174.785061120987,
+  "runtime_per_model_seconds": {
+    "deit_small": 1455.732543706894,
+    "deit_tiny": 474.0052652359009,
+    "dinov2": 3119.8961062431335,
+    "vit_base": 9107.454071998596
+  },
+  "peak_vram_gb_per_model": {
+    "deit_small": 0.5262928009033203,
+    "deit_tiny": 0.5262928009033203,
+    "dinov2": 0.5262928009033203,
+    "vit_base": 1.2017292976379395
+  },
+  "device": "cuda",
+  "smoke_test": false,
+  "grid_meta": {
+    "attempted_grid": "1% step (101 points)",
+    "selected_grid": "1% step (101 points)",
+    "fallback_reason": "None. 1% grid runtime is well within the acceptable budget (<20 minutes).",
+    "estimated_runtime_seconds": 2758.466335773468,
+    "mask_seeds": [
+      31001,
+      31002,
+      31003,
+      31004,
+      31005
+    ],
+    "gaussian_seeds": [
+      32001,
+      32002,
+      32003
+    ]
+  },
+  "decision": {
+    "overall_decision": "ROBUST",
+    "interpretation": "The patch-content fungibility phenomenon is robust across independently sampled spatial masks; Centroid and Gaussian replacements consistently outperform destructive Zero replacement across the fraction range.",
+    "model_statuses": {
+      "deit_small": {
+        "status": "ROBUST",
+        "pct_points_centroid_better": 100.0,
+        "max_mask_spread_pct": 9.699999999999998
+      },
+      "deit_tiny": {
+        "status": "ROBUST",
+        "pct_points_centroid_better": 98.9010989010989,
+        "max_mask_spread_pct": 11.299999999999999
+      },
+      "dinov2": {
+        "status": "ROBUST",
+        "pct_points_centroid_better": 100.0,
+        "max_mask_spread_pct": 4.299999999999993
+      },
+      "vit_base": {
+        "status": "ROBUST",
+        "pct_points_centroid_better": 96.875,
+        "max_mask_spread_pct": 7.300000000000001
+      }
+    }
+  },
+  "models_evaluated": [
+    "deit_small",
+    "deit_tiny",
+    "dinov2",
+    "vit_base"
+  ]
+}

@@ -1,0 +1,1423 @@
+{
+  "grid_196": [
+    {
+      "requested_fraction": 0.0,
+      "requested_percent": 0,
+      "actual_k": 0,
+      "actual_fraction": 0.0,
+      "actual_percent": 0.0
+    },
+    {
+      "requested_fraction": 0.01,
+      "requested_percent": 1,
+      "actual_k": 2,
+      "actual_fraction": 0.01020408163265306,
+      "actual_percent": 1.0204081632653061
+    },
+    {
+      "requested_fraction": 0.02,
+      "requested_percent": 2,
+      "actual_k": 4,
+      "actual_fraction": 0.02040816326530612,
+      "actual_percent": 2.0408163265306123
+    },
+    {
+      "requested_fraction": 0.03,
+      "requested_percent": 3,
+      "actual_k": 6,
+      "actual_fraction": 0.030612244897959183,
+      "actual_percent": 3.061224489795918
+    },
+    {
+      "requested_fraction": 0.04,
+      "requested_percent": 4,
+      "actual_k": 8,
+      "actual_fraction": 0.04081632653061224,
+      "actual_percent": 4.081632653061225
+    },
+    {
+      "requested_fraction": 0.05,
+      "requested_percent": 5,
+      "actual_k": 10,
+      "actual_fraction": 0.05102040816326531,
+      "actual_percent": 5.1020408163265305
+    },
+    {
+      "requested_fraction": 0.06,
+      "requested_percent": 6,
+      "actual_k": 12,
+      "actual_fraction": 0.061224489795918366,
+      "actual_percent": 6.122448979591836
+    },
+    {
+      "requested_fraction": 0.07,
+      "requested_percent": 7,
+      "actual_k": 14,
+      "actual_fraction": 0.07142857142857142,
+      "actual_percent": 7.142857142857142
+    },
+    {
+      "requested_fraction": 0.08,
+      "requested_percent": 8,
+      "actual_k": 16,
+      "actual_fraction": 0.08163265306122448,
+      "actual_percent": 8.16326530612245
+    },
+    {
+      "requested_fraction": 0.09,
+      "requested_percent": 9,
+      "actual_k": 18,
+      "actual_fraction": 0.09183673469387756,
+      "actual_percent": 9.183673469387756
+    },
+    {
+      "requested_fraction": 0.1,
+      "requested_percent": 10,
+      "actual_k": 20,
+      "actual_fraction": 0.10204081632653061,
+      "actual_percent": 10.204081632653061
+    },
+    {
+      "requested_fraction": 0.11,
+      "requested_percent": 11,
+      "actual_k": 22,
+      "actual_fraction": 0.11224489795918367,
+      "actual_percent": 11.224489795918368
+    },
+    {
+      "requested_fraction": 0.12,
+      "requested_percent": 12,
+      "actual_k": 24,
+      "actual_fraction": 0.12244897959183673,
+      "actual_percent": 12.244897959183673
+    },
+    {
+      "requested_fraction": 0.13,
+      "requested_percent": 13,
+      "actual_k": 25,
+      "actual_fraction": 0.12755102040816327,
+      "actual_percent": 12.755102040816327
+    },
+    {
+      "requested_fraction": 0.14,
+      "requested_percent": 14,
+      "actual_k": 27,
+      "actual_fraction": 0.1377551020408163,
+      "actual_percent": 13.77551020408163
+    },
+    {
+      "requested_fraction": 0.15,
+      "requested_percent": 15,
+      "actual_k": 29,
+      "actual_fraction": 0.14795918367346939,
+      "actual_percent": 14.795918367346939
+    },
+    {
+      "requested_fraction": 0.16,
+      "requested_percent": 16,
+      "actual_k": 31,
+      "actual_fraction": 0.15816326530612246,
+      "actual_percent": 15.816326530612246
+    },
+    {
+      "requested_fraction": 0.17,
+      "requested_percent": 17,
+      "actual_k": 33,
+      "actual_fraction": 0.1683673469387755,
+      "actual_percent": 16.83673469387755
+    },
+    {
+      "requested_fraction": 0.18,
+      "requested_percent": 18,
+      "actual_k": 35,
+      "actual_fraction": 0.17857142857142858,
+      "actual_percent": 17.857142857142858
+    },
+    {
+      "requested_fraction": 0.19,
+      "requested_percent": 19,
+      "actual_k": 37,
+      "actual_fraction": 0.18877551020408162,
+      "actual_percent": 18.877551020408163
+    },
+    {
+      "requested_fraction": 0.2,
+      "requested_percent": 20,
+      "actual_k": 39,
+      "actual_fraction": 0.1989795918367347,
+      "actual_percent": 19.897959183673468
+    },
+    {
+      "requested_fraction": 0.21,
+      "requested_percent": 21,
+      "actual_k": 41,
+      "actual_fraction": 0.20918367346938777,
+      "actual_percent": 20.918367346938776
+    },
+    {
+      "requested_fraction": 0.22,
+      "requested_percent": 22,
+      "actual_k": 43,
+      "actual_fraction": 0.2193877551020408,
+      "actual_percent": 21.93877551020408
+    },
+    {
+      "requested_fraction": 0.23,
+      "requested_percent": 23,
+      "actual_k": 45,
+      "actual_fraction": 0.22959183673469388,
+      "actual_percent": 22.95918367346939
+    },
+    {
+      "requested_fraction": 0.24,
+      "requested_percent": 24,
+      "actual_k": 47,
+      "actual_fraction": 0.23979591836734693,
+      "actual_percent": 23.97959183673469
+    },
+    {
+      "requested_fraction": 0.25,
+      "requested_percent": 25,
+      "actual_k": 49,
+      "actual_fraction": 0.25,
+      "actual_percent": 25.0
+    },
+    {
+      "requested_fraction": 0.26,
+      "requested_percent": 26,
+      "actual_k": 51,
+      "actual_fraction": 0.2602040816326531,
+      "actual_percent": 26.02040816326531
+    },
+    {
+      "requested_fraction": 0.27,
+      "requested_percent": 27,
+      "actual_k": 53,
+      "actual_fraction": 0.27040816326530615,
+      "actual_percent": 27.040816326530614
+    },
+    {
+      "requested_fraction": 0.28,
+      "requested_percent": 28,
+      "actual_k": 55,
+      "actual_fraction": 0.28061224489795916,
+      "actual_percent": 28.061224489795915
+    },
+    {
+      "requested_fraction": 0.29,
+      "requested_percent": 29,
+      "actual_k": 57,
+      "actual_fraction": 0.29081632653061223,
+      "actual_percent": 29.081632653061224
+    },
+    {
+      "requested_fraction": 0.3,
+      "requested_percent": 30,
+      "actual_k": 59,
+      "actual_fraction": 0.3010204081632653,
+      "actual_percent": 30.102040816326532
+    },
+    {
+      "requested_fraction": 0.31,
+      "requested_percent": 31,
+      "actual_k": 61,
+      "actual_fraction": 0.3112244897959184,
+      "actual_percent": 31.122448979591837
+    },
+    {
+      "requested_fraction": 0.32,
+      "requested_percent": 32,
+      "actual_k": 63,
+      "actual_fraction": 0.32142857142857145,
+      "actual_percent": 32.142857142857146
+    },
+    {
+      "requested_fraction": 0.33,
+      "requested_percent": 33,
+      "actual_k": 65,
+      "actual_fraction": 0.33163265306122447,
+      "actual_percent": 33.16326530612245
+    },
+    {
+      "requested_fraction": 0.34,
+      "requested_percent": 34,
+      "actual_k": 67,
+      "actual_fraction": 0.34183673469387754,
+      "actual_percent": 34.183673469387756
+    },
+    {
+      "requested_fraction": 0.35,
+      "requested_percent": 35,
+      "actual_k": 69,
+      "actual_fraction": 0.3520408163265306,
+      "actual_percent": 35.204081632653065
+    },
+    {
+      "requested_fraction": 0.36,
+      "requested_percent": 36,
+      "actual_k": 71,
+      "actual_fraction": 0.3622448979591837,
+      "actual_percent": 36.224489795918366
+    },
+    {
+      "requested_fraction": 0.37,
+      "requested_percent": 37,
+      "actual_k": 73,
+      "actual_fraction": 0.37244897959183676,
+      "actual_percent": 37.244897959183675
+    },
+    {
+      "requested_fraction": 0.38,
+      "requested_percent": 38,
+      "actual_k": 74,
+      "actual_fraction": 0.37755102040816324,
+      "actual_percent": 37.755102040816325
+    },
+    {
+      "requested_fraction": 0.39,
+      "requested_percent": 39,
+      "actual_k": 76,
+      "actual_fraction": 0.3877551020408163,
+      "actual_percent": 38.775510204081634
+    },
+    {
+      "requested_fraction": 0.4,
+      "requested_percent": 40,
+      "actual_k": 78,
+      "actual_fraction": 0.3979591836734694,
+      "actual_percent": 39.795918367346935
+    },
+    {
+      "requested_fraction": 0.41,
+      "requested_percent": 41,
+      "actual_k": 80,
+      "actual_fraction": 0.40816326530612246,
+      "actual_percent": 40.816326530612244
+    },
+    {
+      "requested_fraction": 0.42,
+      "requested_percent": 42,
+      "actual_k": 82,
+      "actual_fraction": 0.41836734693877553,
+      "actual_percent": 41.83673469387755
+    },
+    {
+      "requested_fraction": 0.43,
+      "requested_percent": 43,
+      "actual_k": 84,
+      "actual_fraction": 0.42857142857142855,
+      "actual_percent": 42.857142857142854
+    },
+    {
+      "requested_fraction": 0.44,
+      "requested_percent": 44,
+      "actual_k": 86,
+      "actual_fraction": 0.4387755102040816,
+      "actual_percent": 43.87755102040816
+    },
+    {
+      "requested_fraction": 0.45,
+      "requested_percent": 45,
+      "actual_k": 88,
+      "actual_fraction": 0.4489795918367347,
+      "actual_percent": 44.89795918367347
+    },
+    {
+      "requested_fraction": 0.46,
+      "requested_percent": 46,
+      "actual_k": 90,
+      "actual_fraction": 0.45918367346938777,
+      "actual_percent": 45.91836734693878
+    },
+    {
+      "requested_fraction": 0.47,
+      "requested_percent": 47,
+      "actual_k": 92,
+      "actual_fraction": 0.46938775510204084,
+      "actual_percent": 46.93877551020408
+    },
+    {
+      "requested_fraction": 0.48,
+      "requested_percent": 48,
+      "actual_k": 94,
+      "actual_fraction": 0.47959183673469385,
+      "actual_percent": 47.95918367346938
+    },
+    {
+      "requested_fraction": 0.49,
+      "requested_percent": 49,
+      "actual_k": 96,
+      "actual_fraction": 0.4897959183673469,
+      "actual_percent": 48.97959183673469
+    },
+    {
+      "requested_fraction": 0.5,
+      "requested_percent": 50,
+      "actual_k": 98,
+      "actual_fraction": 0.5,
+      "actual_percent": 50.0
+    },
+    {
+      "requested_fraction": 0.51,
+      "requested_percent": 51,
+      "actual_k": 100,
+      "actual_fraction": 0.5102040816326531,
+      "actual_percent": 51.02040816326531
+    },
+    {
+      "requested_fraction": 0.52,
+      "requested_percent": 52,
+      "actual_k": 102,
+      "actual_fraction": 0.5204081632653061,
+      "actual_percent": 52.04081632653062
+    },
+    {
+      "requested_fraction": 0.53,
+      "requested_percent": 53,
+      "actual_k": 104,
+      "actual_fraction": 0.5306122448979592,
+      "actual_percent": 53.06122448979592
+    },
+    {
+      "requested_fraction": 0.54,
+      "requested_percent": 54,
+      "actual_k": 106,
+      "actual_fraction": 0.5408163265306123,
+      "actual_percent": 54.08163265306123
+    },
+    {
+      "requested_fraction": 0.55,
+      "requested_percent": 55,
+      "actual_k": 108,
+      "actual_fraction": 0.5510204081632653,
+      "actual_percent": 55.10204081632652
+    },
+    {
+      "requested_fraction": 0.56,
+      "requested_percent": 56,
+      "actual_k": 110,
+      "actual_fraction": 0.5612244897959183,
+      "actual_percent": 56.12244897959183
+    },
+    {
+      "requested_fraction": 0.57,
+      "requested_percent": 57,
+      "actual_k": 112,
+      "actual_fraction": 0.5714285714285714,
+      "actual_percent": 57.14285714285714
+    },
+    {
+      "requested_fraction": 0.58,
+      "requested_percent": 58,
+      "actual_k": 114,
+      "actual_fraction": 0.5816326530612245,
+      "actual_percent": 58.16326530612245
+    },
+    {
+      "requested_fraction": 0.59,
+      "requested_percent": 59,
+      "actual_k": 116,
+      "actual_fraction": 0.5918367346938775,
+      "actual_percent": 59.183673469387756
+    },
+    {
+      "requested_fraction": 0.6,
+      "requested_percent": 60,
+      "actual_k": 118,
+      "actual_fraction": 0.6020408163265306,
+      "actual_percent": 60.204081632653065
+    },
+    {
+      "requested_fraction": 0.61,
+      "requested_percent": 61,
+      "actual_k": 120,
+      "actual_fraction": 0.6122448979591837,
+      "actual_percent": 61.224489795918366
+    },
+    {
+      "requested_fraction": 0.62,
+      "requested_percent": 62,
+      "actual_k": 122,
+      "actual_fraction": 0.6224489795918368,
+      "actual_percent": 62.244897959183675
+    },
+    {
+      "requested_fraction": 0.63,
+      "requested_percent": 63,
+      "actual_k": 123,
+      "actual_fraction": 0.6275510204081632,
+      "actual_percent": 62.755102040816325
+    },
+    {
+      "requested_fraction": 0.64,
+      "requested_percent": 64,
+      "actual_k": 125,
+      "actual_fraction": 0.6377551020408163,
+      "actual_percent": 63.775510204081634
+    },
+    {
+      "requested_fraction": 0.65,
+      "requested_percent": 65,
+      "actual_k": 127,
+      "actual_fraction": 0.6479591836734694,
+      "actual_percent": 64.79591836734694
+    },
+    {
+      "requested_fraction": 0.66,
+      "requested_percent": 66,
+      "actual_k": 129,
+      "actual_fraction": 0.6581632653061225,
+      "actual_percent": 65.81632653061224
+    },
+    {
+      "requested_fraction": 0.67,
+      "requested_percent": 67,
+      "actual_k": 131,
+      "actual_fraction": 0.6683673469387755,
+      "actual_percent": 66.83673469387756
+    },
+    {
+      "requested_fraction": 0.68,
+      "requested_percent": 68,
+      "actual_k": 133,
+      "actual_fraction": 0.6785714285714286,
+      "actual_percent": 67.85714285714286
+    },
+    {
+      "requested_fraction": 0.69,
+      "requested_percent": 69,
+      "actual_k": 135,
+      "actual_fraction": 0.6887755102040817,
+      "actual_percent": 68.87755102040816
+    },
+    {
+      "requested_fraction": 0.7,
+      "requested_percent": 70,
+      "actual_k": 137,
+      "actual_fraction": 0.6989795918367347,
+      "actual_percent": 69.89795918367348
+    },
+    {
+      "requested_fraction": 0.71,
+      "requested_percent": 71,
+      "actual_k": 139,
+      "actual_fraction": 0.7091836734693877,
+      "actual_percent": 70.91836734693877
+    },
+    {
+      "requested_fraction": 0.72,
+      "requested_percent": 72,
+      "actual_k": 141,
+      "actual_fraction": 0.7193877551020408,
+      "actual_percent": 71.93877551020408
+    },
+    {
+      "requested_fraction": 0.73,
+      "requested_percent": 73,
+      "actual_k": 143,
+      "actual_fraction": 0.7295918367346939,
+      "actual_percent": 72.95918367346938
+    },
+    {
+      "requested_fraction": 0.74,
+      "requested_percent": 74,
+      "actual_k": 145,
+      "actual_fraction": 0.7397959183673469,
+      "actual_percent": 73.9795918367347
+    },
+    {
+      "requested_fraction": 0.75,
+      "requested_percent": 75,
+      "actual_k": 147,
+      "actual_fraction": 0.75,
+      "actual_percent": 75.0
+    },
+    {
+      "requested_fraction": 0.76,
+      "requested_percent": 76,
+      "actual_k": 149,
+      "actual_fraction": 0.7602040816326531,
+      "actual_percent": 76.0204081632653
+    },
+    {
+      "requested_fraction": 0.77,
+      "requested_percent": 77,
+      "actual_k": 151,
+      "actual_fraction": 0.7704081632653061,
+      "actual_percent": 77.04081632653062
+    },
+    {
+      "requested_fraction": 0.78,
+      "requested_percent": 78,
+      "actual_k": 153,
+      "actual_fraction": 0.7806122448979592,
+      "actual_percent": 78.06122448979592
+    },
+    {
+      "requested_fraction": 0.79,
+      "requested_percent": 79,
+      "actual_k": 155,
+      "actual_fraction": 0.7908163265306123,
+      "actual_percent": 79.08163265306123
+    },
+    {
+      "requested_fraction": 0.8,
+      "requested_percent": 80,
+      "actual_k": 157,
+      "actual_fraction": 0.8010204081632653,
+      "actual_percent": 80.10204081632652
+    },
+    {
+      "requested_fraction": 0.81,
+      "requested_percent": 81,
+      "actual_k": 159,
+      "actual_fraction": 0.8112244897959183,
+      "actual_percent": 81.12244897959184
+    },
+    {
+      "requested_fraction": 0.82,
+      "requested_percent": 82,
+      "actual_k": 161,
+      "actual_fraction": 0.8214285714285714,
+      "actual_percent": 82.14285714285714
+    },
+    {
+      "requested_fraction": 0.83,
+      "requested_percent": 83,
+      "actual_k": 163,
+      "actual_fraction": 0.8316326530612245,
+      "actual_percent": 83.16326530612244
+    },
+    {
+      "requested_fraction": 0.84,
+      "requested_percent": 84,
+      "actual_k": 165,
+      "actual_fraction": 0.8418367346938775,
+      "actual_percent": 84.18367346938776
+    },
+    {
+      "requested_fraction": 0.85,
+      "requested_percent": 85,
+      "actual_k": 167,
+      "actual_fraction": 0.8520408163265306,
+      "actual_percent": 85.20408163265306
+    },
+    {
+      "requested_fraction": 0.86,
+      "requested_percent": 86,
+      "actual_k": 169,
+      "actual_fraction": 0.8622448979591837,
+      "actual_percent": 86.22448979591837
+    },
+    {
+      "requested_fraction": 0.87,
+      "requested_percent": 87,
+      "actual_k": 171,
+      "actual_fraction": 0.8724489795918368,
+      "actual_percent": 87.24489795918367
+    },
+    {
+      "requested_fraction": 0.88,
+      "requested_percent": 88,
+      "actual_k": 172,
+      "actual_fraction": 0.8775510204081632,
+      "actual_percent": 87.75510204081633
+    },
+    {
+      "requested_fraction": 0.89,
+      "requested_percent": 89,
+      "actual_k": 174,
+      "actual_fraction": 0.8877551020408163,
+      "actual_percent": 88.77551020408163
+    },
+    {
+      "requested_fraction": 0.9,
+      "requested_percent": 90,
+      "actual_k": 176,
+      "actual_fraction": 0.8979591836734694,
+      "actual_percent": 89.79591836734694
+    },
+    {
+      "requested_fraction": 0.91,
+      "requested_percent": 91,
+      "actual_k": 178,
+      "actual_fraction": 0.9081632653061225,
+      "actual_percent": 90.81632653061224
+    },
+    {
+      "requested_fraction": 0.92,
+      "requested_percent": 92,
+      "actual_k": 180,
+      "actual_fraction": 0.9183673469387755,
+      "actual_percent": 91.83673469387756
+    },
+    {
+      "requested_fraction": 0.93,
+      "requested_percent": 93,
+      "actual_k": 182,
+      "actual_fraction": 0.9285714285714286,
+      "actual_percent": 92.85714285714286
+    },
+    {
+      "requested_fraction": 0.94,
+      "requested_percent": 94,
+      "actual_k": 184,
+      "actual_fraction": 0.9387755102040817,
+      "actual_percent": 93.87755102040816
+    },
+    {
+      "requested_fraction": 0.95,
+      "requested_percent": 95,
+      "actual_k": 186,
+      "actual_fraction": 0.9489795918367347,
+      "actual_percent": 94.89795918367348
+    },
+    {
+      "requested_fraction": 0.96,
+      "requested_percent": 96,
+      "actual_k": 188,
+      "actual_fraction": 0.9591836734693877,
+      "actual_percent": 95.91836734693877
+    },
+    {
+      "requested_fraction": 0.97,
+      "requested_percent": 97,
+      "actual_k": 190,
+      "actual_fraction": 0.9693877551020408,
+      "actual_percent": 96.93877551020408
+    },
+    {
+      "requested_fraction": 0.98,
+      "requested_percent": 98,
+      "actual_k": 192,
+      "actual_fraction": 0.9795918367346939,
+      "actual_percent": 97.95918367346938
+    },
+    {
+      "requested_fraction": 0.99,
+      "requested_percent": 99,
+      "actual_k": 194,
+      "actual_fraction": 0.9897959183673469,
+      "actual_percent": 98.9795918367347
+    },
+    {
+      "requested_fraction": 1.0,
+      "requested_percent": 100,
+      "actual_k": 196,
+      "actual_fraction": 1.0,
+      "actual_percent": 100.0
+    }
+  ],
+  "grid_256": [
+    {
+      "requested_fraction": 0.0,
+      "requested_percent": 0,
+      "actual_k": 0,
+      "actual_fraction": 0.0,
+      "actual_percent": 0.0
+    },
+    {
+      "requested_fraction": 0.01,
+      "requested_percent": 1,
+      "actual_k": 3,
+      "actual_fraction": 0.01171875,
+      "actual_percent": 1.171875
+    },
+    {
+      "requested_fraction": 0.02,
+      "requested_percent": 2,
+      "actual_k": 5,
+      "actual_fraction": 0.01953125,
+      "actual_percent": 1.953125
+    },
+    {
+      "requested_fraction": 0.03,
+      "requested_percent": 3,
+      "actual_k": 8,
+      "actual_fraction": 0.03125,
+      "actual_percent": 3.125
+    },
+    {
+      "requested_fraction": 0.04,
+      "requested_percent": 4,
+      "actual_k": 10,
+      "actual_fraction": 0.0390625,
+      "actual_percent": 3.90625
+    },
+    {
+      "requested_fraction": 0.05,
+      "requested_percent": 5,
+      "actual_k": 13,
+      "actual_fraction": 0.05078125,
+      "actual_percent": 5.078125
+    },
+    {
+      "requested_fraction": 0.06,
+      "requested_percent": 6,
+      "actual_k": 15,
+      "actual_fraction": 0.05859375,
+      "actual_percent": 5.859375
+    },
+    {
+      "requested_fraction": 0.07,
+      "requested_percent": 7,
+      "actual_k": 18,
+      "actual_fraction": 0.0703125,
+      "actual_percent": 7.03125
+    },
+    {
+      "requested_fraction": 0.08,
+      "requested_percent": 8,
+      "actual_k": 20,
+      "actual_fraction": 0.078125,
+      "actual_percent": 7.8125
+    },
+    {
+      "requested_fraction": 0.09,
+      "requested_percent": 9,
+      "actual_k": 23,
+      "actual_fraction": 0.08984375,
+      "actual_percent": 8.984375
+    },
+    {
+      "requested_fraction": 0.1,
+      "requested_percent": 10,
+      "actual_k": 26,
+      "actual_fraction": 0.1015625,
+      "actual_percent": 10.15625
+    },
+    {
+      "requested_fraction": 0.11,
+      "requested_percent": 11,
+      "actual_k": 28,
+      "actual_fraction": 0.109375,
+      "actual_percent": 10.9375
+    },
+    {
+      "requested_fraction": 0.12,
+      "requested_percent": 12,
+      "actual_k": 31,
+      "actual_fraction": 0.12109375,
+      "actual_percent": 12.109375
+    },
+    {
+      "requested_fraction": 0.13,
+      "requested_percent": 13,
+      "actual_k": 33,
+      "actual_fraction": 0.12890625,
+      "actual_percent": 12.890625
+    },
+    {
+      "requested_fraction": 0.14,
+      "requested_percent": 14,
+      "actual_k": 36,
+      "actual_fraction": 0.140625,
+      "actual_percent": 14.0625
+    },
+    {
+      "requested_fraction": 0.15,
+      "requested_percent": 15,
+      "actual_k": 38,
+      "actual_fraction": 0.1484375,
+      "actual_percent": 14.84375
+    },
+    {
+      "requested_fraction": 0.16,
+      "requested_percent": 16,
+      "actual_k": 41,
+      "actual_fraction": 0.16015625,
+      "actual_percent": 16.015625
+    },
+    {
+      "requested_fraction": 0.17,
+      "requested_percent": 17,
+      "actual_k": 44,
+      "actual_fraction": 0.171875,
+      "actual_percent": 17.1875
+    },
+    {
+      "requested_fraction": 0.18,
+      "requested_percent": 18,
+      "actual_k": 46,
+      "actual_fraction": 0.1796875,
+      "actual_percent": 17.96875
+    },
+    {
+      "requested_fraction": 0.19,
+      "requested_percent": 19,
+      "actual_k": 49,
+      "actual_fraction": 0.19140625,
+      "actual_percent": 19.140625
+    },
+    {
+      "requested_fraction": 0.2,
+      "requested_percent": 20,
+      "actual_k": 51,
+      "actual_fraction": 0.19921875,
+      "actual_percent": 19.921875
+    },
+    {
+      "requested_fraction": 0.21,
+      "requested_percent": 21,
+      "actual_k": 54,
+      "actual_fraction": 0.2109375,
+      "actual_percent": 21.09375
+    },
+    {
+      "requested_fraction": 0.22,
+      "requested_percent": 22,
+      "actual_k": 56,
+      "actual_fraction": 0.21875,
+      "actual_percent": 21.875
+    },
+    {
+      "requested_fraction": 0.23,
+      "requested_percent": 23,
+      "actual_k": 59,
+      "actual_fraction": 0.23046875,
+      "actual_percent": 23.046875
+    },
+    {
+      "requested_fraction": 0.24,
+      "requested_percent": 24,
+      "actual_k": 61,
+      "actual_fraction": 0.23828125,
+      "actual_percent": 23.828125
+    },
+    {
+      "requested_fraction": 0.25,
+      "requested_percent": 25,
+      "actual_k": 64,
+      "actual_fraction": 0.25,
+      "actual_percent": 25.0
+    },
+    {
+      "requested_fraction": 0.26,
+      "requested_percent": 26,
+      "actual_k": 67,
+      "actual_fraction": 0.26171875,
+      "actual_percent": 26.171875
+    },
+    {
+      "requested_fraction": 0.27,
+      "requested_percent": 27,
+      "actual_k": 69,
+      "actual_fraction": 0.26953125,
+      "actual_percent": 26.953125
+    },
+    {
+      "requested_fraction": 0.28,
+      "requested_percent": 28,
+      "actual_k": 72,
+      "actual_fraction": 0.28125,
+      "actual_percent": 28.125
+    },
+    {
+      "requested_fraction": 0.29,
+      "requested_percent": 29,
+      "actual_k": 74,
+      "actual_fraction": 0.2890625,
+      "actual_percent": 28.90625
+    },
+    {
+      "requested_fraction": 0.3,
+      "requested_percent": 30,
+      "actual_k": 77,
+      "actual_fraction": 0.30078125,
+      "actual_percent": 30.078125
+    },
+    {
+      "requested_fraction": 0.31,
+      "requested_percent": 31,
+      "actual_k": 79,
+      "actual_fraction": 0.30859375,
+      "actual_percent": 30.859375
+    },
+    {
+      "requested_fraction": 0.32,
+      "requested_percent": 32,
+      "actual_k": 82,
+      "actual_fraction": 0.3203125,
+      "actual_percent": 32.03125
+    },
+    {
+      "requested_fraction": 0.33,
+      "requested_percent": 33,
+      "actual_k": 84,
+      "actual_fraction": 0.328125,
+      "actual_percent": 32.8125
+    },
+    {
+      "requested_fraction": 0.34,
+      "requested_percent": 34,
+      "actual_k": 87,
+      "actual_fraction": 0.33984375,
+      "actual_percent": 33.984375
+    },
+    {
+      "requested_fraction": 0.35,
+      "requested_percent": 35,
+      "actual_k": 90,
+      "actual_fraction": 0.3515625,
+      "actual_percent": 35.15625
+    },
+    {
+      "requested_fraction": 0.36,
+      "requested_percent": 36,
+      "actual_k": 92,
+      "actual_fraction": 0.359375,
+      "actual_percent": 35.9375
+    },
+    {
+      "requested_fraction": 0.37,
+      "requested_percent": 37,
+      "actual_k": 95,
+      "actual_fraction": 0.37109375,
+      "actual_percent": 37.109375
+    },
+    {
+      "requested_fraction": 0.38,
+      "requested_percent": 38,
+      "actual_k": 97,
+      "actual_fraction": 0.37890625,
+      "actual_percent": 37.890625
+    },
+    {
+      "requested_fraction": 0.39,
+      "requested_percent": 39,
+      "actual_k": 100,
+      "actual_fraction": 0.390625,
+      "actual_percent": 39.0625
+    },
+    {
+      "requested_fraction": 0.4,
+      "requested_percent": 40,
+      "actual_k": 102,
+      "actual_fraction": 0.3984375,
+      "actual_percent": 39.84375
+    },
+    {
+      "requested_fraction": 0.41,
+      "requested_percent": 41,
+      "actual_k": 105,
+      "actual_fraction": 0.41015625,
+      "actual_percent": 41.015625
+    },
+    {
+      "requested_fraction": 0.42,
+      "requested_percent": 42,
+      "actual_k": 108,
+      "actual_fraction": 0.421875,
+      "actual_percent": 42.1875
+    },
+    {
+      "requested_fraction": 0.43,
+      "requested_percent": 43,
+      "actual_k": 110,
+      "actual_fraction": 0.4296875,
+      "actual_percent": 42.96875
+    },
+    {
+      "requested_fraction": 0.44,
+      "requested_percent": 44,
+      "actual_k": 113,
+      "actual_fraction": 0.44140625,
+      "actual_percent": 44.140625
+    },
+    {
+      "requested_fraction": 0.45,
+      "requested_percent": 45,
+      "actual_k": 115,
+      "actual_fraction": 0.44921875,
+      "actual_percent": 44.921875
+    },
+    {
+      "requested_fraction": 0.46,
+      "requested_percent": 46,
+      "actual_k": 118,
+      "actual_fraction": 0.4609375,
+      "actual_percent": 46.09375
+    },
+    {
+      "requested_fraction": 0.47,
+      "requested_percent": 47,
+      "actual_k": 120,
+      "actual_fraction": 0.46875,
+      "actual_percent": 46.875
+    },
+    {
+      "requested_fraction": 0.48,
+      "requested_percent": 48,
+      "actual_k": 123,
+      "actual_fraction": 0.48046875,
+      "actual_percent": 48.046875
+    },
+    {
+      "requested_fraction": 0.49,
+      "requested_percent": 49,
+      "actual_k": 125,
+      "actual_fraction": 0.48828125,
+      "actual_percent": 48.828125
+    },
+    {
+      "requested_fraction": 0.5,
+      "requested_percent": 50,
+      "actual_k": 128,
+      "actual_fraction": 0.5,
+      "actual_percent": 50.0
+    },
+    {
+      "requested_fraction": 0.51,
+      "requested_percent": 51,
+      "actual_k": 131,
+      "actual_fraction": 0.51171875,
+      "actual_percent": 51.171875
+    },
+    {
+      "requested_fraction": 0.52,
+      "requested_percent": 52,
+      "actual_k": 133,
+      "actual_fraction": 0.51953125,
+      "actual_percent": 51.953125
+    },
+    {
+      "requested_fraction": 0.53,
+      "requested_percent": 53,
+      "actual_k": 136,
+      "actual_fraction": 0.53125,
+      "actual_percent": 53.125
+    },
+    {
+      "requested_fraction": 0.54,
+      "requested_percent": 54,
+      "actual_k": 138,
+      "actual_fraction": 0.5390625,
+      "actual_percent": 53.90625
+    },
+    {
+      "requested_fraction": 0.55,
+      "requested_percent": 55,
+      "actual_k": 141,
+      "actual_fraction": 0.55078125,
+      "actual_percent": 55.078125
+    },
+    {
+      "requested_fraction": 0.56,
+      "requested_percent": 56,
+      "actual_k": 143,
+      "actual_fraction": 0.55859375,
+      "actual_percent": 55.859375
+    },
+    {
+      "requested_fraction": 0.57,
+      "requested_percent": 57,
+      "actual_k": 146,
+      "actual_fraction": 0.5703125,
+      "actual_percent": 57.03125
+    },
+    {
+      "requested_fraction": 0.58,
+      "requested_percent": 58,
+      "actual_k": 148,
+      "actual_fraction": 0.578125,
+      "actual_percent": 57.8125
+    },
+    {
+      "requested_fraction": 0.59,
+      "requested_percent": 59,
+      "actual_k": 151,
+      "actual_fraction": 0.58984375,
+      "actual_percent": 58.984375
+    },
+    {
+      "requested_fraction": 0.6,
+      "requested_percent": 60,
+      "actual_k": 154,
+      "actual_fraction": 0.6015625,
+      "actual_percent": 60.15625
+    },
+    {
+      "requested_fraction": 0.61,
+      "requested_percent": 61,
+      "actual_k": 156,
+      "actual_fraction": 0.609375,
+      "actual_percent": 60.9375
+    },
+    {
+      "requested_fraction": 0.62,
+      "requested_percent": 62,
+      "actual_k": 159,
+      "actual_fraction": 0.62109375,
+      "actual_percent": 62.109375
+    },
+    {
+      "requested_fraction": 0.63,
+      "requested_percent": 63,
+      "actual_k": 161,
+      "actual_fraction": 0.62890625,
+      "actual_percent": 62.890625
+    },
+    {
+      "requested_fraction": 0.64,
+      "requested_percent": 64,
+      "actual_k": 164,
+      "actual_fraction": 0.640625,
+      "actual_percent": 64.0625
+    },
+    {
+      "requested_fraction": 0.65,
+      "requested_percent": 65,
+      "actual_k": 166,
+      "actual_fraction": 0.6484375,
+      "actual_percent": 64.84375
+    },
+    {
+      "requested_fraction": 0.66,
+      "requested_percent": 66,
+      "actual_k": 169,
+      "actual_fraction": 0.66015625,
+      "actual_percent": 66.015625
+    },
+    {
+      "requested_fraction": 0.67,
+      "requested_percent": 67,
+      "actual_k": 172,
+      "actual_fraction": 0.671875,
+      "actual_percent": 67.1875
+    },
+    {
+      "requested_fraction": 0.68,
+      "requested_percent": 68,
+      "actual_k": 174,
+      "actual_fraction": 0.6796875,
+      "actual_percent": 67.96875
+    },
+    {
+      "requested_fraction": 0.69,
+      "requested_percent": 69,
+      "actual_k": 177,
+      "actual_fraction": 0.69140625,
+      "actual_percent": 69.140625
+    },
+    {
+      "requested_fraction": 0.7,
+      "requested_percent": 70,
+      "actual_k": 179,
+      "actual_fraction": 0.69921875,
+      "actual_percent": 69.921875
+    },
+    {
+      "requested_fraction": 0.71,
+      "requested_percent": 71,
+      "actual_k": 182,
+      "actual_fraction": 0.7109375,
+      "actual_percent": 71.09375
+    },
+    {
+      "requested_fraction": 0.72,
+      "requested_percent": 72,
+      "actual_k": 184,
+      "actual_fraction": 0.71875,
+      "actual_percent": 71.875
+    },
+    {
+      "requested_fraction": 0.73,
+      "requested_percent": 73,
+      "actual_k": 187,
+      "actual_fraction": 0.73046875,
+      "actual_percent": 73.046875
+    },
+    {
+      "requested_fraction": 0.74,
+      "requested_percent": 74,
+      "actual_k": 189,
+      "actual_fraction": 0.73828125,
+      "actual_percent": 73.828125
+    },
+    {
+      "requested_fraction": 0.75,
+      "requested_percent": 75,
+      "actual_k": 192,
+      "actual_fraction": 0.75,
+      "actual_percent": 75.0
+    },
+    {
+      "requested_fraction": 0.76,
+      "requested_percent": 76,
+      "actual_k": 195,
+      "actual_fraction": 0.76171875,
+      "actual_percent": 76.171875
+    },
+    {
+      "requested_fraction": 0.77,
+      "requested_percent": 77,
+      "actual_k": 197,
+      "actual_fraction": 0.76953125,
+      "actual_percent": 76.953125
+    },
+    {
+      "requested_fraction": 0.78,
+      "requested_percent": 78,
+      "actual_k": 200,
+      "actual_fraction": 0.78125,
+      "actual_percent": 78.125
+    },
+    {
+      "requested_fraction": 0.79,
+      "requested_percent": 79,
+      "actual_k": 202,
+      "actual_fraction": 0.7890625,
+      "actual_percent": 78.90625
+    },
+    {
+      "requested_fraction": 0.8,
+      "requested_percent": 80,
+      "actual_k": 205,
+      "actual_fraction": 0.80078125,
+      "actual_percent": 80.078125
+    },
+    {
+      "requested_fraction": 0.81,
+      "requested_percent": 81,
+      "actual_k": 207,
+      "actual_fraction": 0.80859375,
+      "actual_percent": 80.859375
+    },
+    {
+      "requested_fraction": 0.82,
+      "requested_percent": 82,
+      "actual_k": 210,
+      "actual_fraction": 0.8203125,
+      "actual_percent": 82.03125
+    },
+    {
+      "requested_fraction": 0.83,
+      "requested_percent": 83,
+      "actual_k": 212,
+      "actual_fraction": 0.828125,
+      "actual_percent": 82.8125
+    },
+    {
+      "requested_fraction": 0.84,
+      "requested_percent": 84,
+      "actual_k": 215,
+      "actual_fraction": 0.83984375,
+      "actual_percent": 83.984375
+    },
+    {
+      "requested_fraction": 0.85,
+      "requested_percent": 85,
+      "actual_k": 218,
+      "actual_fraction": 0.8515625,
+      "actual_percent": 85.15625
+    },
+    {
+      "requested_fraction": 0.86,
+      "requested_percent": 86,
+      "actual_k": 220,
+      "actual_fraction": 0.859375,
+      "actual_percent": 85.9375
+    },
+    {
+      "requested_fraction": 0.87,
+      "requested_percent": 87,
+      "actual_k": 223,
+      "actual_fraction": 0.87109375,
+      "actual_percent": 87.109375
+    },
+    {
+      "requested_fraction": 0.88,
+      "requested_percent": 88,
+      "actual_k": 225,
+      "actual_fraction": 0.87890625,
+      "actual_percent": 87.890625
+    },
+    {
+      "requested_fraction": 0.89,
+      "requested_percent": 89,
+      "actual_k": 228,
+      "actual_fraction": 0.890625,
+      "actual_percent": 89.0625
+    },
+    {
+      "requested_fraction": 0.9,
+      "requested_percent": 90,
+      "actual_k": 230,
+      "actual_fraction": 0.8984375,
+      "actual_percent": 89.84375
+    },
+    {
+      "requested_fraction": 0.91,
+      "requested_percent": 91,
+      "actual_k": 233,
+      "actual_fraction": 0.91015625,
+      "actual_percent": 91.015625
+    },
+    {
+      "requested_fraction": 0.92,
+      "requested_percent": 92,
+      "actual_k": 236,
+      "actual_fraction": 0.921875,
+      "actual_percent": 92.1875
+    },
+    {
+      "requested_fraction": 0.93,
+      "requested_percent": 93,
+      "actual_k": 238,
+      "actual_fraction": 0.9296875,
+      "actual_percent": 92.96875
+    },
+    {
+      "requested_fraction": 0.94,
+      "requested_percent": 94,
+      "actual_k": 241,
+      "actual_fraction": 0.94140625,
+      "actual_percent": 94.140625
+    },
+    {
+      "requested_fraction": 0.95,
+      "requested_percent": 95,
+      "actual_k": 243,
+      "actual_fraction": 0.94921875,
+      "actual_percent": 94.921875
+    },
+    {
+      "requested_fraction": 0.96,
+      "requested_percent": 96,
+      "actual_k": 246,
+      "actual_fraction": 0.9609375,
+      "actual_percent": 96.09375
+    },
+    {
+      "requested_fraction": 0.97,
+      "requested_percent": 97,
+      "actual_k": 248,
+      "actual_fraction": 0.96875,
+      "actual_percent": 96.875
+    },
+    {
+      "requested_fraction": 0.98,
+      "requested_percent": 98,
+      "actual_k": 251,
+      "actual_fraction": 0.98046875,
+      "actual_percent": 98.046875
+    },
+    {
+      "requested_fraction": 0.99,
+      "requested_percent": 99,
+      "actual_k": 253,
+      "actual_fraction": 0.98828125,
+      "actual_percent": 98.828125
+    },
+    {
+      "requested_fraction": 1.0,
+      "requested_percent": 100,
+      "actual_k": 256,
+      "actual_fraction": 1.0,
+      "actual_percent": 100.0
+    }
+  ],
+  "step_percent": 1,
+  "num_points_196": 101,
+  "num_points_256": 101
+}
