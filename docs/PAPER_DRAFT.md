@@ -223,9 +223,9 @@ Discovery experiments use frozen deterministic masks specified by their protocol
 
 ### 3.7 Models, data isolation, and forward validation
 
-We study four frozen pretrained Vision Transformer settings: DeiT-Tiny, DeiT-Small, supervised ViT-B/16 AugReg, and self-supervised DINOv2 ViT-S/14 with the no-register checkpoint and official ImageNet linear head. The first three use 196 spatial patches at the evaluated image resolution; DINOv2 uses 256. DeiT and ViT-B classify from [CLS], whereas the evaluated DINOv2 head consumes the concatenation of normalized [CLS] and the mean normalized patch representation. This readout difference is explicitly accounted for when interpreting complete-stream replacement.
+We study four frozen pretrained Vision Transformer settings: `deit_tiny_patch16_224` (DeiT-Tiny, (D=192)), `deit_small_patch16_224` (DeiT-Small, (D=384)), `vit_base_patch16_224.augreg_in1k` (supervised ViT-B/16 AugReg, (D=768)), and `dinov2_vits14_lc` with `layers=1` (self-supervised DINOv2 ViT-S/14, (D=384), no registers, official ImageNet linear head). All have 12 Transformer blocks. The first three produce 196 spatial tokens at (224	imes224) input resolution; DINOv2 produces 256. DeiT and ViT-B classify from [CLS], whereas the evaluated DINOv2 head consumes the concatenation of normalized [CLS] and the mean normalized patch representation. This readout difference is explicitly accounted for when interpreting complete-stream replacement.
 
-Calibration and evaluation each use 1,000 ImageNet-1k validation images with zero overlap. Calibration statistics are computed only from the calibration split. All model weights and classifier heads remain frozen. For ViT-B and DINOv2, the manual block-by-block forward paths used for intervention were verified against the untouched official forward implementation before scientific evaluation.
+Calibration and evaluation each contain 1,000 ImageNet-1k validation images, sampled deterministically as one image per class. The calibration split uses seed 9101 and the evaluation split seed 9201, with exact zero image overlap. All calibration statistics are computed exclusively from calibration activations and without labels. All model weights and classifier heads remain frozen. Official model preprocessing is used for each checkpoint; in particular, ViT-B AugReg uses its checkpoint-specific resize/crop and normalization configuration, while DINOv2 uses its official ImageNet evaluation preprocessing. For ViT-B and DINOv2, the manual block-by-block intervention paths were verified against the untouched official forward implementation before scientific evaluation, with exact prediction agreement in the parity audit.
 
 ### 3.8 Evaluation metrics
 
@@ -250,6 +250,11 @@ $$
 $$
 
 Recovery is treated as not applicable when zero damage is negligible. Statistical comparisons use the evaluation image as the independent unit, with paired margin comparisons, bootstrap confidence intervals, paired parametric and nonparametric tests, effect sizes, and exact McNemar tests for paired accuracy changes. Multiple stochastic replacement seeds are summarized before inferential comparisons rather than pooled as independent images.
+
+### 3.9 Reproducibility controls
+
+All intervention choices are frozen before the corresponding evaluation stage. Calibration and evaluation images are disjoint; [CLS] is untouched in primary patch interventions; replacement masks are content-independent; and model parameters remain unchanged. The final dense robustness sweep uses five spatial mask seeds (31001--31005), each defining one deterministic random permutation shared across all evaluation images, with nested prefix masks across fractions. Gaussian sampling seeds are kept separate from spatial-mask seeds. Integer replaced-token counts and realized fractions are logged explicitly because requested percentages do not always map exactly to integer patch counts. Programmatic validation checks verify split disjointness, mask nesting, fraction-zero clean parity, complete replacement at 100%, frozen weights, calibration-statistic identity, and unique result keys.
+
 
 ## 4. Emergence of Late Patch Content Fungibility
 
