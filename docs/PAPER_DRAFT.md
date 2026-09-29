@@ -400,13 +400,7 @@ This negative result clarifies the scope of fungibility. **A representation can 
 
 Sequence shortening can of course reduce computation: the weighted-carrier proof-of-concept produced measurable end-to-end latency reductions in larger models, including 32.3% in ViT-B and 18.4% in DeiT-Small at batch size 16 on the evaluated GPU. Because simple pruning achieves the same sequence reduction with equal or better accuracy, these speedups should be attributed to shorter sequences rather than to a new competitive compression method. We therefore treat the compression experiments as a boundary test of the mechanistic finding, not as an acceleration contribution.
 
-**Supplementary application evidence.** The carrier-equivalence audit, latency measurements, and geometry-bank falsification are retained as boundary tests rather than headline results.
-
-![Figure S1. Exact carrier equivalence audit.](../figures/fungibility_compression_poc/equivalence_error.png)
-
-![Figure S2. Accuracy versus downstream token count for compression baselines.](../figures/fungibility_compression_poc/accuracy_vs_tail_tokens.png)
-
-![Figure S3. Geometry/diversity synthetic banks versus matched-budget random pruning.](../figures/fungibility_geometry_bank/delta_vs_pruning.png)
+The corresponding equivalence, latency, and matched-budget falsification figures are reported in the Supplementary Material.
 
 
 ### 9.4 Relation to zero ablation and causal interpretation
