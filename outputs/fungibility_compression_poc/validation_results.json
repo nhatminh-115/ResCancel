@@ -1,0 +1,82 @@
+{
+  "outcome": "Outcome A \u2014 EXACT CARRIER WORKS",
+  "classification": "USEFUL APPLICATION",
+  "interpretation": "Weighted centroid carrier preserves centroid-reference accuracy, provides substantial token/FLOP reduction, produces measurable end-to-end latency speedup on GPU, and is highly competitive with matched-budget baselines.",
+  "validation_audit": {
+    "phase_a_exact_equivalence": true,
+    "max_abs_logit_diff_across_all": 4.4912099838256836e-05,
+    "min_prediction_agreement": 1.0,
+    "models_audited": [
+      "deit_tiny",
+      "deit_small",
+      "vit_base",
+      "dinov2"
+    ]
+  },
+  "operating_points": {
+    "deit_tiny": {
+      "F95_point": {
+        "actual_fraction": 0.6377551020408163,
+        "top1_acc": 0.6466000318527222,
+        "M_real": 71.0,
+        "actual_k": 125.0,
+        "total_downstream_tokens": 73.0
+      },
+      "F90_point": {
+        "actual_fraction": 0.7806122448979592,
+        "top1_acc": 0.6122000217437744,
+        "M_real": 43.0,
+        "actual_k": 153.0,
+        "total_downstream_tokens": 45.0
+      }
+    },
+    "deit_small": {
+      "F95_point": {
+        "actual_fraction": 0.7448979591836735,
+        "top1_acc": 0.7244000315666199,
+        "M_real": 50.0,
+        "actual_k": 146.0,
+        "total_downstream_tokens": 52.0
+      },
+      "F90_point": {
+        "actual_fraction": 0.75,
+        "top1_acc": 0.7214000344276428,
+        "M_real": 49.0,
+        "actual_k": 147.0,
+        "total_downstream_tokens": 51.0
+      }
+    },
+    "vit_base": {
+      "F95_point": {
+        "actual_fraction": 0.25,
+        "top1_acc": 0.7396000385284424,
+        "M_real": 147.0,
+        "actual_k": 49.0,
+        "total_downstream_tokens": 149.0
+      },
+      "F90_point": {
+        "actual_fraction": 0.6377551020408163,
+        "top1_acc": 0.6870000243186951,
+        "M_real": 71.0,
+        "actual_k": 125.0,
+        "total_downstream_tokens": 73.0
+      }
+    },
+    "dinov2": {
+      "F95_point": {
+        "actual_fraction": 0.23046875,
+        "top1_acc": 0.754200029373169,
+        "M_real": 197.0,
+        "actual_k": 59.0,
+        "total_downstream_tokens": 199.0
+      },
+      "F90_point": {
+        "actual_fraction": 0.2890625,
+        "top1_acc": 0.7148000478744507,
+        "M_real": 182.0,
+        "actual_k": 74.0,
+        "total_downstream_tokens": 184.0
+      }
+    }
+  }
+}
