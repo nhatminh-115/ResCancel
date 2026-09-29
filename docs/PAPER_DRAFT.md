@@ -1,6 +1,6 @@
 # Patch Content Fungibility in Vision Transformers: Geometric and Diversity Constraints in Late-Layer Representations
 
-> Draft status: manuscript construction started after experimental freeze at V1.  
+> Draft status: full manuscript draft after final robustness and compression-boundary audits.  
 > Canonical numerical source: `docs/PAPER_EVIDENCE_TABLE.md`.  
 > Claim boundaries: `docs/PAPER_CLAIMS_AUDIT.md`.  
 > Do not introduce numerical values not present in the canonical evidence table.
@@ -21,13 +21,18 @@ The first result is that **late patch content becomes strongly fungible**. In De
 
 This fungibility is not equivalent to arbitrary replacement. Geometry-preserving controls reveal that the surrogate activation must remain aligned with the learned late-layer feature space. In ViT-B, replacing 75% of patches with the correct centroid retains 65.4% Top-1 accuracy, but permuting the centroid's feature coordinates reduces accuracy to 38.0%, and sign inversion reduces it to 27.9%. In DINOv2, replacing 25% of patches with the correct centroid retains 74.6% accuracy, whereas coordinate permutation drops to 31.8% and sign inversion to 0.1%. These interventions preserve broad scale statistics while destroying feature-coordinate identity or orientation. The result is a more precise characterization than simple redundancy: late patch content is fungible only within a constrained region of learned representation geometry.
 
+![Figure 3. Geometry-destroying controls across model families.](../figures/fungibility_v1/geometry_controls_across_models.png)
+
+**Figure 3. Valid substitutions are constrained by learned feature geometry.** Coordinate permutation and sign inversion preserve coarse scale properties while disrupting learned feature-coordinate alignment, producing large performance losses relative to the correct calibration centroid.
+
+
 A second boundary emerges when the entire spatial stream is replaced. If every replacement token is identical, downstream computation collapses. Holding the marginal replacement distribution fixed while sampling tokens independently instead of broadcasting a shared vector produces large gains in CLS-readout models: +25.32 percentage points in DeiT-Tiny, +37.08 points in DeiT-Small, and +11.74 points in ViT-B. DINOv2 differs because its official classifier directly consumes the mean final patch representation; under 100% replacement, Top-1 accuracy remains at floor for both shared and independent replacements. Even there, independent variation improves true-class margin by 1.124 with a paired effect size of (d_z=0.301). We therefore treat token-to-token diversity as a strong causal requirement under complete replacement in CLS-readout models, with supporting margin-level evidence under DINOv2's pooled readout rather than claiming universal accuracy rescue.
 
 The structure of this required variation is also informative. A single learned principal direction can provide substantial recovery relative to a matched random one-dimensional direction: 18.64% versus 10.80% in DeiT-Tiny, 28.08% versus 20.78% in DeiT-Small, and 40.10% versus 6.70% in ViT-B. However, earlier controls show that this effect depends on both direction and amplitude, so we do not claim that arbitrary rank-one variation is sufficient. Instead, the result suggests that downstream blocks are selectively compatible with low-dimensional variation aligned to learned late-layer geometry.
 
 Together, these findings support a simple picture of late Vision Transformer computation. Patch tokens begin as image-specific spatial representations, but after repeated global interaction their exact content becomes progressively less necessary for classification. What remains necessary is not the original patch identity itself, but compatibility with the learned feature geometry and, under complete stream replacement, sufficient token-to-token variation to sustain downstream computation. We refer to this regime as **patch content fungibility**.
 
-This paper makes four contributions. First, we introduce a causal substitution framework for testing what information must remain in ordinary spatial patch activations while keeping sequence length and downstream computation fixed. Second, we show that late patch-content fungibility generalizes across DeiT, supervised ViT-B, and self-supervised DINOv2. Third, we demonstrate that valid substitutions are geometry-constrained and that complete stream replacement exposes a causal dependence on token diversity, with the strength of the observable effect depending on classifier readout topology. Fourth, we show that learned low-dimensional variation can partially restore downstream computation, while direction and amplitude remain essential. Our core study is mechanistic rather than an acceleration method: the causal substitution experiments keep sequence length fixed. A separate proof-of-concept tests whether the discovered redundancy can be converted into sequence compression; it confirms exact collapsibility of duplicate surrogate states but does not outperform simple matched-budget pruning.
+This paper makes four contributions. First, we introduce a causal activation-substitution framework and use it to identify **late patch content fungibility** in ordinary spatial ViT tokens: after sufficient depth, downstream classification can tolerate removal of much of their exact image-specific content while token slots and the remaining network are held fixed. Second, we causally decompose the phenomenon and show that fungibility is structured by **feature geometry** and, under complete stream replacement, **token-to-token diversity**; learned low-dimensional directions provide an additional probe of this structure. Third, we show that the phenomenon generalizes across DeiT, supervised ViT-B, and self-supervised DINOv2 and remains robust across dense replacement fractions and five independently sampled spatial masks. Fourth, we establish a boundary between **representational replaceability and practical compressibility**: duplicate surrogate states admit exact multiplicity-aware collapse, yet simple matched-budget pruning outperforms generic synthetic carriers. The paper therefore contributes a mechanistic characterization rather than a new acceleration algorithm.
 
 The remainder of the paper is organized as follows. Section 2 positions patch content fungibility relative to token pruning, token merging, attribution, register-token analyses, and representation redundancy. Section 3 defines the intervention framework and calibration protocol. Section 4 characterizes the emergence of content fungibility with depth. Section 5 isolates geometric constraints on valid replacements. Section 6 studies token-to-token diversity under complete stream replacement. Section 7 examines low-dimensional replacement structure. Section 8 evaluates cross-architecture and cross-training-regime generalization. Section 9 discusses limitations and implications for representation analysis and future compression methods.
 
@@ -68,167 +73,186 @@ The literature above establishes four adjacent facts: ViT patch roles evolve wit
 
 ### 3.1 Problem formulation
 
-Consider a pretrained Vision Transformer with (L) Transformer blocks. For an input image (x), let the token sequence after block (ell) be
+Consider a pretrained Vision Transformer with \(L\) Transformer blocks. For an input image \(x\), let the token sequence after block \(\ell\) be
 
-[
-H^{(ell)}(x) = [,c^{(ell)}(x);, p_1^{(ell)}(x),ldots,p_N^{(ell)}(x),] in mathbb{R}^{(N+1)	imes D},
-]
+$$
+H^{(\ell)}(x)
+=
+\left[
+c^{(\ell)}(x);
+p_1^{(\ell)}(x),\ldots,p_N^{(\ell)}(x)
+\right]
+\in
+\mathbb{R}^{(N+1)\times D},
+$$
 
-where (c^{(ell)}) is the classification token and (p_i^{(ell)}) is the activation of spatial patch position (i). The remaining network from this intervention point to the classifier is denoted (F_{>ell}).
+where \(c^{(\ell)}\) is the classification token and \(p_i^{(\ell)}\) is the activation at spatial patch position \(i\). The remaining network from this intervention point to the classifier is denoted \(F_{>\ell}\).
 
-Our goal is not to determine whether patch position (i) is important in isolation. Instead, we ask whether the remaining computation requires the **exact image-specific value** (p_i^{(ell)}(x)). We therefore intervene after a normal forward pass through block (ell), overwrite selected patch activations, and then resume the untouched pretrained model:
+Our goal is not to determine whether patch position \(i\) is important in isolation. Instead, we ask whether the remaining computation requires the **exact image-specific value** \(p_i^{(\ell)}(x)\). We run the image normally through block \(\ell\), overwrite selected spatial activations, and resume the untouched pretrained model:
 
-[
-	ilde{y} = F_{>ell}(	ilde{H}^{(ell)}).
-]
+$$
+\tilde{y}=F_{>\ell}\!\left(\tilde{H}^{(\ell)}\right).
+$$
 
-For a spatial mask (Msubseteq{1,ldots,N}),
+For a spatial mask \(M\subseteq\{1,\ldots,N\}\),
 
-[
-	ilde{p}_i^{(ell)} =
-egin{cases}
-R_i^{(ell)}, & iin M,\
-p_i^{(ell)}(x), & i
-otin M,
-end{cases}
-]
+$$
+\tilde{p}_i^{(\ell)}
+=
+\begin{cases}
+R_i^{(\ell)}, & i\in M,\\
+p_i^{(\ell)}(x), & i\notin M,
+\end{cases}
+$$
 
 while
 
-[
-	ilde{c}^{(ell)} = c^{(ell)}(x)
-]
+$$
+\tilde{c}^{(\ell)}=c^{(\ell)}(x)
+$$
 
-in all primary patch interventions. Thus, all upstream image processing through block (ell) is preserved, the [CLS] state remains image-specific, sequence length is unchanged, and only the content supplied by selected spatial slots to subsequent blocks is manipulated.
+in all primary patch interventions. Thus, upstream image processing through block \(\ell\) is preserved, [CLS] remains image-specific, sequence length is unchanged, and only the content supplied by selected spatial slots to subsequent blocks is manipulated.
 
-This distinction is central to interpretation. A successful late-layer substitution does **not** imply that the original image or earlier patch computation was unnecessary. It implies only that, conditional on the computation already performed up to depth (ell), the downstream network does not require the exact activation values of the replaced patch slots.
+This distinction is central to interpretation. A successful late-layer substitution does **not** imply that the original image or earlier patch computation was unnecessary. It implies only that, conditional on the computation already performed up to depth \(\ell\), the downstream network does not require the exact activation values of the replaced spatial slots.
 
 ### 3.2 Calibration-derived surrogate representations
 
-Replacement vectors are constructed from a calibration set that is strictly disjoint from evaluation images. Let (mathcal{C}_{ell}) denote the collection of spatial patch activations extracted at depth (ell) from the calibration set. No evaluation activations, labels, or gradients are used to construct the replacements.
+Replacement vectors are constructed from a calibration set strictly disjoint from the evaluation images. Let \(\mathcal{C}_{\ell}\) denote the collection of spatial patch activations extracted at depth \(\ell\) from the calibration set. No evaluation activations, labels, or gradients are used to construct replacements.
 
-We define the calibration centroid
+The calibration centroid is
 
-[
-mu_{ell} = rac{1}{|mathcal{C}_{ell}|}sum_{pinmathcal{C}_{ell}} p.
-]
+$$
+\mu_{\ell}
+=
+\frac{1}{|\mathcal{C}_{\ell}|}
+\sum_{p\in\mathcal{C}_{\ell}} p.
+$$
 
-**Centroid substitution** replaces every selected patch with the same class-agnostic vector:
+**Centroid substitution** replaces every selected patch with the same class-agnostic vector,
 
-[
-R_i^{(ell)} = mu_{ell}.
-]
+$$
+R_i^{(\ell)}=\mu_{\ell}.
+$$
 
-This is a stringent test of exact-content necessity because (mu_{ell}) is not the representation of the current image, nor of any particular calibration image. It is a dataset-level prototype of a late patch activation.
+The centroid is neither the representation of the current image nor the activation of any particular calibration image. It is a dataset-level prototype of a late patch state and therefore provides a stringent test of exact image-specific content necessity.
 
-For **diagonal-Gaussian substitution**, we additionally estimate the per-coordinate calibration standard deviation (sigma_{ell}) and independently sample
+For **diagonal-Gaussian substitution**, we additionally estimate the per-coordinate calibration standard deviation \(\sigma_{\ell}\) and independently sample
 
-[
-R_i^{(ell)} sim
-mathcal{N}!left(
-mu_{ell},
-operatorname{diag}(sigma_{ell}^2)
-ight).
-]
+$$
+R_i^{(\ell)}
+\sim
+\mathcal{N}
+\left(
+\mu_{\ell},
+\operatorname{diag}(\sigma_{\ell}^{2})
+\right).
+$$
 
-This preserves coarse coordinate-wise first- and second-order statistics without preserving image-specific patch content, cross-coordinate covariance, or the original patch identity. We deliberately describe this as moment matching rather than “manifold matching.”
+This preserves coarse coordinate-wise first- and second-order statistics without preserving image-specific content, cross-coordinate covariance, or original patch identity. We deliberately describe this intervention as moment matching rather than manifold matching.
 
 ### 3.3 Destructive and geometric controls
 
 Zero replacement,
 
-[
-R_i^{(ell)} = 0,
-]
+$$
+R_i^{(\ell)}=0,
+$$
 
-serves as a destructive baseline. A central motivation of the study is that zero replacement can confound content removal with severe out-of-distribution activation shift. Accordingly, claims of fungibility are based on the contrast between zero and calibration-derived replacements rather than on zero sensitivity alone.
+serves as a destructive baseline. Zero simultaneously removes image-specific content and introduces a potentially severe activation-distribution shift. Accordingly, claims of fungibility are based on the contrast between zero and calibration-derived replacements rather than on zero sensitivity alone.
 
-To test whether any nonzero vector with similar global scale is sufficient, we use geometry-destroying controls. A **coordinate-permuted centroid** applies a frozen bijection (pi) to the feature dimensions,
+To test whether any nonzero vector with similar global scale is sufficient, we use geometry-destroying controls. A **coordinate-permuted centroid** applies a frozen bijection \(\pi\) to the feature dimensions,
 
-[
-R_i^{(ell)} = pi(mu_{ell}),
-]
+$$
+R_i^{(\ell)}=\pi(\mu_{\ell}),
+$$
 
-preserving the multiset of coordinate values and hence scalar mean, variance, and (L_2) norm while destroying feature-coordinate correspondence. A **sign-inverted centroid** uses
+preserving the multiset of coordinate values and therefore scalar mean, variance, and \(L_2\) norm while destroying feature-coordinate correspondence. A **sign-inverted centroid** uses
 
-[
-R_i^{(ell)} = -mu_{ell},
-]
+$$
+R_i^{(\ell)}=-\mu_{\ell},
+$$
 
-preserving norm while reversing orientation. Large performance differences between (mu_{ell}) and these controls indicate that successful substitution depends on learned feature geometry rather than merely nonzero activation magnitude.
+preserving norm while reversing orientation. Large performance differences between \(\mu_{\ell}\) and these controls indicate that successful substitution depends on learned feature geometry rather than merely nonzero activation magnitude.
 
 ### 3.4 Isolating token-to-token diversity
 
-When every spatial patch is replaced, centroid substitution removes all variation across patch slots. To isolate whether downstream computation requires token-to-token diversity independently of the marginal replacement distribution, we compare two Gaussian interventions with matched per-token statistics.
+When every spatial patch is replaced, centroid substitution removes all variation across patch slots. To isolate whether downstream computation requires token-to-token diversity independently of the marginal replacement distribution, we compare shared and independent Gaussian interventions with matched per-token statistics.
 
-In the **shared** condition, one Gaussian sample (epsilon) is drawn for an image and broadcast to every replaced spatial position:
+In the **shared** condition, one Gaussian sample is drawn for an image and broadcast to every replaced spatial position:
 
-[
-R_i^{(ell)} = mu_{ell} + epsilon
-quadorall i.
-]
+$$
+R_i^{(\ell)}=\mu_{\ell}+\epsilon
+\qquad \forall i.
+$$
 
-In the **independent** condition, each spatial token receives its own sample from the same distribution:
+In the **independent** condition, each spatial token receives its own sample:
 
-[
-R_i^{(ell)} = mu_{ell} + epsilon_i,
-qquad
-epsilon_i overset{	ext{i.i.d.}}{sim}
-mathcal{N}(0,operatorname{diag}(sigma_{ell}^2)).
-]
+$$
+R_i^{(\ell)}
+=
+\mu_{\ell}+\epsilon_i,
+\qquad
+\epsilon_i
+\overset{\mathrm{i.i.d.}}{\sim}
+\mathcal{N}
+\left(
+0,\operatorname{diag}(\sigma_{\ell}^{2})
+\right).
+$$
 
-The expected per-token norm and marginal distribution are therefore matched; the principal manipulated variable is whether different spatial slots carry distinct values. This comparison provides the cleanest causal test of token-to-token diversity under complete stream replacement.
+The expected per-token norm and marginal distribution are therefore matched; the principal manipulated variable is whether different spatial slots carry distinct values.
 
 ### 3.5 Low-dimensional replacement variation
 
-To determine whether useful diversity must occupy the full feature space, we eigendecompose the covariance of centered calibration patch activations. Let (v_k) and (lambda_k) denote eigenvectors and eigenvalues. A natural one-dimensional replacement along component (k) is
+To determine whether useful diversity must occupy the full feature space, we eigendecompose the covariance of centered calibration patch activations. Let \(v_k\) and \(\lambda_k\) denote eigenvectors and eigenvalues. A natural one-dimensional replacement along component \(k\) is
 
-[
-R_i^{(ell)}
+$$
+R_i^{(\ell)}
 =
-mu_{ell}
+\mu_{\ell}
 +
-z_isqrt{lambda_k},v_k,
-qquad z_isimmathcal{N}(0,1).
-]
+z_i\sqrt{\lambda_k}\,v_k,
+\qquad
+z_i\sim\mathcal{N}(0,1).
+$$
 
-We compare learned principal directions with random unit directions under matched variance. These interventions test whether downstream compatibility depends only on having non-identical tokens or also on the orientation and amplitude of their variation. Because the experiments show architecture-specific amplitude sensitivity, we treat low-dimensional recovery as direction- and scale-dependent rather than claiming generic rank-one sufficiency.
+We compare learned principal directions with random unit directions under matched variance. Because the response depends on both direction and amplitude, we treat low-dimensional recovery as a directional probe rather than claiming generic rank-one sufficiency.
 
 ### 3.6 Spatial masks and replacement fraction
 
-For fraction-based interventions, spatial positions are selected independently of image content, labels, attention scores, activation norms, or saliency. A seeded random permutation of the (N) spatial patch positions defines a nested family of masks: larger replacement fractions extend the same ordered prefix rather than selecting an unrelated subset. This design ensures that changes across fractions reflect progressively replacing more positions under a fixed spatial ordering.
+Spatial positions are selected independently of image content, labels, attention scores, activation norms, or saliency. A seeded random permutation of the \(N\) spatial positions defines a nested family of masks: larger replacement fractions extend the same ordered prefix rather than selecting unrelated subsets.
 
-The discovery and mechanism experiments use frozen deterministic masks specified by their corresponding protocols. We additionally perform a final dense-fraction robustness analysis over 101 replacement levels and five independent spatial permutations. This analysis is used only to test whether the observed dose-response depends on a fortunate spatial ordering; the core mechanistic conclusions remain based on the pre-registered intervention contrasts.
+Discovery experiments use frozen deterministic masks specified by their protocols. A final robustness analysis evaluates 101 requested replacement fractions from 0% to 100% over five independent spatial permutations. The purpose of this sweep is to test sensitivity to spatial subset choice and to characterize the continuous dose-response, not to select favorable operating points.
 
 ### 3.7 Models, data isolation, and forward validation
 
-The study spans four pretrained Vision Transformer settings: DeiT-Tiny, DeiT-Small, supervised ViT-B/16 AugReg, and self-supervised DINOv2 ViT-S/14 with the no-register checkpoint and official ImageNet linear head. The first three use 196 spatial patches at the evaluated image resolution, while DINOv2 uses 256. DeiT and ViT-B classification is read from [CLS], whereas the evaluated DINOv2 head consumes the concatenation of normalized [CLS] and the mean normalized patch representation. This difference is explicitly accounted for when interpreting complete-stream replacement.
+We study four frozen pretrained Vision Transformer settings: DeiT-Tiny, DeiT-Small, supervised ViT-B/16 AugReg, and self-supervised DINOv2 ViT-S/14 with the no-register checkpoint and official ImageNet linear head. The first three use 196 spatial patches at the evaluated image resolution; DINOv2 uses 256. DeiT and ViT-B classify from [CLS], whereas the evaluated DINOv2 head consumes the concatenation of normalized [CLS] and the mean normalized patch representation. This readout difference is explicitly accounted for when interpreting complete-stream replacement.
 
-Calibration and evaluation each use 1,000 ImageNet-1k validation images with zero overlap. Calibration statistics are computed only from the calibration split. All model weights and classifier heads remain frozen. For ViT-B and DINOv2, the manual block-by-block forward paths used for intervention were verified against the untouched official forward implementation on held-out images, with exact prediction agreement before any scientific result was issued.
+Calibration and evaluation each use 1,000 ImageNet-1k validation images with zero overlap. Calibration statistics are computed only from the calibration split. All model weights and classifier heads remain frozen. For ViT-B and DINOv2, the manual block-by-block forward paths used for intervention were verified against the untouched official forward implementation before scientific evaluation.
 
 ### 3.8 Evaluation metrics
 
-For each image we record the true-class logit, strongest incorrect logit, true-class margin, Top-1 correctness, prediction flips, and directional correctness changes. Let (m_{mathrm{clean}}(x)) and (m_R(x)) be the true-class margins under clean and replacement conditions. We define mean margin damage as
+For each image we record the true-class logit, strongest incorrect logit, true-class margin, Top-1 correctness, prediction flips, and directional correctness changes. Let \(m_{\mathrm{clean}}(x)\) and \(m_R(x)\) be the true-class margins under clean and replacement conditions. Mean margin damage is
 
-[
-D_R =
-mathbb{E}_x[
-m_{mathrm{clean}}(x)-m_R(x)
-].
-]
-
-When zero replacement produces meaningful damage, we summarize how much of that destructive effect is avoided by a replacement (R) using
-
-[
-operatorname{Recovery}(R)
+$$
+D_R
 =
-rac{D_{mathrm{zero}}-D_R}
-{D_{mathrm{zero}}}.
-]
+\mathbb{E}_x
+\left[
+m_{\mathrm{clean}}(x)-m_R(x)
+\right].
+$$
 
-Recovery is not reported as zero when the denominator is negligible; such cases are treated as not applicable. Statistical comparisons use the evaluation image as the independent unit, with paired margin comparisons, bootstrap confidence intervals, paired parametric and nonparametric tests, effect sizes, and exact McNemar tests for paired accuracy changes. Multiple stochastic replacement seeds are summarized before inferential comparisons rather than being pooled as independent images.
+When zero replacement produces meaningful damage, we summarize how much of that destructive effect is avoided by replacement \(R\) using
 
+$$
+\operatorname{Recovery}(R)
+=
+\frac{D_{\mathrm{zero}}-D_R}
+{D_{\mathrm{zero}}}.
+$$
 
+Recovery is treated as not applicable when zero damage is negligible. Statistical comparisons use the evaluation image as the independent unit, with paired margin comparisons, bootstrap confidence intervals, paired parametric and nonparametric tests, effect sizes, and exact McNemar tests for paired accuracy changes. Multiple stochastic replacement seeds are summarized before inferential comparisons rather than pooled as independent images.
 
 ## 4. Emergence of Late Patch Content Fungibility
 
@@ -242,6 +266,11 @@ The phenomenon is not specific to DeiT. ViT-B/16 AugReg exhibits its strongest l
 
 The location of the strongest window varies across architectures: Depth 8 for the two DeiT models, Depth 7 for ViT-B, and Depth 9 for DINOv2. We therefore do not claim a universal block index at which patch content becomes fungible. The common pattern is instead a transition with depth: after substantial upstream mixing has already occurred, downstream computation becomes increasingly tolerant to losing the exact content of many ordinary spatial patch activations.
 
+![Figure 1. Depth-dependent emergence of patch-content fungibility across model families. Calibration-derived replacements become increasingly tolerated at late depths, while the location of the strongest window varies by architecture.](../figures/fungibility_v1/depth_generalization.png)
+
+**Figure 1. Depth-dependent emergence of patch-content fungibility.** Frozen ViTs are intervened on after selected blocks while [CLS] remains untouched. The separation between destructive zero replacement and calibration-derived surrogates widens in late layers, with architecture-specific peak depths.
+
+
 ### 4.2 Fungibility persists over a broad replacement range
 
 A coarse set of replacement fractions could in principle overstate the effect if the chosen fractions or patch positions happened to be favorable. We therefore perform a final dense sweep over 101 requested fractions from 0% to 100%, using five independent image-independent spatial permutations for each model. Within each permutation, replacement masks are nested, so increasing the fraction progressively extends the same spatial ordering.
@@ -251,6 +280,11 @@ The resulting dose-response is broad rather than isolated. In DeiT-Tiny at Depth
 ViT-B and DINOv2 show the same qualitative separation while differing quantitatively. At ViT-B's primary Depth 7 window, diagonal-Gaussian replacement retains 95% of clean accuracy to \(49.2\% \pm 5.0\%\) replacement and 90% to \(67.4\% \pm 2.1\%\), compared with 20.1% and 28.3% under zero. DINOv2 is more sensitive in absolute terms, but the contrast is especially clear: zero falls below 90% of clean accuracy after only \(3.9\%\) replacement, whereas diagonal-Gaussian substitution remains above that threshold through 43.0% replacement.
 
 Across the five tested spatial permutations, retention-threshold variability remains small relative to the separation between plausible replacements and zero. For the \(F_{90}\) and \(F_{80}\) thresholds, standard deviations are at most 1.7 percentage points in DeiT-Tiny, 1.0 in DeiT-Small, 2.1 in ViT-B, and approximately 1.1 or less in DINOv2. Point-wise accuracy spread can be larger at individual fractions, so we do not describe the phenomenon as spatially invariant. The appropriate conclusion is that patch-content fungibility is robust across independently sampled spatial subsets and is not explained by a single fortunate mask ordering.
+
+![Figure 2. Dense replacement-fraction dose-response over five spatial mask permutations.](../figures/fungibility_dense_fraction/dense_fraction_accuracy.png)
+
+**Figure 2. Continuous dose-response and spatial-mask robustness.** Top-1 accuracy is shown across the full replacement range with variability across five independently sampled, image-independent spatial masks. Centroid and diagonal-Gaussian substitutions remain substantially less destructive than zero over broad fraction intervals.
+
 
 For centroid replacement in the supervised ViTs, the most abrupt local degradation occurs at the final transition to complete replacement, where the last remaining real patches disappear. This boundary behavior is consistent with, but does not by itself establish, the diversity mechanism isolated in Section 6.
 
@@ -284,6 +318,11 @@ In the shared condition, one Gaussian vector is sampled and copied to all patch 
 
 The difference is large in all three CLS-readout architectures. In DeiT-Tiny, shared noise yields 1.02% accuracy, while independent noise reaches 26.34%, a gain of 25.32 percentage points. In DeiT-Small, accuracy rises from 9.28% to 46.36%, a 37.08-point gain. ViT-B rises from 2.94% to 14.68%, a gain of 11.74 points. Because the marginal replacement distribution is held fixed, these gains isolate a causal role for token-to-token diversity under complete stream replacement.
 
+![Figure 4. Shared versus independent replacement diversity under complete patch-stream replacement.](../figures/fungibility_v1/shared_vs_independent_across_models.png)
+
+**Figure 4. Token-to-token diversity matters under complete replacement.** Shared and independent Gaussian replacements have matched marginal statistics but differ in whether spatial tokens carry distinct values. Independent variation strongly improves accuracy in CLS-readout models; DINOv2 provides margin-level rather than accuracy-level support because of its patch-mean readout.
+
+
 ### 6.2 DINOv2 exposes a readout-dependent boundary
 
 DINOv2 requires a more conservative interpretation because its evaluated classifier directly consumes both normalized [CLS] and the mean normalized patch representation. Under complete replacement, both shared and independent Gaussian conditions remain near the accuracy floor: 0.24% and 0.12%, respectively. Accuracy therefore does not support a diversity-rescue claim in this architecture.
@@ -302,9 +341,25 @@ DINOv2 again remains at an accuracy floor under complete replacement, but the le
 
 These results establish two points. First, useful token diversity need not require high-dimensional independent noise: variation confined to a single learned direction can preserve substantially more downstream function than a static stream. Second, dimensionality alone is insufficient. A random one-dimensional direction with matched energy performs much worse, and separate amplitude controls show that response depends on scale. The appropriate conclusion is therefore not that late patch computation is generically rank-one, but that downstream blocks are selectively receptive to low-dimensional variation aligned with learned representation directions.
 
+![Figure 5. Learned one-dimensional variation versus matched random directions.](../figures/fungibility_v1/learned_vs_random_1d.png)
+
+**Figure 5. Learned low-dimensional directions carry privileged downstream compatibility.** One-dimensional variation along the leading calibration principal direction outperforms energy-matched random directions, most strongly in ViT-B. The result is direction- and amplitude-dependent rather than evidence of generic rank-one sufficiency.
+
+
 ## 8. Cross-Architecture Synthesis
 
-The central pattern replicates across four frozen ViT settings spanning model size, patch resolution, and training paradigm. Clean Top-1 accuracy is 67.90% for DeiT-Tiny, 76.10% for DeiT-Small, 76.10% for supervised ViT-B/16 AugReg, and 78.80% for self-supervised DINOv2 ViT-S/14. Despite substantial differences in zero sensitivity and readout topology, all four exhibit a late regime in which calibration-derived surrogates preserve downstream function far better than destructive zero replacement.
+The central pattern replicates across four frozen ViT settings spanning model size, patch resolution, and training paradigm.
+
+**Table 1. Cross-architecture synthesis of the primary fungibility window.**
+
+| Model | Primary depth | Clean Top-1 | 25% zero | 25% valid surrogate | Zero-damage recovery | Dense \(F_{90}\) for best surrogate | Complete-replacement diversity evidence |
+|---|---:|---:|---:|---:|---:|---:|---|
+| DeiT-Tiny | 8 | 67.90% | 59.10% | Centroid 67.20% | 93.76% | Centroid \(77.9\%\pm1.7\%\) | +25.32 pp independent vs. shared |
+| DeiT-Small | 8 | 76.10% | 69.60% | Centroid 76.10% | 97.54% | Centroid \(86.5\%\pm1.0\%\) | +37.08 pp independent vs. shared |
+| ViT-B/16 AugReg | 7 | 76.10% | 70.40% | Centroid 74.50% | 81.76% | Gaussian \(67.4\%\pm2.1\%\) | +11.74 pp independent vs. shared |
+| DINOv2 ViT-S/14 | 9 | 78.80% | 4.50% | Centroid 74.10% | 93.41% | Gaussian \(43.0\%\pm0.0\%\) | +1.124 true-class margin; accuracy at floor |
+
+ Clean Top-1 accuracy is 67.90% for DeiT-Tiny, 76.10% for DeiT-Small, 76.10% for supervised ViT-B/16 AugReg, and 78.80% for self-supervised DINOv2 ViT-S/14. Despite substantial differences in zero sensitivity and readout topology, all four exhibit a late regime in which calibration-derived surrogates preserve downstream function far better than destructive zero replacement.
 
 The precise operating point is architecture-dependent. DeiT-Tiny and DeiT-Small peak around Depth 8, ViT-B around Depth 7, and DINOv2 around Depth 9. The tolerated replacement fraction also differs markedly: DeiT-Small can retain at least 90% of clean accuracy under centroid substitution through approximately 86.5% replacement, whereas DINOv2's corresponding Gaussian threshold is 43.0%. These differences argue against a universal numerical law for late fungibility.
 
@@ -337,6 +392,15 @@ However, exact preservation of that redundancy is not the best use of a scarce t
 This negative result clarifies the scope of fungibility. **A representation can be replaceable when sequence structure is preserved without being the best candidate to replace when token capacity itself is scarce.** Geometry and diversity characterize valid substitutes in the fixed-length computation, but surviving real patches retain task-relevant image-specific information that generic class-agnostic carriers fail to replace under matched token budgets.
 
 Sequence shortening can of course reduce computation: the weighted-carrier proof-of-concept produced measurable end-to-end latency reductions in larger models, including 32.3% in ViT-B and 18.4% in DeiT-Small at batch size 16 on the evaluated GPU. Because simple pruning achieves the same sequence reduction with equal or better accuracy, these speedups should be attributed to shorter sequences rather than to a new competitive compression method. We therefore treat the compression experiments as a boundary test of the mechanistic finding, not as an acceleration contribution.
+
+**Supplementary application evidence.** The carrier-equivalence audit, latency measurements, and geometry-bank falsification are retained as boundary tests rather than headline results.
+
+![Figure S1. Exact carrier equivalence audit.](../figures/fungibility_compression_poc/equivalence_error.png)
+
+![Figure S2. Accuracy versus downstream token count for compression baselines.](../figures/fungibility_compression_poc/accuracy_vs_tail_tokens.png)
+
+![Figure S3. Geometry/diversity synthetic banks versus matched-budget random pruning.](../figures/fungibility_geometry_bank/delta_vs_pruning.png)
+
 
 ### 9.4 Relation to zero ablation and causal interpretation
 
