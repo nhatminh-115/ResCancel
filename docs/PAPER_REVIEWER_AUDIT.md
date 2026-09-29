@@ -46,8 +46,9 @@ Compression-equivalence, latency, and geometry-bank negative results should rema
 
 - Convert author-year prose citations to the target journal bibliography style after venue selection.
 - Add final author affiliations/acknowledgments/data-access wording.
-- Decide whether Figure 2 dense-fraction curves replace or supplement the older fraction plot.
+- Main-text figure set is frozen at five figures; dense-fraction accuracy is the primary fraction figure. Additional mask/threshold plots are in `PAPER_SUPPLEMENTARY_DRAFT.md`.
 - Generate final vector/PDF figures if the target venue requires them.
+- Supplementary draft is complete at `docs/PAPER_SUPPLEMENTARY_DRAFT.md`; preserve its corrected final interpretations rather than copying stronger historical wording from stage reports.
 - Run final numerical cross-check against `PAPER_EVIDENCE_TABLE.md` after any typesetting conversion.
 - Perform final reference duplication/preprint-versus-proceedings audit before submission.
 
