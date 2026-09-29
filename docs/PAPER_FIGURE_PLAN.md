@@ -133,3 +133,29 @@ The final paper robustness experiment produced 5 dedicated publication-quality f
    - **Path**: [`figures/fungibility_dense_fraction/threshold_summary.png`](file:///d:/Study/ResCancel/figures/fungibility_dense_fraction/threshold_summary.png)
    - **Structure**: 3-panel grouped bar chart comparing maximum fraction retaining $\ge 95\%$, $\ge 90\%$, and $\ge 80\%$ of clean accuracy across Zero, Centroid, and Gaussian conditions, with mask-seed SD error bars.
 
+---
+
+## 5. Mechanism-to-Application Proof of Concept Figures (Weighted Centroid Carrier)
+
+The proof-of-concept application experiment generated 4 publication figures demonstrating exact mathematical sequence compression and physical GPU runtime speedups:
+
+1. **Figure A1: Accuracy vs. Downstream Sequence Length**
+   - **Path**: [`figures/fungibility_compression_poc/accuracy_vs_tail_tokens.png`](file:///d:/Study/ResCancel/figures/fungibility_compression_poc/accuracy_vs_tail_tokens.png)
+   - **Structure**: 4-panel grid comparing Top-1 Accuracy (%) vs. Downstream Patch Tokens ($B = M_{\text{real}} + 1$).
+   - **Curves**: Weighted Centroid Carrier ($s=m$), Image-Mean Carrier ($s=m$), Unweighted Centroid ($s=1$), and Random Pruning (No Carrier).
+
+2. **Figure A2: Theoretical Pareto Efficiency (Accuracy vs. Model GFLOPs)**
+   - **Path**: [`figures/fungibility_compression_poc/accuracy_vs_total_flops.png`](file:///d:/Study/ResCancel/figures/fungibility_compression_poc/accuracy_vs_total_flops.png)
+   - **Structure**: 4-panel grid mapping accuracy against total model theoretical GFLOPs.
+   - **Key Visual Proof**: Shows that Weighted Centroid Carrier achieves up to **$25\%-27\%$ total model compute reduction** while preserving $\ge 90\%-95\%$ of clean accuracy.
+
+3. **Figure A3: Physical Hardware Latency on NVIDIA RTX 5070 GPU**
+   - **Path**: [`figures/fungibility_compression_poc/accuracy_vs_latency.png`](file:///d:/Study/ResCancel/figures/fungibility_compression_poc/accuracy_vs_latency.png)
+   - **Structure**: 2-panel chart comparing measured end-to-end PyTorch CUDA latency (ms) vs. accuracy for Batch Size 1 and Batch Size 16.
+   - **Key Visual Proof**: Direct demonstration of physical speedups: **$+32.3\%$ faster** in ViT-Base ($72.96\text{ ms} \to 49.42\text{ ms}$) and **$+18.4\%$ faster** in DeiT-Small ($20.06\text{ ms} \to 16.36\text{ ms}$).
+
+4. **Figure A4: Exact Numerical Equivalence Audit**
+   - **Path**: [`figures/fungibility_compression_poc/equivalence_error.png`](file:///d:/Study/ResCancel/figures/fungibility_compression_poc/equivalence_error.png)
+   - **Structure**: Dual-panel plot documenting logit discrepancy ($\le 4.49 \times 10^{-5}$) and exact **100.0% prediction agreement** between the compressed carrier and the uncompressed centroid reference across all fractions.
+
+

@@ -72,3 +72,22 @@
 | DINOv2 | 8 | No | Centroid $\mu_8$ | 0.4648 | -0.8023 | $22.7\% \pm 0.8\%$ | $31.3\% \pm 1.1\%$ | $41.7\% \pm 1.0\%$ | 3.8% | $68\% \to 69\%$ (-2.5% Acc) | [`outputs/fungibility_dense_fraction/threshold_crossings.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/threshold_crossings.csv) |
 | DINOv2 | 8 | No | Diag Gauss | 0.5106 | -0.2817 | $29.4\% \pm 1.5\%$ | $40.9\% \pm 1.1\%$ | $52.0\% \pm 0.7\%$ | 4.2% | $77\% \to 78\%$ (-3.3% Acc) | [`outputs/fungibility_dense_fraction/auc_summary.csv`](file:///d:/Study/ResCancel/outputs/fungibility_dense_fraction/auc_summary.csv) |
 
+---
+
+## 4. Mechanism-to-Application Proof of Concept (Weighted Centroid Carrier)
+
+**Protocol Reference**: [`docs/FUNGIBILITY_COMPRESSION_POC_PROTOCOL.md`](file:///d:/Study/ResCancel/docs/FUNGIBILITY_COMPRESSION_POC_PROTOCOL.md)  
+**Detailed Report**: [`docs/FUNGIBILITY_COMPRESSION_POC_REPORT.md`](file:///d:/Study/ResCancel/docs/FUNGIBILITY_COMPRESSION_POC_REPORT.md)  
+**Equivalence Outcome**: **`Outcome A — EXACT CARRIER WORKS`** ($\max \text{error} = 4.49 \times 10^{-5}$, prediction agreement $100.0\%$).  
+**Utility Classification**: **`USEFUL APPLICATION`** (+18.4% to +32.3% physical GPU latency reduction on standard ViTs).  
+
+### 4.1 Compression Operating Points & Physical GPU Latency (RTX 5070, BS=16)
+
+| Model Family | Intervention Depth | Operating Point | Replaced Tokens ($k$) | Downstream Tokens ($T_{\text{orig}} \to T_{\text{comp}}$) | Tail Token Reduction (%) | Top-1 Accuracy (% Clean Retained) | Total Model FLOP Reduction (%) | Clean End-to-End Latency | Compressed End-to-End Latency | Physical Latency Reduction (%) | Machine-Readable Source File |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
+| **ViT-B/16 AugReg** | Depth 7 | $F_{90}$ Point | 125 (63.8%) | $197 \to 73$ | **62.9%** | 68.70% (90.3%) | **26.6%** (9.36 GF) | $72.96\text{ ms}$ | **$49.42\text{ ms}$** | **+32.3% faster** | [`outputs/fungibility_compression_poc/latency_summary.csv`](file:///d:/Study/ResCancel/outputs/fungibility_compression_poc/latency_summary.csv) |
+| **DeiT-Small** | Depth 8 | $F_{90}$ Point | 147 (75.0%) | $197 \to 51$ | **74.1%** | 72.14% (94.8%) | **25.2%** (1.18 GF) | $20.06\text{ ms}$ | **$16.36\text{ ms}$** | **+18.4% faster** | [`outputs/fungibility_compression_poc/latency_summary.csv`](file:///d:/Study/ResCancel/outputs/fungibility_compression_poc/latency_summary.csv) |
+| **DINOv2 ViT-S/14** | Depth 9 | $F_{90}$ Point | 74 (28.9%) | $257 \to 184$ | **28.4%** | 71.48% (90.7%) | **7.6%** (0.50 GF) | $27.97\text{ ms}$ | **$25.20\text{ ms}$** | **+9.9% faster** | [`outputs/fungibility_compression_poc/latency_summary.csv`](file:///d:/Study/ResCancel/outputs/fungibility_compression_poc/latency_summary.csv) |
+| **DeiT-Tiny** | Depth 8 | $F_{90}$ Point | 153 (78.1%) | $197 \to 45$ | **77.2%** | 61.22% (90.2%) | **26.6%** (0.65 GF) | $7.33\text{ ms}$ | $8.47\text{ ms}$ | -15.5% (overhead) | [`outputs/fungibility_compression_poc/latency_summary.csv`](file:///d:/Study/ResCancel/outputs/fungibility_compression_poc/latency_summary.csv) |
+
+

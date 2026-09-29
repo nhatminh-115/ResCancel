@@ -163,3 +163,20 @@ No existing paper claims are retracted, weakened, or altered. The experiment pro
    - **Finding**: Centroid and Gaussian replacements outperform destructive Zero replacement at **$96.9\% – 100.0\%$** of all evaluated fraction points where Zero is damaging ($m_{\text{damage}} \ge 0.10$).
    - **Verdict**: The fungibility advantage is sustained continuously across the entire spectrum, not confined to coarse isolated points ($25\%, 50\%, 75\%$).
 
+---
+
+## 4. Mechanism-to-Application Audit: Weighted Centroid Carrier Compression
+
+Following the completion of the pre-registered **Fungibility-to-Compression Proof of Concept** (`outputs/fungibility_compression_poc/`), the application claims were audited against empirical evidence.
+
+### Audit Verdict: **`USEFUL APPLICATION AS DIRECT ENGINEERING CONSEQUENCE`**
+- **Outcome A Confirmed**: Multiplicity-aware carrier compression achieves exact numerical equivalence ($\max \text{error} = 4.49 \times 10^{-5}$, $100.0\%$ prediction agreement) across all tested models.
+- **Physical Inference Acceleration**: On an NVIDIA GeForce RTX 5070 GPU (BS=16), downstream sequence compression delivers **$+32.3\%$ end-to-end latency reduction** in ViT-Base ($72.96\text{ ms} \to 49.42\text{ ms}$) and **$+18.4\%$** in DeiT-Small ($20.06\text{ ms} \to 16.36\text{ ms}$).
+- **Claim Boundaries & Framing Guardrails**:
+  1. *Non-Novelty of Multiplicity-Aware Attention:* The mathematical formulation of proportional attention ($+\log(s_j)$) is related to existing token-merging literature (e.g., ToMe). The paper **must not** claim proportional attention math as a novel algorithmic invention.
+  2. *Mechanistic Primacy:* The manuscript remains primarily a study of late-layer representation geometry and content fungibility. Sequence compression is presented as an empirical validation that fungible tokens are computationally redundant.
+  3. *Lightweight Model Caveat:* End-to-end speedups do not materialize for ultra-small models (DeiT-Tiny) where PyTorch kernel launch overhead dominates downstream savings. Speedup scales with model capacity.
+- **Allowed Paper Framing**: *"Because late Vision Transformer patch tokens become content-fungible with respect to a class-agnostic prototype, identical replaced tokens can be collapsed into a single multiplicity-aware carrier token, yielding up to 32% end-to-end physical inference acceleration without fine-tuning or retraining."*
+- **Forbidden Framing**: *"We introduce a novel proportional attention mechanism that outperforms all token pruning methods."*
+
+
