@@ -1,0 +1,38 @@
+{
+  "protocol_version": "Fungibility V0.9",
+  "timestamp": "2026-09-29 10:59:57",
+  "models": [
+    "deit_tiny_patch16_224",
+    "deit_small_patch16_224"
+  ],
+  "target_depth": 8,
+  "n_calib": 1000,
+  "n_eval": 1000,
+  "cls_untouched": true,
+  "replacement_token_count": 196,
+  "natural_pca_unscaled": true,
+  "energy_matched_reproduced": true,
+  "pc1_scale_multipliers": [
+    0.25,
+    0.5,
+    1.0,
+    2.0,
+    4.0,
+    "E_MATCH"
+  ],
+  "max_random_u_norm_error": 1.1920928955078125e-07,
+  "random_1d_variance_matched": true,
+  "perturbation_energy_logged": true,
+  "per_image_rank_computed": true,
+  "attention_diagnostics_measured": true,
+  "seeds_protocol_compliant": true,
+  "zero_labels_or_gradients": true,
+  "tiny_runtime_s": 1042.4045493602753,
+  "small_runtime_s": 1908.2350573539734,
+  "tiny_peak_vram_mb": 294.20556640625,
+  "small_peak_vram_mb": 596.21044921875,
+  "verdict": "OUTCOME_D",
+  "verdict_description": "OUTCOME D \u2014 GENERIC LOW-DIMENSIONAL SEED: Multiple single directions or random 1D directions produce comparable recovery once natural amplitude is used.",
+  "rank_propagation_verdict": "RANK-PRESERVING",
+  "rank_propagation_description": "RANK-PRESERVING: Effective patch representation rank remains close to 1 throughout downstream Blocks 9-11."
+}

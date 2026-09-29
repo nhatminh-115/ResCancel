@@ -1,0 +1,123 @@
+{
+  "verdict": "OUTCOME_D",
+  "verdict_description": "OUTCOME D \u2014 GENERIC LOW-DIMENSIONAL SEED: Multiple single directions or random 1D directions produce comparable recovery once natural amplitude is used.",
+  "rank_propagation_verdict": "RANK-PRESERVING",
+  "rank_propagation_description": "RANK-PRESERVING: Effective patch representation rank remains close to 1 throughout downstream Blocks 9-11.",
+  "tiny": {
+    "r8_reaches_90": false,
+    "target_90_acc": 0.25410000000000005,
+    "low_rank_gain_natural_vs_em": 0.04929999999999999,
+    "pc1_vs_rand_diff": 0.07839999999999997,
+    "pc1_vs_pc2_diff": 0.06599999999999999,
+    "r_eff_depth8": 1.0,
+    "r_eff_block11": 1.248024821281433
+  },
+  "small": {
+    "r4_reaches_90": false,
+    "target_90_acc": 0.4364,
+    "pc1_vs_rand_diff": 0.07300000000000001,
+    "pc1_vs_pc2_diff": 0.008399999999999963,
+    "r_eff_depth8": 1.0,
+    "r_eff_block11": 1.790888786315918
+  },
+  "tiny_summary": {
+    "centroid_acc": 0.102,
+    "gaussian_acc": 0.271,
+    "natural_pca_accs": {
+      "1": 0.18659999999999996,
+      "2": 0.19380000000000003,
+      "4": 0.1848,
+      "8": 0.1874,
+      "16": 0.19019999999999998,
+      "32": 0.21059999999999998,
+      "64": 0.22480000000000003
+    },
+    "energy_matched_pca_accs": {
+      "1": 0.1718,
+      "2": 0.12840000000000001,
+      "4": 0.1224,
+      "8": 0.1328,
+      "16": 0.16040000000000001,
+      "32": 0.1874,
+      "64": 0.21760000000000002
+    },
+    "pc_identity_natural": {
+      "1": 0.18639999999999998,
+      "2": 0.1204,
+      "3": 0.1052,
+      "4": 0.0408,
+      "8": 0.1052,
+      "16": 0.1072
+    },
+    "pc_identity_matched": {
+      "1": 0.18639999999999998,
+      "2": 0.08020000000000001,
+      "3": 0.015,
+      "4": 0.041600000000000005,
+      "8": 0.08679999999999999,
+      "16": 0.1226
+    },
+    "random_1d_acc": 0.10800000000000001
+  },
+  "small_summary": {
+    "centroid_acc": 0.17,
+    "gaussian_acc": 0.466,
+    "natural_pca_accs": {
+      "1": 0.27860000000000007,
+      "2": 0.37979999999999997,
+      "4": 0.3894,
+      "8": 0.40499999999999997,
+      "16": 0.4152,
+      "32": 0.42800000000000005,
+      "64": 0.437
+    },
+    "energy_matched_pca_accs": {
+      "1": 0.46180000000000004,
+      "2": 0.45920000000000005,
+      "4": 0.4452,
+      "8": 0.45780000000000004,
+      "16": 0.4568,
+      "32": 0.454,
+      "64": 0.44639999999999996
+    },
+    "pc_identity_natural": {
+      "1": 0.2808,
+      "2": 0.27240000000000003,
+      "3": 0.14420000000000002,
+      "4": 0.1706,
+      "8": 0.17899999999999996,
+      "16": 0.1722
+    },
+    "pc_identity_matched": {
+      "1": 0.2808,
+      "2": 0.23499999999999996,
+      "3": 0.128,
+      "4": 0.165,
+      "8": 0.0538,
+      "16": 0.0838
+    },
+    "random_1d_acc": 0.20779999999999998
+  },
+  "tiny_propagation": {
+    "r_eff_depth8": 1.0,
+    "r_eff_block9": 1.0855278968811035,
+    "r_eff_block10": 1.139575481414795,
+    "r_eff_block11": 1.248024821281433,
+    "geometric_expansion": {
+      "pc1_correlation": 0.9789469018578529,
+      "pc1_variance_fraction": 0.7255708687709661,
+      "orthogonal_variance_fraction": 0.2744291312290338
+    }
+  },
+  "small_propagation": {
+    "r_eff_depth8": 1.0,
+    "r_eff_block9": 1.3732972145080566,
+    "r_eff_block10": 1.6363755464553833,
+    "r_eff_block11": 1.790888786315918,
+    "geometric_expansion": {
+      "pc1_correlation": 0.9303745999932289,
+      "pc1_variance_fraction": 0.2535544852658366,
+      "orthogonal_variance_fraction": 0.7464455147341633
+    }
+  }
+}
