@@ -237,6 +237,9 @@ def write_main_tex():
 \section*{Supplementary Material}
 \addcontentsline{toc}{section}{Supplementary Material}
 \setcounter{secnumdepth}{0}
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\figurename}{Supplementary Figure}
 \input{supplement_body.tex}
 
 \bibliographystyle{unsrtnat}
