@@ -34,20 +34,21 @@ Low-dimensional PC experiments support Contribution 2 but are not positioned as 
 
 ## 4. Current main figures
 
-1. Depth-dependent emergence: `figures/fungibility_v1/depth_generalization.png`
-2. Dense fraction robustness: `figures/fungibility_dense_fraction/dense_fraction_accuracy.png`
-3. Geometry controls: `figures/fungibility_v1/geometry_controls_across_models.png`
-4. Shared vs independent diversity: `figures/fungibility_v1/shared_vs_independent_across_models.png`
-5. Learned vs random 1D: `figures/fungibility_v1/learned_vs_random_1d.png`
+1. Conceptual overview: `figures/paper_final/main/fig01_conceptual_overview.png`
+2. Depth-dependent emergence: `figures/paper_final/main/fig02_depth_emergence.png`
+3. Dense fraction robustness: `figures/paper_final/main/fig03_dense_fraction.png`
+4. Geometry controls: `figures/paper_final/main/fig04_geometry_constraint.png`
+5. Shared vs independent diversity: `figures/paper_final/main/fig05_diversity_constraint.png`
+6. Learned vs random 1D: `figures/paper_final/main/fig06_lowdim_direction.png`
 
-Compression-equivalence, latency, and geometry-bank negative results should remain supplementary/boundary evidence.
+The six main figures share one publication style and are regenerated from frozen outputs by `scripts/render_paper_figures_final.py`. Compression-equivalence, latency, and geometry-bank negative results remain supplementary/boundary evidence.
 
 ## 5. Current remaining manuscript tasks
 
 - Convert author-year prose citations to the target journal bibliography style after venue selection.
 - Add final author affiliations/acknowledgments/data-access wording.
-- Main-text figure set is frozen at five figures; dense-fraction accuracy is the primary fraction figure. Additional mask/threshold plots are in `PAPER_SUPPLEMENTARY_DRAFT.md`.
-- Generate final vector/PDF figures if the target venue requires them.
+- Main-text figure set is frozen at six figures, including the conceptual overview; dense-fraction accuracy is the primary fraction figure. Nine additional plots are in `PAPER_SUPPLEMENTARY_DRAFT.md`.
+- Final PNG and vector/PDF figure variants are generated under `figures/paper_final/`; preserve this visual language in venue-specific typesetting.
 - Supplementary draft is complete at `docs/PAPER_SUPPLEMENTARY_DRAFT.md`; preserve its corrected final interpretations rather than copying stronger historical wording from stage reports.
 - Run final numerical cross-check against `PAPER_EVIDENCE_TABLE.md` after any typesetting conversion.
 - Perform final reference duplication/preprint-versus-proceedings audit before submission.
