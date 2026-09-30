@@ -112,7 +112,7 @@ def normalize_inline_math(md: str) -> str:
     # The manuscript uses TeX-style inline delimiters \(...\).
     # Pandoc's Markdown reader can treat these as escaped parentheses, so
     # normalize them to dollar-delimited inline math before conversion.
-    md = re.sub(r"\\\\\((.+?)\\\\\)", lambda m: "$" + m.group(1) + "$", md, flags=re.S)
+    md = re.sub(r"\\\((.+?)\\\)", lambda m: "$" + m.group(1) + "$", md, flags=re.S)
     return md
 
 def inject_citations(md: str) -> str:
