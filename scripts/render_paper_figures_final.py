@@ -201,110 +201,166 @@ def _token_grid(ax, x, y, rows=3, cols=6, size=0.022, gap=0.007, colors=None, ed
             k += 1
 
 
-def plot_main_01_schematic() -> None:
-    fig = plt.figure(figsize=(7.25, 4.85))
-    gs = fig.add_gridspec(2, 2, height_ratios=[1.05, 1.0], hspace=0.22, wspace=0.16)
 
-    # (a) intervention design
+def plot_main_01_schematic() -> None:
+    fig = plt.figure(figsize=(7.25, 4.65))
+    gs = fig.add_gridspec(
+        2, 3,
+        height_ratios=[1.12, 1.0],
+        hspace=0.24,
+        wspace=0.16,
+        left=0.04, right=0.99, top=0.98, bottom=0.04,
+    )
+
+    # ------------------------------------------------------------------
+    # (a) Intervention design
+    # ------------------------------------------------------------------
     ax = fig.add_subplot(gs[0, :])
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.axis("off")
-    panel_label(ax, "(a)")
+    ax.text(0.005, 0.98, "(a)", fontsize=10.8, fontweight="bold", va="top", color=C["text"])
+    ax.text(0.055, 0.98, "Activation substitution isolates what late patch states must preserve",
+            fontsize=10.0, fontweight="semibold", va="top", color=C["text"])
 
-    _rounded_box(ax, (0.02, 0.37), (0.12, 0.25), "Image\npatches", fc=C["very_light"], ec=C["light"], weight="semibold")
-    _token_grid(
-        ax,
-        0.035,
-        0.55,
-        rows=3,
-        cols=4,
-        size=0.018,
-        gap=0.006,
-        colors=["#7AA6C2", "#8EC0A4", "#D4A76A", "#9D8AC7", "#6F9FB8", "#B7C98A"],
+    _rounded_box(
+        ax, (0.03, 0.33), (0.12, 0.32),
+        "Input image", fc=C["very_light"], ec="#B8C5D1", fontsize=8.2, weight="semibold"
     )
-    _arrow(ax, (0.145, 0.50), (0.205, 0.50))
+    # Small patch strip below the label instead of behind it.
+    patch_cols = ["#7AA6C2", "#8EC0A4", "#D4A76A", "#9D8AC7"]
+    _token_grid(ax, 0.052, 0.43, rows=1, cols=4, size=0.017, gap=0.006, colors=patch_cols)
 
-    _rounded_box(ax, (0.21, 0.36), (0.16, 0.28), "Early ViT\nblocks", fc="#EEF4F8", ec="#A8C2D4", weight="semibold")
-    _arrow(ax, (0.375, 0.50), (0.43, 0.50))
+    _arrow(ax, (0.155, 0.49), (0.215, 0.49))
+    _rounded_box(
+        ax, (0.22, 0.33), (0.15, 0.32),
+        "Early ViT\nblocks", fc="#EEF4F8", ec="#A8C2D4", fontsize=8.4, weight="semibold"
+    )
+    _arrow(ax, (0.375, 0.49), (0.435, 0.49))
+    _rounded_box(
+        ax, (0.44, 0.28), (0.16, 0.42),
+        "Late patch state\n$H_\\ell$", fc="#F4F7FA", ec="#A8B8C8", fontsize=8.4, weight="semibold"
+    )
+    varied = ["#3F78B5", "#5D91C3", "#32659B", "#759DC7", "#4D80B2"]
+    _token_grid(ax, 0.466, 0.42, rows=1, cols=5, size=0.017, gap=0.006, colors=varied)
 
-    _rounded_box(ax, (0.435, 0.30), (0.17, 0.40), "Late patch\nactivations\n$h_{\\ell,t}$", fc="#F4F7FA", ec="#A8B8C8", weight="semibold")
-    varied = ["#3F78B5", "#5D91C3", "#32659B", "#759DC7", "#4D80B2", "#6A93BE"]
-    _token_grid(ax, 0.458, 0.58, rows=3, cols=5, size=0.018, gap=0.006, colors=varied)
+    # Branch into three interventions.
+    branch_x = 0.655
+    ax.plot([0.605, branch_x], [0.49, 0.49], color="#718096", lw=1.15)
+    ax.plot([branch_x, branch_x], [0.23, 0.76], color="#718096", lw=1.05)
+    for yy in [0.76, 0.49, 0.23]:
+        _arrow(ax, (branch_x, yy), (0.705, yy))
 
-    _arrow(ax, (0.61, 0.59), (0.68, 0.73))
-    _arrow(ax, (0.61, 0.50), (0.68, 0.50))
-    _arrow(ax, (0.61, 0.41), (0.68, 0.27))
+    _rounded_box(
+        ax, (0.71, 0.67), (0.18, 0.18),
+        "Zero\nreplacement", fc="#FBECEC", ec="#E1A7A5", fontsize=8.1, weight="semibold"
+    )
+    _rounded_box(
+        ax, (0.71, 0.40), (0.18, 0.18),
+        "Calibration\nsurrogate", fc="#EAF3FA", ec="#9BC0DE", fontsize=8.1, weight="semibold"
+    )
+    _rounded_box(
+        ax, (0.71, 0.14), (0.18, 0.18),
+        "Unmodified\nreference", fc="#EEF7F0", ec="#9EC5AA", fontsize=8.1, weight="semibold"
+    )
+    ax.text(0.915, 0.76, "destructive", color=C["zero"], fontsize=7.8, fontweight="semibold", va="center")
+    ax.text(0.915, 0.49, "often tolerated late", color=C["gaussian"], fontsize=7.8, fontweight="semibold", va="center")
+    ax.text(0.915, 0.23, "clean", color=C["clean"], fontsize=7.8, fontweight="semibold", va="center")
 
-    _rounded_box(ax, (0.69, 0.67), (0.19, 0.18), "Zero\nreplacement", fc="#FBECEC", ec="#E1A7A5", weight="semibold")
-    _rounded_box(ax, (0.69, 0.41), (0.19, 0.18), "Centroid / Gaussian\nfrom calibration", fc="#EAF3FA", ec="#9BC0DE", weight="semibold")
-    _rounded_box(ax, (0.69, 0.15), (0.19, 0.18), "Exact image-specific\npatch content", fc="#EEF7F0", ec="#9EC5AA", weight="semibold")
+    ax.text(
+        0.49, 0.055,
+        "Upstream image processing is unchanged; [CLS], token slots, sequence length, model weights, and downstream blocks remain fixed.",
+        fontsize=7.4, color="#52606D", ha="center", va="bottom",
+    )
 
-    ax.text(0.91, 0.76, "large drop", color=C["zero"], fontsize=8.5, fontweight="semibold", va="center")
-    ax.text(0.91, 0.50, "late tolerance", color=C["gaussian"], fontsize=8.5, fontweight="semibold", va="center")
-    ax.text(0.91, 0.24, "reference", color=C["clean"], fontsize=8.5, fontweight="semibold", va="center")
-    ax.text(0.47, 0.09, "Intervene after upstream image processing; keep model weights, [CLS], sequence length, and downstream blocks fixed.",
-            fontsize=7.8, color="#52606D", ha="center")
-
-    # (b) geometry constraint
+    # ------------------------------------------------------------------
+    # (b) Geometry constraint
+    # ------------------------------------------------------------------
     ax = fig.add_subplot(gs[1, 0])
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.axis("off")
-    panel_label(ax, "(b)")
-    ax.text(0.02, 0.91, "Geometry constraint", fontsize=10.0, fontweight="semibold", color=C["text"])
+    ax.text(0.00, 0.98, "(b)", fontsize=10.8, fontweight="bold", va="top", color=C["text"])
+    ax.text(0.15, 0.98, "Geometry", fontsize=9.6, fontweight="semibold", va="top", color=C["text"])
 
-    vals = np.array([0.20, 0.72, 0.43, 0.88, 0.35, 0.60])
-    x0 = 0.08
+    vals = np.array([0.25, 0.72, 0.43, 0.88, 0.35, 0.60])
     for i, v in enumerate(vals):
-        ax.add_patch(patches.Rectangle((x0 + i * 0.055, 0.55), 0.032, v * 0.25, facecolor=C["centroid"], edgecolor="none"))
-    ax.text(0.25, 0.48, "aligned $\\mu_\\ell$", ha="center", fontsize=8.1)
-    ax.text(0.25, 0.39, "works", ha="center", color=C["gaussian"], fontsize=8.2, fontweight="semibold")
+        ax.add_patch(patches.Rectangle(
+            (0.08 + i * 0.055, 0.56), 0.032, v * 0.22,
+            facecolor=C["centroid"], edgecolor="none"
+        ))
+    ax.text(0.25, 0.48, "aligned $\\mu_\\ell$", ha="center", fontsize=7.7)
+    ax.text(0.25, 0.39, "tolerated", ha="center", color=C["gaussian"], fontsize=8.0, fontweight="semibold")
 
     perm = vals[[3, 0, 5, 2, 1, 4]]
-    x1 = 0.56
     for i, v in enumerate(perm):
-        ax.add_patch(patches.Rectangle((x1 + i * 0.055, 0.55), 0.032, v * 0.25, facecolor=C["permute"], edgecolor="none"))
-    ax.text(0.73, 0.48, "coordinate permutation", ha="center", fontsize=8.1)
-    ax.text(0.73, 0.39, "degrades", ha="center", color=C["zero"], fontsize=8.2, fontweight="semibold")
-    ax.text(0.50, 0.14, "Scale alone is not enough; downstream computation is coordinate- and orientation-sensitive.",
-            ha="center", fontsize=7.7, color="#52606D", wrap=True)
+        ax.add_patch(patches.Rectangle(
+            (0.58 + i * 0.055, 0.56), 0.032, v * 0.22,
+            facecolor=C["permute"], edgecolor="none"
+        ))
+    ax.text(0.75, 0.48, "permuted / sign-flipped", ha="center", fontsize=7.5)
+    ax.text(0.75, 0.39, "degrades", ha="center", color=C["zero"], fontsize=8.0, fontweight="semibold")
 
-    # (c) diversity + boundary
+    _rounded_box(
+        ax, (0.07, 0.09), (0.86, 0.19),
+        "Correct scale is insufficient:\nfeature coordinates and orientation matter.",
+        fc="#F6F8FA", ec="#C3CED8", fontsize=7.2, weight="semibold"
+    )
+
+    # ------------------------------------------------------------------
+    # (c) Diversity constraint
+    # ------------------------------------------------------------------
     ax = fig.add_subplot(gs[1, 1])
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.axis("off")
-    panel_label(ax, "(c)")
-    ax.text(0.02, 0.91, "Diversity constraint and boundary", fontsize=10.0, fontweight="semibold", color=C["text"])
+    ax.text(0.00, 0.98, "(c)", fontsize=10.8, fontweight="bold", va="top", color=C["text"])
+    ax.text(0.15, 0.98, "Diversity", fontsize=9.6, fontweight="semibold", va="top", color=C["text"])
 
-    shared_cols = [C["shared"]] * 12
-    _token_grid(ax, 0.07, 0.70, rows=2, cols=6, size=0.025, gap=0.011, colors=shared_cols)
-    ax.text(0.21, 0.52, "shared token", ha="center", fontsize=8.0)
-    ax.text(0.21, 0.44, "collapse", ha="center", color=C["zero"], fontsize=8.2, fontweight="semibold")
+    _token_grid(ax, 0.10, 0.67, rows=2, cols=5, size=0.025, gap=0.011, colors=[C["shared"]] * 10)
+    ax.text(0.25, 0.47, "shared state", ha="center", fontsize=7.7)
+    ax.text(0.25, 0.38, "collapse", ha="center", color=C["zero"], fontsize=8.0, fontweight="semibold")
 
-    indep_cols = ["#4D8B6A", "#6AA37F", "#357A59", "#80B18F", "#438563", "#75A987"]
-    _token_grid(ax, 0.55, 0.70, rows=2, cols=6, size=0.025, gap=0.011, colors=indep_cols)
-    ax.text(0.69, 0.52, "independent tokens", ha="center", fontsize=8.0)
-    ax.text(0.69, 0.44, "rescue", ha="center", color=C["gaussian"], fontsize=8.2, fontweight="semibold")
+    independent_cols = ["#4D8B6A", "#6AA37F", "#357A59", "#80B18F", "#438563"]
+    _token_grid(ax, 0.59, 0.67, rows=2, cols=5, size=0.025, gap=0.011, colors=independent_cols)
+    ax.text(0.74, 0.47, "independent states", ha="center", fontsize=7.7)
+    ax.text(0.74, 0.38, "rescue", ha="center", color=C["gaussian"], fontsize=8.0, fontweight="semibold")
 
     _rounded_box(
-        ax,
-        (0.08, 0.10),
-        (0.84, 0.21),
-        "Late patch content can be fungible while geometry and token-set diversity remain necessary.\nReplaceability under a full sequence does not imply a superior compression rule.",
-        fc="#F6F8FA",
-        ec="#B8C5D1",
-        fontsize=7.7,
-        weight="semibold",
+        ax, (0.07, 0.09), (0.86, 0.19),
+        "At complete replacement, token-to-token\nvariation remains functionally important.",
+        fc="#F6F8FA", ec="#C3CED8", fontsize=7.2, weight="semibold"
+    )
+
+    # ------------------------------------------------------------------
+    # (d) Compression boundary
+    # ------------------------------------------------------------------
+    ax = fig.add_subplot(gs[1, 2])
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.axis("off")
+    ax.text(0.00, 0.98, "(d)", fontsize=10.8, fontweight="bold", va="top", color=C["text"])
+    ax.text(0.15, 0.98, "Boundary", fontsize=9.6, fontweight="semibold", va="top", color=C["text"])
+
+    _rounded_box(
+        ax, (0.08, 0.60), (0.84, 0.18),
+        "Full sequence\nsurrogates can be tolerated",
+        fc="#EAF3FA", ec="#9BC0DE", fontsize=7.6, weight="semibold"
+    )
+    _arrow(ax, (0.50, 0.59), (0.50, 0.46))
+    _rounded_box(
+        ax, (0.08, 0.28), (0.84, 0.18),
+        "Shorter sequence\nreduces compute",
+        fc="#EEF7F0", ec="#9EC5AA", fontsize=7.6, weight="semibold"
+    )
+    ax.text(0.50, 0.19, "but", ha="center", fontsize=7.2, color="#52606D")
+    ax.text(
+        0.50, 0.095,
+        "matched pruning ≥ synthetic carrier",
+        ha="center", fontsize=7.5, color=C["zero"], fontweight="semibold"
     )
 
     save_figure(fig, MAIN_DIR / "fig01_conceptual_overview")
-
-
-# -----------------------------------------------------------------------------
-# Main Figure 2: depth emergence
-# -----------------------------------------------------------------------------
 
 def _depth_series_deit(path: str) -> Dict[str, np.ndarray]:
     df = _read(path)
@@ -709,7 +765,7 @@ def plot_main_06_lowd() -> None:
     ax1.legend(frameon=False, ncol=2, loc="upper left")
     style_axis(ax1, "y")
     panel_label(ax1, "(a)")
-    ax1.set_title("100% replacement with one-dimensional variation")
+    ax1.set_title("Accuracy under 100% replacement")
 
     gains = []
     for m in MODEL_ORDER:
@@ -723,7 +779,7 @@ def plot_main_06_lowd() -> None:
     ax2.set_ylabel("PC1 − random\ntrue-class margin")
     style_axis(ax2, "y")
     panel_label(ax2, "(b)")
-    ax2.set_title("Direction-specific advantage")
+    ax2.set_title("PC1 advantage over random")
     for bar, val in zip(bars, gains):
         ax2.text(
             bar.get_x() + bar.get_width()/2,
@@ -945,7 +1001,9 @@ def plot_supp_s6_equivalence() -> None:
     panel_label(ax1, "(a)")
 
     ax2.axhline(100, color=C["clean"], linestyle="--", linewidth=1.0)
-    ax2.set_ylim(99.95, 100.02)
+    ax2.set_ylim(99.94, 100.02)
+    ax2.set_yticks([99.95, 100.00])
+    ax2.ticklabel_format(axis="y", style="plain", useOffset=False)
     ax2.set_xlabel("Replaced patches (%)")
     ax2.set_ylabel("Prediction agreement (%)")
     ax2.set_title("Argmax agreement")
