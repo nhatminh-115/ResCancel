@@ -11,12 +11,12 @@ The study was developed as a sequence of falsification experiments rather than a
 | Stage | Main question | Models | Main intervention | Role in final paper |
 |---|---|---|---|---|
 | V0 | Does zero sensitivity imply exact patch-content dependence? | DeiT-Tiny/Small | Zero, cross-image, shuffle, same-image mean | Discovery |
-| V0.5 | Is recovery merely norm matching or generic noise tolerance? | DeiT-Tiny/Small | Sphere, Gaussian, feature shuffle, norm controls | Distribution/geometry falsification |
+| V0.5 | Is recovery merely norm matching or generic noise tolerance? | DeiT-Tiny/Small | Sphere, Gaussian, feature shuffle, norm controls | Distribution and geometry falsification |
 | V0.6 | Does the effect generalize to held-out statistics, depth, and larger budgets? | DeiT-Tiny/Small | Depth 5--10; 10/25/50%; held-out surrogates | Depth transition + held-out validation |
 | V0.7 | How specific is a successful static prototype? | DeiT-Tiny/Small | Wrong-depth means, permutation, sign, scale, cosine; 25--100% | Geometry characterization |
-| V0.8 | Why does complete static replacement fail? | DeiT-Tiny/Small | Shared vs. independent noise; grouped diversity; PCA/random | Diversity mechanism |
+| V0.8 | Why does complete static replacement fail? | DeiT-Tiny/Small | Shared vs. independent noise; grouped diversity; PCA and random | Diversity mechanism |
 | V0.9 | Is low-dimensional variation sufficient, and does direction matter? | DeiT-Tiny/Small | Natural PCA ranks, PC identity, amplitude, propagation | Low-dimensional refinement |
-| V1 | Does the mechanism replicate outside DeiT? | ViT-B AugReg, DINOv2 | Depth/fraction/geometry/diversity/1D | Cross-family replication |
+| V1 | Does the mechanism replicate outside DeiT? | ViT-B AugReg, DINOv2 | Depth, fraction, geometry, diversity, and 1D | Cross-family replication |
 | Dense robustness | Is the finding caused by lucky fractions or lucky spatial masks? | All four | 101 fractions, five masks | Reviewer-facing robustness |
 | Compression POC | Can duplicate surrogate states be collapsed exactly and usefully? | All four | Multiplicity-aware carrier | Boundary test |
 | Geometry bank POC | Do generic geometry/diversity carriers beat real patches at fixed token budget? | All four | PCA/K-means/random banks | Application falsification |
