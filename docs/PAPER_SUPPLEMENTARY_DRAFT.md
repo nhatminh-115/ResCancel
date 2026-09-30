@@ -51,11 +51,11 @@ The final dense-fraction experiment characterizes this boundary continuously rat
 
 Across the five tested masks, threshold variability is small relative to the separation between valid surrogates and zero. The result therefore supports robustness across the tested spatial subsets, not strict spatial invariance.
 
-![Supplementary Figure S1. Dense mask robustness.](../figures/fungibility_dense_fraction/mask_seed_robustness.png)
+![Supplementary Figure S1. Dense mask robustness.](../figures/paper_final/supp/figS01_mask_robustness.png)
 
 **Supplementary Figure S1. Spatial-mask robustness.** Five independently sampled image-independent spatial permutations are overlaid across the full fraction sweep. The main condition ordering persists across masks.
 
-![Supplementary Figure S2. Retention thresholds.](../figures/fungibility_dense_fraction/threshold_summary.png)
+![Supplementary Figure S2. Retention thresholds.](../figures/paper_final/supp/figS02_retention_thresholds.png)
 
 **Supplementary Figure S2. Accuracy-retention thresholds.** Maximum replacement fractions retaining at least 95%, 90%, and 80% of clean accuracy for zero, centroid, and diagonal-Gaussian interventions.
 
@@ -79,11 +79,11 @@ Amplitude controls show that direction alone is insufficient. DeiT-Tiny exhibits
 
 Rank-propagation measurements provide a related diagnostic. A one-dimensional injected patch variation remains dominated by low effective rank as it passes through downstream blocks, while numerical rank increases above one. For this reason the paper avoids the stronger historical phrase “rank-preserving” as a literal rank statement.
 
-![Supplementary Figure S3. Natural versus energy-matched PCA rank.](../figures/fungibility_v0_9/natural_vs_energy_matched_rank.png)
+![Supplementary Figure S3. Natural versus energy-matched PCA rank.](../figures/paper_final/supp/figS03_pca_rank.png)
 
-![Supplementary Figure S4. PC1 amplitude sensitivity.](../figures/fungibility_v0_9/pc1_amplitude_sweep.png)
+![Supplementary Figure S4. PC1 amplitude sensitivity.](../figures/paper_final/supp/figS04_pc1_amplitude.png)
 
-![Supplementary Figure S5. Effective-rank propagation.](../figures/fungibility_v0_9/rank_expansion_through_blocks.png)
+![Supplementary Figure S5. Effective-rank propagation.](../figures/paper_final/supp/figS05_rank_propagation.png)
 
 ## S7. Cross-model forward-parity and readout controls
 
@@ -101,11 +101,11 @@ Sequence reduction produces real computational savings. At batch size 16 on the 
 
 The carrier is nevertheless not a competitive compression rule. At matched downstream token budgets, random pruning and an unweighted centroid match or outperform the multiplicity-aware carrier. For example, at the tested ViT-B budget, random pruning reaches 72.48% accuracy versus 68.70% for the weighted carrier; in DINOv2 the corresponding values are 77.40% and 71.48%. Therefore the measured latency reduction should be attributed to shorter sequences, not to a superior carrier mechanism.
 
-![Supplementary Figure S6. Exact multiplicity-aware carrier equivalence.](../figures/fungibility_compression_poc/equivalence_error.png)
+![Supplementary Figure S6. Exact multiplicity-aware carrier equivalence.](../figures/paper_final/supp/figS06_carrier_equivalence.png)
 
-![Supplementary Figure S7. Accuracy versus downstream token count.](../figures/fungibility_compression_poc/accuracy_vs_tail_tokens.png)
+![Supplementary Figure S7. Accuracy versus downstream token count.](../figures/paper_final/supp/figS07_accuracy_vs_tokens.png)
 
-![Supplementary Figure S8. Accuracy versus measured GPU latency.](../figures/fungibility_compression_poc/accuracy_vs_latency.png)
+![Supplementary Figure S8. Accuracy versus measured GPU latency.](../figures/paper_final/supp/figS08_accuracy_vs_latency.png)
 
 ## S9. Geometry-bank falsification under matched token budgets
 
@@ -115,7 +115,7 @@ Across all four architectures, both tested budgets per architecture, all three b
 
 The result establishes the boundary summarized in the main text: **replaceability under preserved sequence structure is not equivalent to usefulness under scarce token capacity**.
 
-![Supplementary Figure S9. Synthetic geometry-bank delta relative to random pruning.](../figures/fungibility_geometry_bank/delta_vs_pruning.png)
+![Supplementary Figure S9. Synthetic geometry-bank delta relative to random pruning.](../figures/paper_final/supp/figS09_geometry_bank_vs_pruning.png)
 
 ## S10. Statistical and reproducibility notes
 
