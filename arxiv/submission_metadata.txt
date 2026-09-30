@@ -1,0 +1,31 @@
+ARXIV V1 COPY-PASTE METADATA
+
+Title:
+Patch Content Fungibility in Vision Transformers: Geometric and Diversity Constraints in Late-Layer Representations
+
+Authors:
+Nhat Minh Nghiem
+
+Affiliation:
+University of Economics Ho Chi Minh City (UEH)
+
+Primary category:
+cs.CV (Computer Vision and Pattern Recognition)
+
+Cross-list candidate:
+cs.LG (Machine Learning)
+
+Abstract:
+Vision Transformers maintain spatial patch tokens throughout inference, but it is unclear which properties of those representations remain necessary after substantial global mixing. We study this question with causal activation substitution: after a selected Transformer block, we replace ordinary spatial patch activations while keeping the pretrained model, [CLS] state, sequence length, and remaining computation fixed. Across DeiT-Tiny, DeiT-Small, supervised ViT-B/16 AugReg, and self-supervised DINOv2 ViT-S/14, we identify a late regime of patch content fungibility in which class-agnostic calibration centroids or coarse Gaussian surrogates preserve downstream classification far better than destructive zero replacement. This tolerance is structured rather than arbitrary. Coordinate permutation and sign inversion strongly degrade valid surrogates, revealing a constraint from learned feature geometry; under complete patch-stream replacement, independent rather than identical surrogate tokens substantially improve downstream function, revealing a causal dependence on token-to-token diversity. Learned one-dimensional variation further outperforms matched random directions, showing that useful diversity is direction-specific. Dense fraction sweeps and multiple spatial masks establish robustness across architectures and intervention budgets. Finally, exact collapse of duplicate surrogate states yields real sequence-level speedups but does not outperform matched-budget pruning, separating representational replaceability from practical compressibility. These results provide a mechanistic characterization of what late ViT patch streams must preserve after exact patch-specific content becomes dispensable.
+
+Comments:
+Preprint. Main manuscript with supplementary material.
+
+Journal reference:
+Leave blank for arXiv v1.
+
+DOI:
+Leave blank for arXiv v1.
+
+License:
+CHOOSE MANUALLY IN THE ARXIV UI. Do not submit until the author has selected the intended license.
