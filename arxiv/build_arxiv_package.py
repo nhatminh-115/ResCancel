@@ -88,7 +88,9 @@ def split_main(md: str):
     m_intro = re.search(r"^## 1\. Introduction\s*$", md, flags=re.M)
     if not m_abs or not m_intro:
         raise RuntimeError("Could not locate Abstract / Introduction in main manuscript.")
-    abstract = md[m_abs.end():m_intro.start()].strip()
+    between = md[m_abs.end():m_intro.start()]
+    keyword_match = re.search(r"^\*\*Keywords:\*\*.*$", between, flags=re.M)
+    abstract = (between[:keyword_match.start()] if keyword_match else between).strip()
     body = md[m_intro.start():].strip()
     return abstract, body
 
@@ -115,6 +117,36 @@ def normalize_inline_math(md: str) -> str:
     md = re.sub(r"\\\((.+?)\\\)", lambda m: "$" + m.group(1) + "$", md, flags=re.S)
     return md
 
+def merge_figure_captions(md: str) -> str:
+    lines = md.splitlines()
+    out = []
+    i = 0
+    while i < len(lines):
+        line = lines[i]
+        m = re.match(r"!\[(?:Supplementary )?Figure ([0-9S]+)\.\s*(.*?)\]\(([^)]+)\)", line)
+        if m:
+            number, short_caption, path = m.groups()
+            j = i + 1
+            while j < len(lines) and lines[j].strip() == "":
+                j += 1
+            if j < len(lines):
+                detail = lines[j].strip()
+                prefix = f"**Figure {number}. "
+                supp_prefix = f"**Supplementary Figure {number}. "
+                if detail.startswith(prefix) or detail.startswith(supp_prefix):
+                    plain = detail.replace("**", "")
+                    plain = re.sub(rf"^(?:Supplementary )?Figure {re.escape(number)}\.\s*", "", plain)
+                    out.append(f"![{plain}]({path})")
+                    i = j + 1
+                    continue
+            clean = short_caption.strip()
+            out.append(f"![{clean}]({path})")
+            i += 1
+            continue
+        out.append(line)
+        i += 1
+    return "\n".join(out)
+
 def inject_citations(md: str) -> str:
     for old, new in INLINE_CITATIONS.items():
         md = md.replace(old, new)
@@ -122,13 +154,17 @@ def inject_citations(md: str) -> str:
         md = md.replace(old, new)
     return md
 
-def markdown_to_latex(md_path: Path, tex_path: Path):
+def markdown_to_latex(md_path: Path, tex_path: Path, shift_heading: bool = False):
     cmd = [
         "pandoc",
         str(md_path),
         "--from=markdown+raw_tex+tex_math_dollars",
         "--to=latex",
         "--wrap=preserve",
+    ]
+    if shift_heading:
+        cmd.append("--shift-heading-level-by=-1")
+    cmd += [
         "-o",
         str(tex_path),
     ]
@@ -190,9 +226,9 @@ def write_main_tex():
 \input{main_body.tex}
 
 \clearpage
-\appendix
 \section*{Supplementary Material}
 \addcontentsline{toc}{section}{Supplementary Material}
+\setcounter{secnumdepth}{0}
 \input{supplement_body.tex}
 
 \bibliographystyle{unsrtnat}
@@ -240,8 +276,8 @@ def main():
     supp = prepare_supp(SUPP_MD.read_text(encoding="utf-8"))
 
     abstract = inject_citations(normalize_inline_math(normalize_paths(abstract)))
-    body = inject_citations(normalize_inline_math(normalize_paths(body)))
-    supp = inject_citations(normalize_inline_math(normalize_paths(supp)))
+    body = inject_citations(merge_figure_captions(normalize_inline_math(normalize_paths(body))))
+    supp = inject_citations(merge_figure_captions(normalize_inline_math(normalize_paths(supp))))
 
     # Markdown intermediates remain only in build/, never in the arXiv ZIP.
     tmp = BUILD / "tmp"
@@ -251,8 +287,8 @@ def main():
     (tmp / "supplement.md").write_text(supp, encoding="utf-8")
 
     markdown_to_latex(tmp / "abstract.md", SRC / "abstract_body.tex")
-    markdown_to_latex(tmp / "main.md", SRC / "main_body.tex")
-    markdown_to_latex(tmp / "supplement.md", SRC / "supplement_body.tex")
+    markdown_to_latex(tmp / "main.md", SRC / "main_body.tex", shift_heading=True)
+    markdown_to_latex(tmp / "supplement.md", SRC / "supplement_body.tex", shift_heading=True)
 
     shutil.copy2(BIB, SRC / "references.bib")
     copy_figures()
