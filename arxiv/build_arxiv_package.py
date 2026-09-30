@@ -108,6 +108,13 @@ def prepare_supp(md: str) -> str:
 def normalize_paths(md: str) -> str:
     return md.replace("../figures/", "figures/")
 
+def normalize_inline_math(md: str) -> str:
+    # The manuscript uses TeX-style inline delimiters \(...\).
+    # Pandoc's Markdown reader can treat these as escaped parentheses, so
+    # normalize them to dollar-delimited inline math before conversion.
+    md = re.sub(r"\\\\\((.+?)\\\\\)", lambda m: "$" + m.group(1) + "$", md, flags=re.S)
+    return md
+
 def inject_citations(md: str) -> str:
     for old, new in INLINE_CITATIONS.items():
         md = md.replace(old, new)
@@ -126,6 +133,12 @@ def markdown_to_latex(md_path: Path, tex_path: Path):
         str(tex_path),
     ]
     run(cmd)
+    tex = tex_path.read_text(encoding="utf-8")
+    tex = tex.replace(
+        r"\\includegraphics{",
+        r"\\includegraphics[width=\\linewidth,height=0.78\\textheight,keepaspectratio]{",
+    )
+    tex_path.write_text(tex, encoding="utf-8")
 
 def copy_figures():
     for rel in FIGURES:
@@ -146,6 +159,7 @@ def write_main_tex():
 \geometry{margin=1in}
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs,longtable,array}
+\usepackage{calc}
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{float}
@@ -155,6 +169,8 @@ def write_main_tex():
 \usepackage{enumitem}
 \setlist{nosep}
 \setlength{\emergencystretch}{3em}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\real}[1]{#1}
 
 \title{""" + TITLE + r"""}
 \author{""" + AUTHOR + r"""\\
@@ -223,9 +239,9 @@ def main():
     abstract, body = split_main(main_raw)
     supp = prepare_supp(SUPP_MD.read_text(encoding="utf-8"))
 
-    abstract = inject_citations(normalize_paths(abstract))
-    body = inject_citations(normalize_paths(body))
-    supp = inject_citations(normalize_paths(supp))
+    abstract = inject_citations(normalize_inline_math(normalize_paths(abstract)))
+    body = inject_citations(normalize_inline_math(normalize_paths(body)))
+    supp = inject_citations(normalize_inline_math(normalize_paths(supp)))
 
     # Markdown intermediates remain only in build/, never in the arXiv ZIP.
     tmp = BUILD / "tmp"
