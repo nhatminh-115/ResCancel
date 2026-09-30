@@ -303,8 +303,8 @@ def plot_main_01_schematic() -> None:
 
     _rounded_box(
         ax, (0.07, 0.09), (0.86, 0.19),
-        "Correct scale is insufficient:\nfeature coordinates and orientation matter.",
-        fc="#F6F8FA", ec="#C3CED8", fontsize=7.2, weight="semibold"
+        "Feature-coordinate identity\nand orientation matter.",
+        fc="#F6F8FA", ec="#C3CED8", fontsize=7.0, weight="semibold"
     )
 
     # ------------------------------------------------------------------
@@ -328,8 +328,8 @@ def plot_main_01_schematic() -> None:
 
     _rounded_box(
         ax, (0.07, 0.09), (0.86, 0.19),
-        "At complete replacement, token-to-token\nvariation remains functionally important.",
-        fc="#F6F8FA", ec="#C3CED8", fontsize=7.2, weight="semibold"
+        "Complete replacement still\nrequires token diversity.",
+        fc="#F6F8FA", ec="#C3CED8", fontsize=7.0, weight="semibold"
     )
 
     # ------------------------------------------------------------------
@@ -779,7 +779,7 @@ def plot_main_06_lowd() -> None:
     ax2.set_ylabel("PC1 − random\ntrue-class margin")
     style_axis(ax2, "y")
     panel_label(ax2, "(b)")
-    ax2.set_title("PC1 advantage over random")
+    ax2.set_title("PC1 vs random")
     for bar, val in zip(bars, gains):
         ax2.text(
             bar.get_x() + bar.get_width()/2,
