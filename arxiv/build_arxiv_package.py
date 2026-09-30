@@ -182,6 +182,10 @@ def markdown_to_latex(md_path: Path, tex_path: Path, shift_heading: bool = False
         r"\includegraphics{",
         r"\includegraphics[width=\linewidth,height=0.78\textheight,keepaspectratio]{",
     )
+    # Keep only the conceptual overview exactly at its source location.
+    # Empirical figures remain normal floats so tables/text are not needlessly displaced.
+    if tex_path.name == "main_body.tex":
+        tex = tex.replace(r"\begin{figure}", r"\begin{figure}[H]", 1)
     tex_path.write_text(tex, encoding="utf-8")
 
 def copy_figures():
