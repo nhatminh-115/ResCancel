@@ -117,6 +117,13 @@ def normalize_inline_math(md: str) -> str:
     md = re.sub(r"\\\((.+?)\\\)", lambda m: "$" + m.group(1) + "$", md, flags=re.S)
     return md
 
+def strip_main_heading_numbers(md: str) -> str:
+    out = []
+    for line in md.splitlines():
+        line = re.sub(r"^(#{2,4})\s+\d+(?:\.\d+)*\.?\s+", r"\1 ", line)
+        out.append(line)
+    return "\n".join(out)
+
 def merge_figure_captions(md: str) -> str:
     lines = md.splitlines()
     out = []
@@ -276,7 +283,7 @@ def main():
     supp = prepare_supp(SUPP_MD.read_text(encoding="utf-8"))
 
     abstract = inject_citations(normalize_inline_math(normalize_paths(abstract)))
-    body = inject_citations(merge_figure_captions(normalize_inline_math(normalize_paths(body))))
+    body = inject_citations(merge_figure_captions(strip_main_heading_numbers(normalize_inline_math(normalize_paths(body)))))
     supp = inject_citations(merge_figure_captions(normalize_inline_math(normalize_paths(supp))))
 
     # Markdown intermediates remain only in build/, never in the arXiv ZIP.
