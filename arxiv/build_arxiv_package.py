@@ -18,20 +18,21 @@ SUPP_MD = ROOT / "docs" / "PAPER_SUPPLEMENTARY_DRAFT.md"
 BIB = ROOT / "docs" / "PAPER_REFERENCES_DRAFT.bib"
 
 FIGURES = [
-    "figures/fungibility_v1/depth_generalization.png",
-    "figures/fungibility_dense_fraction/dense_fraction_accuracy.png",
-    "figures/fungibility_v1/geometry_controls_across_models.png",
-    "figures/fungibility_v1/shared_vs_independent_across_models.png",
-    "figures/fungibility_v1/learned_vs_random_1d.png",
-    "figures/fungibility_dense_fraction/mask_seed_robustness.png",
-    "figures/fungibility_dense_fraction/threshold_summary.png",
-    "figures/fungibility_v0_9/natural_vs_energy_matched_rank.png",
-    "figures/fungibility_v0_9/pc1_amplitude_sweep.png",
-    "figures/fungibility_v0_9/rank_expansion_through_blocks.png",
-    "figures/fungibility_compression_poc/equivalence_error.png",
-    "figures/fungibility_compression_poc/accuracy_vs_tail_tokens.png",
-    "figures/fungibility_compression_poc/accuracy_vs_latency.png",
-    "figures/fungibility_geometry_bank/delta_vs_pruning.png",
+    "figures/paper_final/main/fig01_conceptual_overview.png",
+    "figures/paper_final/main/fig02_depth_emergence.png",
+    "figures/paper_final/main/fig03_dense_fraction.png",
+    "figures/paper_final/main/fig04_geometry_constraint.png",
+    "figures/paper_final/main/fig05_diversity_constraint.png",
+    "figures/paper_final/main/fig06_lowdim_direction.png",
+    "figures/paper_final/supp/figS01_mask_robustness.png",
+    "figures/paper_final/supp/figS02_retention_thresholds.png",
+    "figures/paper_final/supp/figS03_pca_rank.png",
+    "figures/paper_final/supp/figS04_pc1_amplitude.png",
+    "figures/paper_final/supp/figS05_rank_propagation.png",
+    "figures/paper_final/supp/figS06_carrier_equivalence.png",
+    "figures/paper_final/supp/figS07_accuracy_vs_tokens.png",
+    "figures/paper_final/supp/figS08_accuracy_vs_latency.png",
+    "figures/paper_final/supp/figS09_geometry_bank_vs_pruning.png",
 ]
 
 CITATIONS = {
