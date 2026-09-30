@@ -135,8 +135,8 @@ def markdown_to_latex(md_path: Path, tex_path: Path):
     run(cmd)
     tex = tex_path.read_text(encoding="utf-8")
     tex = tex.replace(
-        r"\\includegraphics{",
-        r"\\includegraphics[width=\\linewidth,height=0.78\\textheight,keepaspectratio]{",
+        r"\includegraphics{",
+        r"\includegraphics[width=\linewidth,height=0.78\textheight,keepaspectratio]{",
     )
     tex_path.write_text(tex, encoding="utf-8")
 
