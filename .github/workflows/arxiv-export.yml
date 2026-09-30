@@ -1,0 +1,51 @@
+name: Build arXiv export
+
+on:
+  push:
+    paths:
+      - '.github/workflows/arxiv-export.yml'
+      - 'arxiv/**'
+      - 'docs/PAPER_DRAFT.md'
+      - 'docs/PAPER_SUPPLEMENTARY_DRAFT.md'
+      - 'docs/PAPER_REFERENCES_DRAFT.bib'
+      - 'figures/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure Pandoc
+        run: |
+          if ! command -v pandoc >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y pandoc
+          fi
+
+      - name: Build arXiv source package
+        run: |
+          python arxiv/build_arxiv_package.py
+          test -f arxiv/build/arxiv_submission.zip
+          unzip -l arxiv/build/arxiv_submission.zip
+
+      - name: Upload arXiv source ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: arxiv-submission
+          path: arxiv/build/arxiv_submission.zip
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload PDF preview if available
+        if: ${{ hashFiles('arxiv/build/main.pdf') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: arxiv-pdf-preview
+          path: arxiv/build/main.pdf
+          retention-days: 30
