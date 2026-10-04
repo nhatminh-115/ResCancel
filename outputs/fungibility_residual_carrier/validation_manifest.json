@@ -1,0 +1,56 @@
+{
+  "experiment_name": "IMAGE-CONDITIONED RESIDUAL CARRIER POC",
+  "date": "2026-10-04",
+  "models": [
+    "deit_small",
+    "vit_base"
+  ],
+  "mask_seeds": [
+    31001,
+    31002,
+    31003,
+    31004,
+    31005
+  ],
+  "r_values": [
+    "1",
+    "4",
+    "16",
+    "64",
+    "D"
+  ],
+  "gamma_values": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "verdict": "KILL \u2014 image-conditioned carrier does not improve the matched-budget pruning frontier",
+  "max_delta_by_model": {
+    "deit_small": -0.00040000000000000034,
+    "vit_base": 0.0006000000000000005
+  },
+  "best_config_by_model": {
+    "deit_small": {
+      "condition": "RESIDUAL_CARRIER_r16_g0.25",
+      "r": "16",
+      "gamma": 0.25,
+      "delta_acc": -0.00040000000000000034,
+      "paired_delta_margin": -0.015731874015182258,
+      "ci_lower": -0.02931385040283203,
+      "ci_upper": -0.004394675465300679
+    },
+    "vit_base": {
+      "condition": "RESIDUAL_CARRIER_r16_g0.25",
+      "r": "16",
+      "gamma": 0.25,
+      "delta_acc": 0.0006000000000000005,
+      "paired_delta_margin": -0.010039357282221318,
+      "ci_lower": -0.02391106225550175,
+      "ci_upper": 0.002196253923466429
+    }
+  },
+  "smoke_test": false,
+  "elapsed_seconds": 134.73416376113892
+}
