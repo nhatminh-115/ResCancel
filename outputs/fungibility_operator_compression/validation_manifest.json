@@ -1,0 +1,28 @@
+{
+  "timestamp": "2026-10-04 20:56:05",
+  "total_elapsed_sec": 477.9774034023285,
+  "device": "cuda",
+  "primary_arch": "deit_small",
+  "primary_depth": 8,
+  "budgets_evaluated": [
+    147,
+    98,
+    72,
+    49,
+    32
+  ],
+  "replicated_archs": [
+    "deit_small",
+    "vit_base",
+    "deit_tiny",
+    "dinov2"
+  ],
+  "summary_findings": {
+    "mean_transmission_reduction_ratio": 1.4964305496371961,
+    "max_collapse_parity_error": 3.337860107421875e-06,
+    "correlation_residual_vs_damage_r": 0.5966905140771221,
+    "correlation_residual_vs_damage_rho": 0.74657032092667,
+    "deit_small_operator_reduction_pct": 18.657479467869653,
+    "vit_base_operator_reduction_pct": 9.120319039257422
+  }
+}
