@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-10-05 03:06:54",
+  "git_commit": "77e694a96e530ee5c9776d11daab8a426de14117",
+  "device": "cuda",
+  "n_eval_images": 1000,
+  "eval_seed": 9201,
+  "calib_seed": 9101,
+  "models": [
+    "DeiT-Tiny",
+    "DeiT-Small",
+    "ViT-B/16",
+    "DINOv2 ViT-S/14"
+  ],
+  "budgets": {
+    "DeiT-Tiny": [
+      147,
+      98,
+      72,
+      49,
+      32
+    ],
+    "DeiT-Small": [
+      147,
+      98,
+      72,
+      49,
+      32
+    ],
+    "ViT-B/16": [
+      147,
+      98,
+      72,
+      49,
+      32
+    ],
+    "DINOv2 ViT-S/14": [
+      192,
+      128,
+      94,
+      64,
+      42
+    ]
+  },
+  "frozen_lambda_factor": 10.0,
+  "primary_grouping": "feature_similarity",
+  "primary_operator": "Per-image exact downstream Jacobian J_{l->L} (Oracle)",
+  "parity_max_error": 2.0503997802734375e-05
+}
