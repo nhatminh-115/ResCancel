@@ -1,0 +1,41 @@
+{
+  "timestamp": "2026-10-04 20:12:46",
+  "total_runtime_seconds": 38.11768054962158,
+  "models_evaluated": [
+    "deit_small",
+    "vit_base",
+    "deit_tiny",
+    "dinov2"
+  ],
+  "depths_evaluated": [
+    2,
+    8,
+    11
+  ],
+  "scale_sweep": [
+    0.0,
+    0.05,
+    0.1,
+    0.2,
+    0.4,
+    0.8,
+    1.6,
+    3.2,
+    4.0
+  ],
+  "num_heldout_perturbations": 100,
+  "prediction_correlations": {
+    "multi_block_pearson_r": 0.9747171839059678,
+    "multi_block_spearman_rho": 0.9445544554455445,
+    "single_block_pearson_r": 0.7527450712171407,
+    "single_block_spearman_rho": 0.7354455445544552
+  },
+  "primary_findings": {
+    "single_null_to_multi_null_ratio_deit_small": 1.0633798379022534,
+    "multi_top_to_multi_null_ratio_deit_small": 8.351365206719816,
+    "mean_principal_cosine_b8_to_b9": 0.6561402678489685,
+    "mean_principal_angle_deg_b8_to_b9": 48.99383224799797,
+    "coherent_pc1_tau_multi": 0.03632132709026337,
+    "checkerboard_tau_multi": 0.00851231999695301
+  }
+}
