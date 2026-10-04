@@ -1,0 +1,30 @@
+{
+  "execution_timestamp": "2026-10-04T09:44:43Z",
+  "elapsed_seconds": 168.5,
+  "device": "cuda",
+  "models_evaluated": [
+    "deit_small",
+    "vit_base"
+  ],
+  "depths_evaluated": [
+    5,
+    7,
+    8,
+    10
+  ],
+  "num_images_pilot": 100,
+  "anisotropy_summary": {
+    "deit_small_depth_5": 18.546120413399724,
+    "deit_small_depth_7": 30.3843340167026,
+    "deit_small_depth_8": 32.76185042657298,
+    "deit_small_depth_10": 9.137003627119915,
+    "vit_base_depth_5": 8.250462331298703,
+    "vit_base_depth_7": 19.880292777279667,
+    "vit_base_depth_8": 14.907051259176473,
+    "vit_base_depth_10": 14.685999241587684
+  },
+  "mean_image_consistency": {
+    "deit_small": 0.671040124567984,
+    "vit_base": 0.30152749078973917
+  }
+}
