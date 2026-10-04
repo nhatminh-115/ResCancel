@@ -1,0 +1,38 @@
+{
+  "execution_timestamp": "2026-10-04T10:14:37Z",
+  "elapsed_seconds": 388.81,
+  "device": "cuda",
+  "models_evaluated": [
+    "deit_small",
+    "vit_base"
+  ],
+  "depths_evaluated": {
+    "deit_small": [
+      5,
+      8,
+      10
+    ],
+    "vit_base": [
+      5,
+      7,
+      10
+    ]
+  },
+  "num_images": 100,
+  "mean_coherence_damage_ratio": {
+    "deit_small_depth_5": 14.708898933450095,
+    "deit_small_depth_8": 3.2870172128490998,
+    "deit_small_depth_10": 4.351970944018449,
+    "vit_base_depth_5": 0.9841244564864395,
+    "vit_base_depth_7": 223.09184388021026,
+    "vit_base_depth_10": 2.1303226043071946
+  },
+  "interaction_delta_r2": {
+    "deit_small_depth_5": 0.6577216945728489,
+    "deit_small_depth_8": 0.638233333810858,
+    "deit_small_depth_10": 0.6143519500112733,
+    "vit_base_depth_5": 0.5583609171066866,
+    "vit_base_depth_7": 0.6487402092631529,
+    "vit_base_depth_10": 0.424704733754131
+  }
+}
