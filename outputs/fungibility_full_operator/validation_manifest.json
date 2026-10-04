@@ -1,0 +1,37 @@
+{
+  "timestamp": "2026-10-04 19:54:05",
+  "total_runtime_seconds": 14.341970682144165,
+  "models_evaluated": [
+    "deit_small",
+    "vit_base",
+    "deit_tiny",
+    "dinov2"
+  ],
+  "depths_evaluated": [
+    2,
+    8,
+    11
+  ],
+  "scale_sweep": [
+    0.0,
+    0.05,
+    0.1,
+    0.2,
+    0.4,
+    0.8,
+    1.6,
+    3.2,
+    4.0
+  ],
+  "num_heldout_perturbations": 100,
+  "diverse_heldout_r": 0.9485163693489052,
+  "diverse_heldout_rho": 0.9425982598259824,
+  "primary_findings": {
+    "top_to_null_ratio_deit_small": 11.212011066740565,
+    "top_mode_rank1_energy_fraction": 0.9792840020466486,
+    "mid_mode_rank1_energy_fraction": 0.8999472897935384,
+    "exact_null_space_dimension_pct": 99.48979591836735,
+    "coherent_pc1_tau": 0.08475753664970398,
+    "checkerboard_tau": 0.001221375190652907
+  }
+}
