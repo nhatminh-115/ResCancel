@@ -1,0 +1,51 @@
+{
+  "execution_timestamp": "2026-10-04T10:53:28Z",
+  "elapsed_seconds": 89.05,
+  "device": "cuda",
+  "exploratory_models": [
+    [
+      "deit_small",
+      8
+    ],
+    [
+      "vit_base",
+      7
+    ]
+  ],
+  "replication_models": [
+    [
+      "deit_tiny",
+      8
+    ],
+    [
+      "dinov2",
+      8
+    ]
+  ],
+  "num_eval_images": 100,
+  "attribution_summary": {
+    "deit_small_depth_8": {
+      "gap_full": 0.006282992952037603,
+      "gap_v_only": 0.0044483497040346265,
+      "gap_reroute": 0.0004064118838869035,
+      "v_path_attribution_ratio": 0.7079985075889917,
+      "reroute_attribution_ratio": 0.06468443948940901
+    },
+    "vit_base_depth_7": {
+      "gap_full": -0.24719948787242174,
+      "gap_v_only": -0.25269712042063475,
+      "gap_reroute": 0.007103162934072316,
+      "v_path_attribution_ratio": 1.0222396603559076,
+      "reroute_attribution_ratio": -0.02873453742999529
+    }
+  },
+  "smoothness_results": {
+    "deit_small": {
+      "model_key": "deit_small",
+      "depth": 8,
+      "low_frequency_power_ratio": 0.20387567165774853,
+      "total_variation": 0.008145499974489212,
+      "neighbor_correlation": 0.10581110695029104
+    }
+  }
+}
