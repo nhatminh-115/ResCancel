@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-10-04 20:29:15",
+  "total_elapsed_sec": 51.70615530014038,
+  "device": "cuda",
+  "primary_arch": "deit_small",
+  "primary_depth": 8,
+  "replicated_archs": [
+    "deit_small",
+    "vit_base",
+    "deit_tiny",
+    "dinov2"
+  ],
+  "num_held_out_samples": 100,
+  "summary_metrics": {
+    "norm_V": 1.1098886728286743,
+    "norm_R": 0.8521242737770081,
+    "mean_principal_angle_deg": 88.07380580288292,
+    "corr_r_val": 0.9871793588185732,
+    "corr_r_key": 0.9587615094960008,
+    "corr_r_joint": 0.984294596166945,
+    "corr_r_multi": 0.9884005175722332,
+    "scaling_exponent_val_null": 1.0031658647439017,
+    "scaling_exponent_joint_vk_null": 1.0066390434323844,
+    "scaling_exponent_J_null": 1.0109842788700487,
+    "scaling_exponent_joint_cum_null": 1.0143031751999292
+  }
+}
