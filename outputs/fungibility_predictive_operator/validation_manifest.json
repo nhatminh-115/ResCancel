@@ -1,0 +1,27 @@
+{
+  "execution_timestamp": "2026-10-04T12:37:15Z",
+  "device": "cuda",
+  "num_eval_images": 100,
+  "random_pattern_correlations": {
+    "deit_small": {
+      "pearson_r": 0.5508857030011984,
+      "spearman_rho": 0.4854261704681873
+    },
+    "vit_base": {
+      "pearson_r": 0.3509466597413825,
+      "spearman_rho": 0.19154861944777912
+    }
+  },
+  "top_vs_null_contrast": {
+    "deit_small": {
+      "l2_top": 2.163994312286377,
+      "l2_null": 0.3834832012653351,
+      "contrast_ratio": 5.6429963674596335
+    },
+    "vit_base": {
+      "l2_top": 2.71793532371521,
+      "l2_null": 0.6945017576217651,
+      "contrast_ratio": 3.913503880294113
+    }
+  }
+}
