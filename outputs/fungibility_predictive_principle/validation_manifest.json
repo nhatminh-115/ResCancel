@@ -1,0 +1,24 @@
+{
+  "execution_timestamp": "2026-10-04T09:15:28Z",
+  "elapsed_seconds": 246.34,
+  "device": "cuda",
+  "num_models": 4,
+  "num_model_depth_points": 22,
+  "calibration_sample_size": 1000,
+  "pre_registered_threshold": 0.8,
+  "best_predictor": "effective_rank",
+  "best_predictor_metrics": {
+    "pooled_spearman_rho": 0.5324675324675326,
+    "pooled_pearson_r": 0.571945894866141,
+    "r2_univariate": 0.3271221066542309,
+    "r2_depth_baseline": 0.010419303170301708,
+    "r2_joint_with_depth": 0.32778308614950835,
+    "incremental_delta_r2": 0.31736378297920664,
+    "partial_corr_given_depth": 0.5663084926258203,
+    "mean_loao_mae": 0.2675484085317181,
+    "mean_loao_r2": -1.7116083630468208,
+    "mean_transition_depth_error": 2.75
+  },
+  "verdict": "OUTCOME D \u2014 KILL PREDICTIVE-PRINCIPLE HYPOTHESIS",
+  "verdict_explanation": "No candidate clean-state metric achieved robust correlation (|rho|=0.5325 < 0.60)."
+}
