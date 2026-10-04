@@ -112,16 +112,11 @@ def forward_downstream_compressed(
         h_norm = backbone.norm(cur)
         cls_norm = h_norm[:, 0]
 
-        # Check if carrier exists (multiplicities > 1 at the end)
-        m_carrier = float(multiplicities[-1].item())
-        has_carrier = (T_comp > 1) and (m_carrier > 1.0)
-
-        if has_carrier:
-            real_norm = h_norm[:, 1:-1]
-            carrier_norm = h_norm[:, -1]
-            patch_mean = (real_norm.sum(dim=1) + m_carrier * carrier_norm) / float(original_n_patches)
+        patch_mults = multiplicities[1:].view(1, -1, 1)
+        total_m = float(multiplicities[1:].sum().item())
+        if abs(total_m - original_n_patches) < 1e-2:
+            patch_mean = torch.sum(h_norm[:, 1:] * patch_mults, dim=1) / float(original_n_patches)
         else:
-            # Unweighted or all real tokens
             patch_mean = h_norm[:, 1:].mean(dim=1)
 
         readout = torch.cat([cls_norm, patch_mean], dim=-1)
