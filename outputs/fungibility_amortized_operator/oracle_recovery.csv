@@ -1,0 +1,81 @@
+model,budget,method,acc_baseline,acc_oracle,acc_predicted,gain_oracle,gain_predicted,oracle_recovery_pct
+DINOv2 ViT-S/14,42,Predicted Rank-32,0.75,0.765,0.755,0.015000000000000013,0.0050000000000000044,33.33333333333333
+DINOv2 ViT-S/14,42,Predicted Rank-16,0.75,0.765,0.75,0.015000000000000013,0.0,0.0
+DINOv2 ViT-S/14,42,Static Subspace (r=32),0.75,0.765,0.755,0.015000000000000013,0.0050000000000000044,33.33333333333333
+DINOv2 ViT-S/14,42,Direct Carrier Predictor,0.75,0.765,0.005,0.015000000000000013,-0.745,-50.0
+DINOv2 ViT-S/14,64,Predicted Rank-32,0.82,0.83,0.82,0.010000000000000009,0.0,0.0
+DINOv2 ViT-S/14,64,Predicted Rank-16,0.82,0.83,0.82,0.010000000000000009,0.0,0.0
+DINOv2 ViT-S/14,64,Static Subspace (r=32),0.82,0.83,0.82,0.010000000000000009,0.0,0.0
+DINOv2 ViT-S/14,64,Direct Carrier Predictor,0.82,0.83,0.005,0.010000000000000009,-0.815,-50.0
+DINOv2 ViT-S/14,94,Predicted Rank-32,0.84,0.835,0.84,-0.0050000000000000044,0.0,-0.0
+DINOv2 ViT-S/14,94,Predicted Rank-16,0.84,0.835,0.84,-0.0050000000000000044,0.0,-0.0
+DINOv2 ViT-S/14,94,Static Subspace (r=32),0.84,0.835,0.84,-0.0050000000000000044,0.0,-0.0
+DINOv2 ViT-S/14,94,Direct Carrier Predictor,0.84,0.835,0.005,-0.0050000000000000044,-0.835,150.0
+DINOv2 ViT-S/14,128,Predicted Rank-32,0.86,0.86,0.86,0.0,0.0,100.0
+DINOv2 ViT-S/14,128,Predicted Rank-16,0.86,0.86,0.86,0.0,0.0,100.0
+DINOv2 ViT-S/14,128,Static Subspace (r=32),0.86,0.86,0.86,0.0,0.0,100.0
+DINOv2 ViT-S/14,128,Direct Carrier Predictor,0.86,0.86,0.005,0.0,-0.855,100.0
+DINOv2 ViT-S/14,192,Predicted Rank-32,0.87,0.87,0.87,0.0,0.0,100.0
+DINOv2 ViT-S/14,192,Predicted Rank-16,0.87,0.87,0.87,0.0,0.0,100.0
+DINOv2 ViT-S/14,192,Static Subspace (r=32),0.87,0.87,0.87,0.0,0.0,100.0
+DINOv2 ViT-S/14,192,Direct Carrier Predictor,0.87,0.87,0.005,0.0,-0.865,100.0
+DeiT-Small,32,Predicted Rank-32,0.825,0.825,0.825,0.0,0.0,100.0
+DeiT-Small,32,Predicted Rank-16,0.825,0.825,0.83,0.0,0.0050000000000000044,100.0
+DeiT-Small,32,Static Subspace (r=32),0.825,0.825,0.825,0.0,0.0,100.0
+DeiT-Small,32,Direct Carrier Predictor,0.825,0.825,0.02,0.0,-0.8049999999999999,100.0
+DeiT-Small,49,Predicted Rank-32,0.83,0.83,0.83,0.0,0.0,100.0
+DeiT-Small,49,Predicted Rank-16,0.83,0.83,0.83,0.0,0.0,100.0
+DeiT-Small,49,Static Subspace (r=32),0.83,0.83,0.83,0.0,0.0,100.0
+DeiT-Small,49,Direct Carrier Predictor,0.83,0.83,0.005,0.0,-0.825,100.0
+DeiT-Small,72,Predicted Rank-32,0.835,0.84,0.835,0.0050000000000000044,0.0,0.0
+DeiT-Small,72,Predicted Rank-16,0.835,0.84,0.835,0.0050000000000000044,0.0,0.0
+DeiT-Small,72,Static Subspace (r=32),0.835,0.84,0.835,0.0050000000000000044,0.0,0.0
+DeiT-Small,72,Direct Carrier Predictor,0.835,0.84,0.005,0.0050000000000000044,-0.83,-50.0
+DeiT-Small,98,Predicted Rank-32,0.84,0.84,0.84,0.0,0.0,100.0
+DeiT-Small,98,Predicted Rank-16,0.84,0.84,0.84,0.0,0.0,100.0
+DeiT-Small,98,Static Subspace (r=32),0.84,0.84,0.84,0.0,0.0,100.0
+DeiT-Small,98,Direct Carrier Predictor,0.84,0.84,0.005,0.0,-0.835,100.0
+DeiT-Small,147,Predicted Rank-32,0.825,0.825,0.825,0.0,0.0,100.0
+DeiT-Small,147,Predicted Rank-16,0.825,0.825,0.825,0.0,0.0,100.0
+DeiT-Small,147,Static Subspace (r=32),0.825,0.825,0.825,0.0,0.0,100.0
+DeiT-Small,147,Direct Carrier Predictor,0.825,0.825,0.005,0.0,-0.82,100.0
+DeiT-Tiny,32,Predicted Rank-32,0.75,0.76,0.755,0.010000000000000009,0.0050000000000000044,50.0
+DeiT-Tiny,32,Predicted Rank-16,0.75,0.76,0.75,0.010000000000000009,0.0,0.0
+DeiT-Tiny,32,Static Subspace (r=32),0.75,0.76,0.75,0.010000000000000009,0.0,0.0
+DeiT-Tiny,32,Direct Carrier Predictor,0.75,0.76,0.04,0.010000000000000009,-0.71,-50.0
+DeiT-Tiny,49,Predicted Rank-32,0.785,0.78,0.785,-0.0050000000000000044,0.0,-0.0
+DeiT-Tiny,49,Predicted Rank-16,0.785,0.78,0.785,-0.0050000000000000044,0.0,-0.0
+DeiT-Tiny,49,Static Subspace (r=32),0.785,0.78,0.785,-0.0050000000000000044,0.0,-0.0
+DeiT-Tiny,49,Direct Carrier Predictor,0.785,0.78,0.005,-0.0050000000000000044,-0.78,150.0
+DeiT-Tiny,72,Predicted Rank-32,0.76,0.76,0.76,0.0,0.0,100.0
+DeiT-Tiny,72,Predicted Rank-16,0.76,0.76,0.76,0.0,0.0,100.0
+DeiT-Tiny,72,Static Subspace (r=32),0.76,0.76,0.76,0.0,0.0,100.0
+DeiT-Tiny,72,Direct Carrier Predictor,0.76,0.76,0.005,0.0,-0.755,100.0
+DeiT-Tiny,98,Predicted Rank-32,0.765,0.77,0.77,0.0050000000000000044,0.0050000000000000044,100.0
+DeiT-Tiny,98,Predicted Rank-16,0.765,0.77,0.77,0.0050000000000000044,0.0050000000000000044,100.0
+DeiT-Tiny,98,Static Subspace (r=32),0.765,0.77,0.77,0.0050000000000000044,0.0050000000000000044,100.0
+DeiT-Tiny,98,Direct Carrier Predictor,0.765,0.77,0.005,0.0050000000000000044,-0.76,-50.0
+DeiT-Tiny,147,Predicted Rank-32,0.77,0.77,0.77,0.0,0.0,100.0
+DeiT-Tiny,147,Predicted Rank-16,0.77,0.77,0.77,0.0,0.0,100.0
+DeiT-Tiny,147,Static Subspace (r=32),0.77,0.77,0.77,0.0,0.0,100.0
+DeiT-Tiny,147,Direct Carrier Predictor,0.77,0.77,0.005,0.0,-0.765,100.0
+ViT-B/16,32,Predicted Rank-32,0.78,0.78,0.78,0.0,0.0,100.0
+ViT-B/16,32,Predicted Rank-16,0.78,0.78,0.78,0.0,0.0,100.0
+ViT-B/16,32,Static Subspace (r=32),0.78,0.78,0.78,0.0,0.0,100.0
+ViT-B/16,32,Direct Carrier Predictor,0.78,0.78,0.1,0.0,-0.68,100.0
+ViT-B/16,49,Predicted Rank-32,0.77,0.77,0.77,0.0,0.0,100.0
+ViT-B/16,49,Predicted Rank-16,0.77,0.77,0.77,0.0,0.0,100.0
+ViT-B/16,49,Static Subspace (r=32),0.77,0.77,0.77,0.0,0.0,100.0
+ViT-B/16,49,Direct Carrier Predictor,0.77,0.77,0.01,0.0,-0.76,100.0
+ViT-B/16,72,Predicted Rank-32,0.78,0.78,0.78,0.0,0.0,100.0
+ViT-B/16,72,Predicted Rank-16,0.78,0.78,0.78,0.0,0.0,100.0
+ViT-B/16,72,Static Subspace (r=32),0.78,0.78,0.78,0.0,0.0,100.0
+ViT-B/16,72,Direct Carrier Predictor,0.78,0.78,0.01,0.0,-0.77,100.0
+ViT-B/16,98,Predicted Rank-32,0.78,0.78,0.78,0.0,0.0,100.0
+ViT-B/16,98,Predicted Rank-16,0.78,0.78,0.78,0.0,0.0,100.0
+ViT-B/16,98,Static Subspace (r=32),0.78,0.78,0.78,0.0,0.0,100.0
+ViT-B/16,98,Direct Carrier Predictor,0.78,0.78,0.01,0.0,-0.77,100.0
+ViT-B/16,147,Predicted Rank-32,0.8,0.8,0.8,0.0,0.0,100.0
+ViT-B/16,147,Predicted Rank-16,0.8,0.8,0.8,0.0,0.0,100.0
+ViT-B/16,147,Static Subspace (r=32),0.8,0.8,0.8,0.0,0.0,100.0
+ViT-B/16,147,Direct Carrier Predictor,0.8,0.8,0.01,0.0,-0.79,100.0

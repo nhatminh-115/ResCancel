@@ -1,0 +1,5 @@
+model,aggressive_budget,acc_baseline,acc_oracle,acc_predicted
+DeiT-Small,32,0.764,0.825,0.766
+ViT-B/16,32,0.732,0.78,0.732
+DeiT-Tiny,32,0.665,0.76,0.666
+DINOv2 ViT-S/14,42,0.722,0.765,0.726

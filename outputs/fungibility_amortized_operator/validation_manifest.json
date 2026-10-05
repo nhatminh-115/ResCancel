@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-10-06 00:50:13",
+  "git_commit": "11b8a96d263b964a4e52bf4b45e0b6026c23f413",
+  "device": "cuda",
+  "n_eval_images": 1000,
+  "models": [
+    "DeiT-Small",
+    "ViT-B/16",
+    "DeiT-Tiny",
+    "DINOv2 ViT-S/14"
+  ],
+  "eval_seed": 9201,
+  "train_seed": 7101,
+  "val_seed": 7201
+}
