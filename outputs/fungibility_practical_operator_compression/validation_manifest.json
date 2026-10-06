@@ -1,0 +1,61 @@
+{
+  "timestamp": "2026-10-06 14:24:31",
+  "git_commit": "0f146351e0f2acc6dd7d4d4db88418db090ae6b6",
+  "device": "cuda",
+  "gpu_name": "NVIDIA GeForce RTX 5070 Laptop GPU",
+  "eval_manifest_hash": "3ed5b4d44c1da8f5",
+  "calib_seed": 9101,
+  "eval_seed": 9201,
+  "evaluated_models": [
+    "deit_tiny",
+    "deit_small",
+    "vit_base",
+    "dinov2"
+  ],
+  "evaluated_depths": {
+    "deit_tiny": [
+      3,
+      6,
+      8
+    ],
+    "deit_small": [
+      3,
+      6,
+      8
+    ],
+    "vit_base": [
+      3,
+      5,
+      7
+    ],
+    "dinov2": [
+      3,
+      6,
+      8
+    ]
+  },
+  "evaluated_budgets": {
+    "deit_tiny": [
+      98,
+      49,
+      32
+    ],
+    "deit_small": [
+      98,
+      49,
+      32
+    ],
+    "vit_base": [
+      98,
+      49,
+      32
+    ],
+    "dinov2": [
+      128,
+      64,
+      42
+    ]
+  },
+  "fast_solver_parity_diff": 15.673739056289197,
+  "predefined_success_level": "LEVEL P1 / P2"
+}

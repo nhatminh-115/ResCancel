@@ -1,0 +1,65 @@
+model,model_key,method,depth,budget_tokens,retention_frac,latency_ms,top1_accuracy,is_pareto
+DINOv2-S,dinov2,Clean ViT,0,256,1.0,9.271519660949707,0.87,True
+DINOv2-S,dinov2,Spatial Group Mean,6,42,0.1640625,10.335824012756348,0.39,False
+DINOv2-S,dinov2,Attention Pruning,6,64,0.25,10.371744155883789,0.77,False
+DINOv2-S,dinov2,Attention Pruning,6,42,0.1640625,10.41923189163208,0.67,False
+DINOv2-S,dinov2,Spatial Group Mean,6,64,0.25,10.422752141952515,0.6,False
+DINOv2-S,dinov2,Spatial Group Mean,6,128,0.5,10.605119943618774,0.79,False
+DINOv2-S,dinov2,Attention Pruning,6,128,0.5,11.07038402557373,0.83,False
+DINOv2-S,dinov2,Fast Amortized Operator,6,42,0.1640625,12.096256017684937,0.4,False
+DINOv2-S,dinov2,Fast Amortized Operator,6,64,0.25,12.859056115150452,0.6,False
+DINOv2-S,dinov2,Fast Amortized Operator,6,128,0.5,12.999279975891113,0.79,False
+DINOv2-S,dinov2,ToMe,6,128,0.5,61.35003304481506,0.83,False
+DINOv2-S,dinov2,ToMe,6,64,0.25,91.00385546684265,0.72,False
+DINOv2-S,dinov2,ToMe,6,42,0.1640625,95.69785523414612,0.53,False
+DINOv2-S,dinov2,Oracle Operator,6,42,0.1640625,404.6365759372711,0.4,False
+DINOv2-S,dinov2,Oracle Operator,6,64,0.25,404.82227206230164,0.6,False
+DINOv2-S,dinov2,Oracle Operator,6,128,0.5,405.12344002723694,0.8,False
+DeiT-Small,deit_small,Clean ViT,0,196,1.0,8.501999855041504,0.81,True
+DeiT-Small,deit_small,Attention Pruning,6,98,0.5,9.893872022628784,0.8,False
+DeiT-Small,deit_small,Spatial Group Mean,6,32,0.16326530612244897,10.013984203338623,0.73,False
+DeiT-Small,deit_small,Attention Pruning,6,32,0.16326530612244897,10.187040090560913,0.73,False
+DeiT-Small,deit_small,Spatial Group Mean,6,49,0.25,10.212000131607056,0.75,False
+DeiT-Small,deit_small,Attention Pruning,6,49,0.25,10.307551860809326,0.78,False
+DeiT-Small,deit_small,Spatial Group Mean,6,98,0.5,10.34662413597107,0.78,False
+DeiT-Small,deit_small,Fast Amortized Operator,6,32,0.16326530612244897,12.431648194789886,0.73,False
+DeiT-Small,deit_small,Fast Amortized Operator,6,49,0.25,12.711408138275146,0.75,False
+DeiT-Small,deit_small,Fast Amortized Operator,6,98,0.5,12.793344140052795,0.78,False
+DeiT-Small,deit_small,ToMe,6,98,0.5,50.54236841201782,0.81,False
+DeiT-Small,deit_small,ToMe,6,49,0.25,73.35240054130554,0.79,False
+DeiT-Small,deit_small,ToMe,6,32,0.16326530612244897,78.14198589324951,0.76,False
+DeiT-Small,deit_small,Oracle Operator,6,98,0.5,404.4392800331116,0.8,False
+DeiT-Small,deit_small,Oracle Operator,6,32,0.16326530612244897,404.6896162033081,0.7,False
+DeiT-Small,deit_small,Oracle Operator,6,49,0.25,405.0699679851532,0.725,False
+DeiT-Tiny,deit_tiny,Clean ViT,0,196,1.0,8.37500810623169,0.78,True
+DeiT-Tiny,deit_tiny,Spatial Group Mean,6,32,0.16326530612244897,8.956703901290894,0.6,False
+DeiT-Tiny,deit_tiny,Attention Pruning,6,32,0.16326530612244897,9.10968017578125,0.61,False
+DeiT-Tiny,deit_tiny,Spatial Group Mean,6,49,0.25,9.804703950881958,0.63,False
+DeiT-Tiny,deit_tiny,Spatial Group Mean,6,98,0.5,9.872496128082275,0.71,False
+DeiT-Tiny,deit_tiny,Attention Pruning,6,49,0.25,9.925519943237305,0.64,False
+DeiT-Tiny,deit_tiny,Attention Pruning,6,98,0.5,10.166688203811646,0.77,False
+DeiT-Tiny,deit_tiny,Fast Amortized Operator,6,32,0.16326530612244897,11.333487927913666,0.6,False
+DeiT-Tiny,deit_tiny,Fast Amortized Operator,6,49,0.25,12.183615982532501,0.63,False
+DeiT-Tiny,deit_tiny,Fast Amortized Operator,6,98,0.5,12.349808096885681,0.71,False
+DeiT-Tiny,deit_tiny,ToMe,6,98,0.5,50.68468904495239,0.73,False
+DeiT-Tiny,deit_tiny,ToMe,6,49,0.25,64.28606414794922,0.72,False
+DeiT-Tiny,deit_tiny,ToMe,6,32,0.16326530612244897,74.20865654945374,0.69,False
+DeiT-Tiny,deit_tiny,Oracle Operator,6,32,0.16326530612244897,404.2414400577545,0.55,False
+DeiT-Tiny,deit_tiny,Oracle Operator,6,98,0.5,404.8864960670471,0.65,False
+DeiT-Tiny,deit_tiny,Oracle Operator,6,49,0.25,405.0814399719238,0.6,False
+ViT-Base,vit_base,Clean ViT,0,196,1.0,8.092607975006104,0.8,True
+ViT-Base,vit_base,Spatial Group Mean,5,98,0.5,9.137488007545471,0.76,False
+ViT-Base,vit_base,Spatial Group Mean,5,32,0.16326530612244897,9.439696073532104,0.61,False
+ViT-Base,vit_base,Attention Pruning,5,32,0.16326530612244897,9.834944009780884,0.64,False
+ViT-Base,vit_base,Spatial Group Mean,5,49,0.25,9.923488020896912,0.7,False
+ViT-Base,vit_base,Attention Pruning,5,49,0.25,10.097632050514221,0.76,False
+ViT-Base,vit_base,Attention Pruning,5,98,0.5,10.258671879768372,0.8,False
+ViT-Base,vit_base,Fast Amortized Operator,5,98,0.5,11.72622400522232,0.76,False
+ViT-Base,vit_base,Fast Amortized Operator,5,32,0.16326530612244897,11.803264081478119,0.63,False
+ViT-Base,vit_base,Fast Amortized Operator,5,49,0.25,12.364031970500946,0.7,False
+ViT-Base,vit_base,ToMe,5,98,0.5,49.78048098087311,0.77,False
+ViT-Base,vit_base,ToMe,5,49,0.25,70.55972802639008,0.74,False
+ViT-Base,vit_base,ToMe,5,32,0.16326530612244897,76.18641829490662,0.71,False
+ViT-Base,vit_base,Oracle Operator,5,49,0.25,403.7641919851303,0.675,False
+ViT-Base,vit_base,Oracle Operator,5,32,0.16326530612244897,403.84152007102966,0.575,False
+ViT-Base,vit_base,Oracle Operator,5,98,0.5,403.89854395389557,0.725,False

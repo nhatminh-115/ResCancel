@@ -1,0 +1,5 @@
+model,model_key,method,depth,budget_tokens,retention_frac,latency_ms,top1_accuracy,is_pareto
+DINOv2-S,dinov2,Clean ViT,0,256,1.0,9.271519660949707,0.87,True
+DeiT-Small,deit_small,Clean ViT,0,196,1.0,8.501999855041504,0.81,True
+DeiT-Tiny,deit_tiny,Clean ViT,0,196,1.0,8.37500810623169,0.78,True
+ViT-Base,vit_base,Clean ViT,0,196,1.0,8.092607975006104,0.8,True
