@@ -1,0 +1,29 @@
+architecture,method,n_rows,n_unique_images,manifest_hash,denominator,n_clean_correct,accuracy_definition,aligned_with_clean,notes
+DeiT-Tiny,Random Pruning,5000,1000,3ed5b4d44c1da8f5,1000,679,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DeiT-Tiny,Attention Pruning,5000,1000,3ed5b4d44c1da8f5,1000,679,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DeiT-Tiny,ToMe (BSM),5000,1000,3ed5b4d44c1da8f5,1000,679,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DeiT-Tiny,Group-Mean Merging,5000,1000,3ed5b4d44c1da8f5,1000,679,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DeiT-Tiny,Static Subspace (r=32),5000,1000,3ed5b4d44c1da8f5,1000,679,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DeiT-Tiny,Predicted Rank-32,5000,1000,3ed5b4d44c1da8f5,1000,679,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DeiT-Tiny,Oracle Rank-32,1000,200,3ed5b4d44c1da8f5,200,153,mean(pred == ground_truth_label),NO (SUBSET),Evaluated only on first N=200 oracle subset (causes apparent denominator mismatch!)
+DeiT-Small,Random Pruning,5000,1000,3ed5b4d44c1da8f5,1000,761,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DeiT-Small,Attention Pruning,5000,1000,3ed5b4d44c1da8f5,1000,761,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DeiT-Small,ToMe (BSM),5000,1000,3ed5b4d44c1da8f5,1000,761,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DeiT-Small,Group-Mean Merging,5000,1000,3ed5b4d44c1da8f5,1000,761,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DeiT-Small,Static Subspace (r=32),5000,1000,3ed5b4d44c1da8f5,1000,761,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DeiT-Small,Predicted Rank-32,5000,1000,3ed5b4d44c1da8f5,1000,761,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DeiT-Small,Oracle Rank-32,1000,200,3ed5b4d44c1da8f5,200,165,mean(pred == ground_truth_label),NO (SUBSET),Evaluated only on first N=200 oracle subset (causes apparent denominator mismatch!)
+ViT-B/16,Random Pruning,5000,1000,3ed5b4d44c1da8f5,1000,761,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+ViT-B/16,Attention Pruning,5000,1000,3ed5b4d44c1da8f5,1000,761,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+ViT-B/16,ToMe (BSM),5000,1000,3ed5b4d44c1da8f5,1000,761,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+ViT-B/16,Group-Mean Merging,5000,1000,3ed5b4d44c1da8f5,1000,761,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+ViT-B/16,Static Subspace (r=32),5000,1000,3ed5b4d44c1da8f5,1000,761,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+ViT-B/16,Predicted Rank-32,5000,1000,3ed5b4d44c1da8f5,1000,761,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+ViT-B/16,Oracle Rank-32,500,100,3ed5b4d44c1da8f5,100,80,mean(pred == ground_truth_label),NO (SUBSET),Evaluated only on first N=100 oracle subset (causes apparent denominator mismatch!)
+DINOv2 ViT-S/14,Random Pruning,5000,1000,3ed5b4d44c1da8f5,1000,788,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DINOv2 ViT-S/14,Attention Pruning,5000,1000,3ed5b4d44c1da8f5,1000,788,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DINOv2 ViT-S/14,ToMe (BSM),5000,1000,3ed5b4d44c1da8f5,1000,788,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DINOv2 ViT-S/14,Group-Mean Merging,5000,1000,3ed5b4d44c1da8f5,1000,788,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DINOv2 ViT-S/14,Static Subspace (r=32),5000,1000,3ed5b4d44c1da8f5,1000,788,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DINOv2 ViT-S/14,Predicted Rank-32,5000,1000,3ed5b4d44c1da8f5,1000,788,mean(pred == ground_truth_label),YES,Full canonical N=1000 evaluation
+DINOv2 ViT-S/14,Oracle Rank-32,1000,200,3ed5b4d44c1da8f5,200,174,mean(pred == ground_truth_label),NO (SUBSET),Evaluated only on first N=200 oracle subset (causes apparent denominator mismatch!)

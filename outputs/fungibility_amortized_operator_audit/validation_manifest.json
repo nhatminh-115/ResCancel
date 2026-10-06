@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-10-06 07:21:27",
+  "git_commit": "24367e47f3e41b2af540643d6dd08212d076eea7",
+  "device": "cuda",
+  "manifest_hash": "3ed5b4d44c1da8f5",
+  "n_eval_images": 1000,
+  "models_audited": [
+    "DeiT-Tiny",
+    "DeiT-Small",
+    "ViT-B/16",
+    "DINOv2 ViT-S/14"
+  ],
+  "eval_seed": 9201,
+  "audit_status": "COMPLETED_AUDIT"
+}
